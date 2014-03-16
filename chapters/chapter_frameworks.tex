@@ -1,0 +1,143 @@
+\chapter{Szkielety aplikacji - szkielety programistyczne}
+
+\section{Rozwój szkieletów aplikacji dla WWW}
+	\subsection{Podwaliny szkieletów aplikacji}
+		Od momentu wynalezienia sieci internetowej znanej dzisiaj pod nazwą \textbf{WWW}\footnote{WWW - World Wide Web jest to system dokumentów połączonych ze sobą hiperłączami 
+		dostępnymi przez sieć internetową} powstało, w i dalszym ciągu powstaje, wiele narzędzi pozwalających na projektowanie i tworzenie stron. Jest to jednocześnie przykład obrazujący
+		prostą ideę będącą zalążkiem wielu późniejszych wynalazków. Początkowo statyczne treści, a dokładniej sposoby ich dostarczania-programy były pisane w językach takich jak C oraz Perl.
+		Okazało się to jednak niewystarczające ponieważ obecnie istnieje wiele rozwiązań dla wielu różnych języków, z których warto przytoczyć między innymi Django dla języka Python, ASP.NET\cite{asp_net} dla języka C#, Zend.
+		Framework dla języka PHP, ExtJS dla języka JavaScript, czy też ostatecznie Spring Framework dla języka Java. Motorem napędzającym rozwój tych narzędzi 
+		były niewystarczające interfejsy programistyczne oraz rosnące oczekiwania odbiorców w stosunku do serwowania treści dynamicznych, a nie statycznych\cite{art_of_java_web_dev}.
+		\todo[inline, color=red!40]{books.bib}
+	\subsection{Historia i rozwój}
+		Początek istnienie szkieletów aplikacji lub bardziej ogólnie szkieletów programistycznych sięga momentu kiedy pojawiły się pierwsze faktyczne aplikacje internetowe.
+		Z drugiej strony sam język Java został zaprojektowany nie z myślą tworzenia rozbudowanych programów będących źródłem logiki dla stron internetowych. 
+		Pierwsza koncepcja tego języka jako sposobu tworzenia treści Internetu pojawiła się dopiero w z ideą \textit{serwletów} w roku 1995, 
+		jeszcze przed wydaniem pierwszej wersji języka Java. Pierwsza działająca wersja \textbf{serwletów} pojawiła się z rokiem 1997, a jej twórcami
+		byli pomysłodawcy James Gosling oraz Pavani Diwanji. Szybko okazało się jednak, że ta początkowo obiecująca idea jest niewystarczająca.
+		Różnice paradygmatów związane z projektowaniem kodu warstwy widoku oraz kodu Javy oferującego funkcjonalność były zbyt duże. 
+		Długotrwała utrzymanie oraz modyfikacje istniejącego kodu okazywały się na dłuższą metę niemożliwe lub bardzo trudne\cite{art_of_java_web_dev}. 
+		
+		Kolejnym krokiem były wprowadzenie szablonów, które w znaczący sposób usprawniły pracę programistów odpowiedzialnych za wizualną stronę
+		aplikacji oraz tych odpowiedzialnych za generowanie dynamicznej jej treści. Mimo wszystko rozwiązanie to miało jedną znaczącą wadę - wydajność. 
+		Początkowo implementacje opierały się na każdorazowym przeszukania kodu HTML w poszukiwaniu odpowiednich znaczników i zastępowaniu ich odpowiadającymi
+		im wartościami. Takie podejście przestałoby być efektywnym z momentem kiedy z witryny zaczynało korzystać więcej niż 1 osoba, ponieważ dla każdego
+		z kolejnych odwiedzających należało wykonać ten sam zestaw operacji aby pokazać gotową stronę. Parsowanie plików HTML zawierających znaczników
+		generowało zbyt duże obciążenie zarówno w kontekście zużycia zasobów procesora jak i operacji I/O\footnote{Operacje dyskowe, na plikach, 
+		często określane mianem operacji Wejścia/Wyjścia}\cite{art_of_java_web_dev}. 
+		\begin{code}
+			\inputminted[
+				lineos=true,
+				firstline=23,
+				lastline=40,
+				fontfamily=monospace,
+				obeytabs=true,
+				samepage=true,
+				fontsize=\scriptsize
+			]{jsp}{../../src/main/webapp/ui/wizard/header.jsp}
+			% src file used
+			\label{jsp_tag_usage_example}
+			\caption[Przykład użycia tagów JSP]{\textit{header.jsp} - plik JSP definiujący nagłówek \textbf{wizard} wykorzystujący język znaczników do tworzenia dynamicznej treści}.
+		\end{code}
+		
+	 	Odpowiedzią oraz jednocześnie kolejnym krokiem ku szkieletom programistycznym stały się \textbf{JavaServer Pages}\cite{jsp_spec}. 
+		\textbf{JSP} dalej korzystały i wciąż korzystają z szablonów ale podejście jest zupełnie inne. 
+		Zamiast parsować stronę za każdym razem w poszukiwaniu znaczników, \textbf{JSP} są parsowane tylko na początku i następnie konwertowane
+		do serwletów, a następnie wykonywane. Każde następnie odwołanie do tego same adresu nie powoduje ponownej kompilacji strony \textbf{JSP} do serwletu,
+		ponieważ wykorzystywane jest ten skompilowany przy poprzednim odwołaniu. Niemniej korzystanie z takiego rozwiązania, mimo że rozwiązuje problemy
+		związane z wydajnością, rodzi inne. Idea której głównym założeniem było pisanie plików HTML zawierających odpowiednie instrukcji do generowanie 
+		treści dynamicznych przerodziło się niekontrolowanie w trudny do utrzymania i zrozumienia kod, gdzie wymieszane były elementy odpowiedzialne 
+		za logikę biznesową oraz warstwę widoku\cite{art_of_java_web_dev}.
+	 	\begin{code}
+			\inputminted[
+				lineos=true,
+				fontfamily=monospace,
+				obeytabs=true,
+				samepage=true,
+				fontsize=\scriptsize
+			]{jsp}{codeSamples/bad_jsp.jsp}
+			\caption[Przykład wymieszania logiki biznesowej oraz warstwy widoku w pliku JSP]{Przykład wymieszania logiki biznesowej oraz warstwy widoku w pliku JSP}.
+			\label{bad_jsp_usage_example}
+		\end{code}
+		Listing \ref{bad_jsp_usage_example} obrazuje takie nadużycie. W poprawnym przykładzie pobranie listy pustych jednostek odbyłoby się poza plikiem JSP. 
+		
+\section{Wzorce projektowe jako budulec szkieletów aplikacji}
+	Kolejnym krokiem w historii języka \textbf{Java} jako narzędzie do budowy stron internetowych okazały się wzorce projektowe.
+	Będąc odpowiedzią na problemy wynikające z niepoprawnego korzystania z plików \textbf{JSP} stały się jednocześnie punktem
+	pośredniczącym, gdzie następnym etapem były właściwe szkielety aplikacji jako praktyczne przykłady ich wykorzystania.
+	
+	Za twórcę pojęcia \textbf{wzorzec projektowy} nie uznaje się żadnego programisty, ale wkładu Christopher'a Alexender'a nie sposób pominąć.
+	Zauważył on, podczas swoich licznych podróży biznesowych, że architekci z wielu różnych krajów ergo całkowicie ze sobą niezwiązani, 
+	przejawią tendencję do rozwiązywanie podobnych klas problemów w równie podobny sposób. Owocem tego spostrzeżenia było wydanie 
+	książki traktujących o najlepszych praktykach dla osób jemu podobnych\cite{christoper_alexander_influence}. Mimo, że odnosił się on 
+	do problemów całkowicie niezwiązanych z programowaniem, jego idea została po raz pierwszy zaadoptowana dla kwestii programistycznych 
+	w roku 1994 przez Erich'a Gamma, Richard'a Helm, Ralph'a Johnson oraz John'a Vlissides w książce \textit{Design Patterns: Elements of Reusable Object-Oriented Software}. 
+	Zdefiniowane w niej pojęcia wzorca stało się samo w sobie wzorem do tworzenia kolejnych. 
+
+\section{Znaczenie szkieletów aplikacji}
+	Internetowe szkielety aplikacji nie są same w sobie bibliotekami programistycznymi. Stanowią one raczej ich zbiór oraz nierzadko i 
+	narzędzi mających na celu ułatwienie programiście implementacji własnego rozwiązanie. Bardzo często są one również praktyczną 
+	implementacją standardów i tzw. \textbf{best practices}\footnote{Zalecane i pożądane sposoby realizacji często spotykanych problemów}. 
+	Jest to szczególnie użyteczne ponieważ nierzadko zdarza się, że programista popełnia błąd na pewnym etapie projektowanie lub implementacji 
+	pewnego modułu, którego późniejsze konsekwencje wymagają stworzenie niepotrzebnego kodu, czego dałoby by się uniknąć, gdyby podążano
+	już wyznaczonymi ścieżkami. Prawdziwe w takim wypadku staje się również zdanie, że jeden błąd generuje kolejne, a te mogą być zalążkiem następnych.
+	To czym są szkielety aplikacji u samego źródła ich istnienia jest zapobiegać takim sytuacjom poprzez proponowanie już gotowych modułów,
+	które są przetestowane i ciągle modyfikowane przez doświadczone osoby celem dostarczenia jeszcze lepszych rozwiązań\cite{art_of_java_web_dev}.
+	
+	Oprogramowanie zorientowane obiektowo jest doskonałym zobrazowaniem koncepcji wykorzystanie szkieletu jako fundamentu do budowy własnego rozwiązania.
+	Na najniższym poziomie szczegółowości każdy program czy też moduł większej części jest zbiorem klas posiadającym jasno określony zbiór ról - obowiązków, a 
+	których obiekty współpracują ze sobą celem dostarczenie gotowego wyniku lub jego części. Wspólnie te obiekty reprezentują pewną koncepcję, dla której został utworzone.
+	W kontekście framework'a dla aplikacji internetowych można więc wyróżnić klasy przeznaczone dla kooperacji z bazą danych, odpowiedzialnych za walidacji informacji czy też 
+	pomocnych w momencie renderowania widoku. 
+	Warto nadmienić, że te zasady są równie ważne dla małych systemów, jak i dla dużych. Niemniej w pierwszym przypadku, gdzie poziom skomplikowania jest niski nie ma 
+	potrzeby definiowania wielu poziomów abstrakcji ułatwiających określone czynności, jak na przykład wcześniej wymienione walidacje danych. Niestety z czasem, początkowo
+	prosty system, staje się coraz bardziej skomplikowany i bardzo często programista nie jest już wtedy w stanie zapanować na chaosem oraz dostarczyć zunifikowanego sposobu
+	rozwiązywania powtarzalnych czynności. 
+	Z tego powodu dobry framework charakteryzuje się jasno, ale nie sztywno, zdefiniowanymi granicami między poszczególnymi zbiorami funkcjonalnymi. Wprowadzone poziomy
+	abstrakcji, często więcej niż jeden dla pojedynczego celu jak na przykład sposób interakcji systemu i jego klientów, są wynikiem wieloletnich zmian podczas kiedy zidentyfikowano
+	wiele wspólnych problemów i dla których znaleziono rozwiązanie w postaci ram projektowych czy też \textbf{best pratices}, będących ostatecznie właściwą 
+	esencją znaczenie szkieletu aplikacji\cite{framework_design_-_a_role_modeling_approach}.
+	
+	Dobrymi przykładami tutaj będą z pewnością warstwy abstrakcji dla obsługi operacji bazodanowych. Zawierając konkretne implementacje,
+	które już posiadają funkcjonalność odpowiedzialną za wykonanie tychże operacji na praktycznie elementarnym poziomie, 
+	a zostawiając właściwą warstwę logikę w kontekście tworzonej aplikacji, odciążają one programistę od przysłowiowego wynajdowania koła od nowa.
+	Praktyczną realizacją tej koncepcji jest na przykład \textbf{Spring Data}, które pozwala na napisania kodu, którego głównymi zaletami
+	będzie odseparowanie logiki biznesowej od wybranej bazy danych oraz wyraźny podział na klasy odpowiedzialne za operacje \textbf{CRUD} 
+	na danych, jak i te wykonujące operacje biznesowe. Inne przykłady to między innymi \textbf{EJB}\todo[inline,color=red]{books.bib} 
+	czy też moduł innego szkieletu programistycznego \textbf{GWT}\todo[inline,color=red]{books.bib} wykonującego identyczne zadanie. 
+	Warto nadmienić, że również warstwy odpowiedzialne za tworzenie i zarządzanie widokiem (warstwa prezentacji),
+	czy też takie których nadrzędnym celem jest pośredniczenie między widokiem, a danymi są potencjalnymi 
+	kandydatami do wyodrębnienie pewnego zbioru funkcjonalności jako części składowych gotowe szkieletu aplikacji. 
+	
+	\subsection{Funkcjonalność szkieletów aplikacji}
+	
+	Do najczęściej implementowanych funkcjonalności framewerków webowych należą:
+	\begin{itemize}
+		\item internacjonalizacja oraz lokalizacja tworzonych stron w dowolnym języku oraz wsparcia dla efektywnego przełączanie między nimi
+		\item wsparcia dla technologi widoku innych niż strony \textbf{JSP} lub takich, które je wykorzystują ale definiują inny sposób korzystania z nich
+		\item integracja z językiem szablonów innym niż \textbf{JSTL}
+		\item walidacja danych
+		\item mapowanie żądań HTTP do tzw. \textbf{kontrolerów}\footnote{Kontrolery należy rozumieć jako tzw. \textbf{POJO} które same w sobie są zwykłymi klasami, ale w kontekście framework'a nabierają konkretne znaczenie jako wykonawcy pewnej logiki właściwej dla danej aplikacji}
+		\item wsparcie dla popularnych języków transportu danych jak JSON czy też jego odpowiednik XML. 
+	\end{itemize}
+	
+	\subsection{Problemy szkieletów aplikacji}
+	Mimo że framework'i znacząco podnoszą jakość kodu aplikacji oraz obniżają późniejsze koszty jej utrzymania nie są doskonałym
+	narzędziem. Większość niedociągnięć, które można zaobserwować związane jest z:
+	\begin{itemize}
+		\item \textit{złożonością klas} - obiekty klas zaimplementowane w szkielecie aplikacji współpracują ze sobą, wielokrotnie w
+		więcej niż jednym kontekście. Definiowania funkcjonalności danej klasy poprzez użycie pojedynczej klasy abstrakcyjnej lub
+		interfejsu jest rozwiązanie zbyt sztywnym ponieważ często większa część zdefiniowanych metod nie będzie wykorzystana 
+		w innym miejscu,
+		\item \textit{skupieniem się na szczególe} - w momencie projektowania klas, tj. kreowania późniejszego celu istnienia 
+		ich obiektów, zdarza się, że gubi się obraz całości zbytnio skupiając się na poszczególnych przypadkach, 
+		\item \textit{złożoność współpracy} - mechanizmy współpracy obiektów odpowiadających za, na przykład, komunikacją klient-serwer
+		mogą stać się zbyt skomplikowane,
+		\item \textit{trudnością użycia} - brak drobiazgowej dokumentacji może skutkować użyciem szkieletu w sposób niezamierzony przez
+		jego tworców, co może skutkować implementowaniem tzw. \textbf{work arounds}\footnote{Technika programistyczna, której celem jest
+		naprawa jakiegoś błędu bądź uzyskanie zamierzonego celu podczas gdy używany framework lub biblioteka nie pozwalają na dotarcie
+		doń.} lub błędami funkcjonalnymi\cite{framework_design_-_a_role_modeling_approach}. 
+	\end{itemize}
+	
+\section{Istniejące architektury szkieletów - realizacje wzorców programistycznych}
+	

@@ -1,0 +1,27 @@
+\documentclass[12pt,a4paper,notitlepage,final]{mwrep}
+\input{settings/packages.tex}
+\input{settings/settings.tex}
+
+\bibliography{books}
+	
+\begin{document}
+	% title page holder
+	% title page holder
+	
+	% table of contents
+		\includeWithClear{table_of_contents}
+	% table of contents
+	
+	% chapters
+		\pagenumbering{arabic}
+		\includeWithClear{chapters/chapter1_entry}
+		\includeWithClear{chapters/chapter_frameworks}
+		\includeWithClear{chapters/chapter2_web_app_purpose}
+		\includeWithClear{chapters/chapter_technologies}
+		\includeWithClear{chapters/chapter_app}
+		\includeWithClear{chapters/chapter_x_summary}
+	% chapters
+	
+	\includeWithClear{listining_gen}
+
+\end{document}
