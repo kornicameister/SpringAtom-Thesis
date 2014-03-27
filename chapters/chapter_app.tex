@@ -131,8 +131,78 @@
 		\end{itemize}
 
 	\subsubsection{ReportBuilder}
+		\textbf{ReportBuilder} jest narzędziem będącym obecnie w fazie rozwoju, niemniej pozwalającym już teraz na tworzenie
+		raportów biznesowych. Dedykowany dla użytkownika daje mu możliwość wybrania zbioru interesujących go tabel, kolumn które
+		zebrane razem stanowią logiczny zbiór używany w dalszej kolejności do konstrukcji zapytania do bazy danych i utworzenia
+		gotowego raportu. 
+		Nie udało się znaleźć żadnego rozwiązania które można by wykorzystać bezpośrednio w aplikacji WEB. Byłoby do tej pory
+		źródłem wielu problemów wynikających z konieczności wprowadzenie odpowiedniego, pośredniego, modelu danych przekazujących
+		dane pobrane od użytkownika i kompilacji raportu. 
+		Przewodnik składa się z 4 wymaganych kroków:
+		\begin{enumerate}
+			\item wybranie tabeli dla której wygenerowany zostanie raport
+			\item dostosowanie formatowania kolumn,
+			\item podania danych opisujących raport: tytuł, podtytuł, opis
+		\end{enumerate}		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/rbuilder_step1}
+			\caption[Kreator nowego raportu - krok 1]{
+				Kreator nowego raportu - krok 1
+			}
+			\label{app:wizard_newReport_step1}
+		\end{figure}	
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/rbuilder_step2}
+			\caption[Kreator nowego raportu - krok 2]{
+				Kreator nowego raportu - krok 2
+			}
+			\label{app:wizard_newReport_step2}
+		\end{figure}		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/rbuilder_step3}
+			\caption[Kreator nowego raportu - krok 3]{
+				Kreator nowego raportu - krok 3
+			}
+			\label{app:wizard_newReport_step2}
+		\end{figure}	
 		
-	\subsection{Architektura MVC}
+		\begin{wrapfigure}{r}{0.5\textwidth}
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/rbuilder_generateReport}
+			\caption[Generowanie nowego raportu - wybór docelowego formatu]{
+				Generowanie nowego raportu - wybór docelowego formatu: \textbf{PDF}, \textbf{XLS}, \textbf{CSV}, \textbf{HTML}
+			}
+			\vspace{-10pt}
+			\label{app:wizard_newReport_generateReport}
+		\end{wrapfigure}	
+		
+		W momencie zapisania raportu zapisywane są:
+		\begin{itemize}
+			\item skompilowany raport w postaci pliku \emph{*.jasper},
+			\item deskryptor raportu w postaci pliku \emph{*.json},
+			\item obiekt domenowy raportu zawierający ścieżki do powyższych plików oraz pozostałe informacje biznesowe jak na przykład tytuł itp. 
+		\end{itemize}	
+		
+		Dzięki możliwości wykonywania akcji na poszczególnych wierszach tabeli udało się przypisać dla każdego raportu link uruchamiający jego
+		generowania oraz usunięcie. Usunięcie jest operacją trywialną z punktu widzenia użytkownika ponieważ nie widzi on niczego poza 
+		końcowym rezultatem. Z drugiej strony w momencie kliknięcia na przycisk \textbf{Generuj} użytkownika dostaje możliwość
+		wybrania końcowego formatu w jakim chciałby zobaczyć swoje dane. 
+		Dalsza część funkcjonalności, czyli faktycznego zrenderowania gotowych danych została zaimplementowana z użyciem biblioteki wspierającej
+		\textbf{JasperReports} z frameworka \textbf{Spring}. Przykładowy raport wygląda w następujący sposób:
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/rbuilder_report}
+			\caption[Gotowy raport utworzony przez komponent \textbf{RBuilder}]{
+				Gotowy raport utworzony przez komponent \textbf{RBuilder}
+			}
+			\label{app:wizard_newReport_report}
+		\end{figure}		
+		
+		
+	\subsection{Architektura MVC} 
 		Aplikacja została zrealizowana w architekturze MVC. Architektura MVC jest znanym wzorcem projektowym
 		szczególnie użytecznym w procesie projektowania warstwy widoku. Korzyści takie jak odseparowanie logiki biznesowej,
 		warstwy modelu danych czy też ostatecznie faktycznej funkcjonalności aplikacji udostępnionej poprzez serwisy. 
