@@ -159,7 +159,7 @@
 			obeytabs=true,
 			samepage=true,
 			fontsize=\scriptsize
-		]{xml}{../../src/main/webapp/ui/wizard/NewReportWizard/flow.xml}
+		]{xml}{../SpringAtom/src/main/webapp/ui/wizard/NewReportWizard/flow.xml}
 		% src file used
 		\label{app:swf_view_state}
 		\caption[Definicja kroku Spring Web Flow]{\textit{../NewReportWizard/flow.xml} - deklaratywna deklaracja stanu - kroku 
@@ -177,7 +177,7 @@
 			obeytabs=true,
 			samepage=true,
 			fontsize=\scriptsize
-		]{java}{../../src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
+		]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
 		% src file used
 		\label{app:swf_setupForm}
 		\caption[Metoda \textit{setupForm} dla \textbf{Spring Web Flow}]{\textit{PickEntityFormAction\#{}setupForm} - metoda
@@ -296,5 +296,21 @@
 \section{Apache Tiles}\label{tech:tiles}
 	\textbf{Apache Tiles} to biblioteka umożliwiająca dekompozycję widoku aplikacji na wiele niezwiązanych ze sobą bezpośrednio elementów - płytek \footnote{Z angielskiego tiles może oznaczać płytkę, w kontekście technologii ApacheTiles należy rozumieć to wyrażenie, jako element, który można wykorzystać w dowolnym szablon}. Płytki można potem dowolnie łączyć w konkretne widoki definiując je na poziomie plików XML. Główną zaletą korzystanie z podejścia ze wzorca kompozycji jest wyeliminowanie powielania się elementów stron i zastąpienie ich szablonami gotowymi do użycia w dowolnym miejscu. Dodatkową zaletą użycia tej biblioteki było gotowe wsparcie dla modułu Spring’a – Spring Webflow\ref{app:techonlog_spring_webflow}, gdzie jedną z preferowanych technologii widoku jest właśnie Apache Tiles, a także możliwość prostszego wsparcia dla \textbf{partial rendering}\footnote{Partial rendering należy rozumieć, jako usunięcie konieczności przeładowania całej strony WEB, a jedynie jej konkretnej części.} stron, gdzie podczas przechodzenia do innego adresu w rzeczywistości zamiast ładować całość strony wraz ze wszystkimi plikami \textit{CSS} oraz \textit{JavaScript}, ładuje się jedynie konkretną zawartość.
 	
-\section{Jasper Reports/Dynamic Jasper}
+\section{Jasper Reports/Dynamic Jasper}\label{tech:jasperReports}
+	\textbf{Jasper Reports} to kompleksowe rozwiązanie dla języka \textbf{Java} wspierające tworzenie oraz generowanie reportów
+	biznesowych dla wielu różnorodnych formatów wyjściowych: \textbf{PDF}, \textbf{XLS}, \textbf{CSV} i wielu innych. Jego główną
+	zaletą jest pojedynczy format przechowywania raportu oraz mnogość formatów reprezentacji, a także ogromna ilość
+	narzędzi oraz bibliotek wspierających tworzenie, modyfikacje raportów. 
+
+	Z drugiej strony wiele tych narzędzi jest aplikacjami uruchamianymi na komputerach użytkowników, a nie
+	zaprojektowanych do wykorzystania w środowisku aplikacji WEB. Z tego powodu właściwą biblioteką, która została
+	użyta celem utworzenia raportu jest \textbf{Dynamic Jasper}. Działając po stronie serwera oraz bazując
+	na danych wejściowych uzyskanych od użytkownika pozwala na kompilację do pliku \textit{*.jasper}. 
+	Możliwe jest ustalenie takich właściwości jak nagłówki, styl, ilość kolumn oraz typ danych w nich przechowywanych.
+
 \section{Dandelion Datatables}\label{tech:dandelion}
+	\textbf{Dandelion-Datatables} jest biblioteką zaprojektowaną dla języka \textbf{Java}, której zadaniem jest wsparcie
+	dla tworzenie tabel korzystając z użyciem tagów JSP. Instrukcje dostarczane tą drogą uruchamiają proces generowania
+	kodu JavaScript dla wtyczki \textbf{jQuery} - \textbf{DataTables}. Nie ma konieczności bezpośredniego
+	pisania kodu JS co pozwala na budowania responsywnych tabel bez znajomości języka JavaScript. 
+	\textbf{Dandelion Datables} pozwala na bezproblemowe sortowanie, filtrowanie oraz eksportowanie danych. 

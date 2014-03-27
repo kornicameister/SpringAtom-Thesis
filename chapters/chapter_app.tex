@@ -36,6 +36,101 @@
 		\item istnieje generyczna warstwa stron obiektów domenowych, gdzie jedynym wymogiem jest istnienie obiektu w bazie
 		oraz poprawność adresu
 	\end{enumerate}
+
+	\subsubsection{InfoPage - Strony domenowe}
+		\textbf{InfoPage} jest komponentem prezentującym atrybuty danego obiektu domenowego w postaci strony HTML. 
+		Dzięki wykorzystaniu informacji pobranych z meta modelu obiektów domenowych utworzenie nowej strony
+		sprowadza się do zaimplementowania rozszerzenie specjalnej klasy \emph{EntityInfoPageComponentBuilder}.
+		Uzyskanie dostępu do danych i wkomponowanie ich do struktury drzewa nie wymaga w tym miejscu dalszej implementacji
+		kodu o ile dany atrybut istnieje w klasie \textbf{Java}. W innym wypadku jest on atrybutem dynamicznym
+		i należy podać kod który zwróci dlań wartość. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/infoPage}
+			\caption[Strona domenowa dla spotkania]{
+				Strona domenowa dla spotkania	
+			}
+			\label{app:infoPage}
+		\end{figure}	
+	
+	\subsubsection{Organizator spotkań}
+		Organizator spotkań jest komponentem wspierającym zarządzania tym typem obiektów. 
+		Pozwala na wgląd w listę wszystkich spotkań na 4 rożne sposoby:
+		\begin{itemize}
+			\item widok w kontekście wybranego dnia,
+			\item widok w kontekście wybranego tygodnia,
+			\item widok w kontekście wybranego miesiąca,
+			\item widok tabelaryczny wszystkich spotkań
+		\end{itemize}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/calendarComponent-organizer}
+			\caption[Komponent kalendarza wspierajacy organizację spotkań - orgainizer]{
+				Komponent kalendarza wspierajacy organizację spotkań - orgainizer		
+			}
+			\label{app:component_calendar_organizer}
+		\end{figure}	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/calendarComponent-table}
+			\caption[Komponent kalendarza wspierajacy organizację spotkań - tabela]{
+				Komponent kalendarza wspierajacy organizację spotkań - orgainizer	
+			}
+			\label{app:component_calendar_table}
+		\end{figure}	
+		Z poziomu organizera możliwe jest natomiast otwarcie strony domenowej dla wybranego
+		spotkania dostarczającej znacznie więcej informacji niż sam organizator oraz uruchomienie
+		przewodnika utworzenia nowego spotkania. Ważną cechą tego przewodnika jest to, że 
+		zakres dat wybrany w organizatorze jest zachowany.
+		Sam kreator został napisany w oparciu o technologię \textbf{Spring Web Flow} dzięki czemu
+		na poziomie jednego komponentu można wprowadzić danego takie jak: 
+		\begin{itemize}
+			\item mechanik, który będzie odpowiedzialny za wizytę,
+			\item mechanik raportujący dane spotkanie, niemniej taką możliwość posiadają jedynie osoby uprawnione do tego,
+			\item wybrany samochód,
+			\item listę zadań,
+			\item opcjonalny komentarz dla wizyty
+		\end{itemize}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newAppointment_step1}
+			\caption[Kreator nowego spotkania - krok 1]{
+				Kreator nowego spotkania - krok 1
+			}
+			\label{app:wizard_newAppointment_step1}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newAppointment_step2}
+			\caption[Kreator nowego spotkania - krok 2]{
+				Kreator nowego spotkania - krok 2
+			}
+			\label{app:wizard_newAppointment_step2}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newAppointment_step3}
+			\caption[Kreator nowego spotkania - krok 3]{
+				Kreator nowego spotkania - krok 3
+			}
+			\label{app:wizard_newAppointment_step3}
+		\end{figure}		
+		Dane wejściowe są walidowane pod kątem logiki biznesowej:
+		\begin{itemize}
+			\item termin spotkania:
+			\begin{itemize}
+				\item podane godziny (oraz czas) muszą mieścić się w wybranym zakresie [7-21],
+				\item koniec spotkania nie może nastąpić później niż jego początek,
+				\item zbyt krótkie (30 minut) oraz zbyt długie (10 dni),
+				\item pokrywa się z co najmniej jednym spotkaniem dla mechanika wybranego jako wykonawca
+			\end{itemize} 
+			\item wybrany samochód:
+			\begin{itemize}
+				\item jeśli z właścicielem samochodu przypisane są jakiekolwiek problematyczne informacje wyświetlane jest ostrzeżenie
+			\end{itemize}
+		\end{itemize}
+
+	\subsubsection{ReportBuilder}
 		
 	\subsection{Architektura MVC}
 		Aplikacja została zrealizowana w architekturze MVC. Architektura MVC jest znanym wzorcem projektowym
@@ -74,7 +169,9 @@
 				czynności i może skupić się na rozwiązywaniu faktycznego problemu.
 			\paragraph{Spring Data Envers}
 				\textbf{Envers} wspierają tak zwane wersjonowanie obiektów, dzięki któremu programista ma dostęp do pełnej, a także konfigurowalnej, 
-				historii ich zmian
+				historii ich zmian. Dużym plusem w korzystaniu z tej technologii jest to, że wywołania logiki pobierającej instancję danego 
+				obiektu z bazy przekłada się na uzyskania jego ostatniej nie zmodyfikowanej wersji. Dzięki temu bez dodatkowego nakładu pracy
+				możliwe jest zaprezentowania użytkownikowi ostatniej iteracji danego obiektu domenowego. 
 			\paragraph{QueryDSL}	
 				Mimo że \textbf{QueryDSL} nie jest faktycznie modułem \textbf{Spring}'a, ani nie jest też bezpośrednio związana z firmą odpowiedzialną
 				za niego, to jest na tyle interesująca, że doczekała się swojej integracji z nim. Wsparcie dla takich elementów jak silnie typizowane
@@ -119,7 +216,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/server/repository/repositories/car/SCarMasterRepository.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/server/repository/repositories/car/SCarMasterRepository.java}
 				% src file used
 				\label{app:scarmaster_repo}
 				\caption[\textbf{SCarMasterRepository} - interfejs repozytorium dla modelu \textsc{SCarMaster}]{
@@ -139,7 +236,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/server/repository/SRepository.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/server/repository/SRepository.java}
 				% src file used
 				\label{app:scarmaster_repo}
 				\caption[\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji]{
@@ -161,7 +258,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/server/repository/factory/SRepositoriesFactoryBean.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/server/repository/factory/SRepositoriesFactoryBean.java}
 				% src file used
 				\label{app:scarmaster_repo}
 				\caption[\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności]{
@@ -181,7 +278,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/server/service/domain/SPersonService.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/server/service/domain/SPersonService.java}
 				% src file used
 				\label{app:sperson_service}
 				\caption[\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}]{
@@ -214,7 +311,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{xml}{../../src/main/webapp/ui/core/core-page-view.xml}
+				]{xml}{../SpringAtom/src/main/webapp/ui/core/core-page-view.xml}
 				% src file used
 				\label{app:apache_tiles_example}
 				\caption[Definicja \textit{tile} - podstawowego elementu widoku]{
@@ -234,7 +331,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{jsp}{../../src/main/webapp/ui/core/page.jsp}
+				]{jsp}{../SpringAtom/src/main/webapp/ui/core/page.jsp}
 				% src file used
 				\label{app:apache_tiles_example_jsp}
 				\caption[Plik \textbf{JSP} odpowiadający płytce \ref{app:apache_tiles_example}]{
@@ -257,7 +354,7 @@
 					obeytabs=true,
 					samepage=true,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/web/component/builders/ComponentBuilder.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/component/builders/ComponentBuilder.java}
 				% src file used
 				\label{app:component_builder}
 				\caption[\textbf{ComponentBuilder - korzeń hierarchii modułu komponentów}]{
@@ -298,7 +395,7 @@
 					obeytabs=true, 
 					samepage=false,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/webmvc/controllers/SVInfoPageController.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/webmvc/controllers/SVInfoPageController.java}
 				% src file used
 				\label{app:infopage_ctrl_get_def}
 				\caption[Obsługa żądania \textbf{ComponentBuilder\#{}getDefinition()}]{
@@ -315,7 +412,7 @@
 					obeytabs=true, 
 					samepage=false,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/webmvc/controllers/SVTableBuilderController.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/webmvc/controllers/SVTableBuilderController.java}
 				% src file used
 				\label{app:table_ctrl_get_data}
 				\caption[Obsługa żądania \textbf{ComponentBuilder\#{}getData()}]{
@@ -323,6 +420,30 @@
 					dla tabeli
 				}
 			\end{code}
+
+			Dla tabel istnieje możliwość zdefiniowania atrybutów do zaprezentowania
+			użytkownikowi, które bezpośrednio nie istnieją w klasie odpowiadającej danemu obiektowi. Należy wtedy przeciążyć metodę
+			\emph{handleDynamicColumn}, której zadaniem jest zwrócenie wartości dla danego \textbf{dynamicznego} atrybutu.
+			Poniższy listinig pokazuje przykładową implementację:
+			\begin{code}
+				\inputminted[
+					lineos=true,
+					firstline=75,
+					lastline=109,
+					fontfamily=monospace,
+					obeytabs=true, 
+					samepage=true,
+					fontsize=\scriptsize
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/rbuilder/table/ReportTableBuilder.java}
+				% src file used
+				\label{app:handleDynamicColumn}
+				\caption[Uzyskania wartości dynamiczego atrybutu]{
+					Uzyskania wartości dynamiczego atrybutu w momencie tworzenia
+					odpowiedzi dla tabeli
+				}
+			\end{code}
+			Zadaniem \ref{app:handleDynamicColumn} jest zwrócenie akcji dla poszczególnych wierszy, które użytkownik będzie
+			mógł wykonać na obiekcie odpowiadającym danemu rekordowi w tabeli. 
 			
 		\subsubsection{Model/Widok - RBuilder}
 			\textbf{RBuilder} jest praktyczną realizacją, będącej na wczesnym etapie realizacji, koncepcji zaprojektowania generycznego
@@ -405,7 +526,7 @@
 				\item tworzeniem obiektu domenowego w zależności od konfiguracji raportu,
 				\item generowaniem instancji reprezentatywnego raportu
 			\end{itemize}
-			Funkcjonalność tej gruby klas do komponentu \textbf{RBuilder} można podzielić na następujące bloki:
+			Funkcjonalność tej grupy klas dla komponentu \textbf{RBuilder} można podzielić na następujące bloki:
 			\begin{center}
 				\begin{longtable}{| p{2.5cm} | p{13cm} |}
 					\caption[Bloki funkcjonalne modelu serwisów \textbf{RBuilder}]{
@@ -527,7 +648,7 @@
 					obeytabs=true, 
 					samepage=false,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
 				% src file used
 				\label{app:rbuilder_converter_of_data}
 				\caption[Bazowy konwerter dla operacji \textbf{PickEntityFormAction}]{
@@ -559,7 +680,7 @@
 					obeytabs=true, 
 					samepage=false,
 					fontsize=\scriptsize
-				]{java}{../../src/main/java/org/agatom/springatom/server/model/conversion/picker/PersistableConverterPicker.java}
+				]{java}{../SpringAtom/src/main/java/org/agatom/springatom/server/model/conversion/picker/PersistableConverterPicker.java}
 				% src file used
 				\label{app:conversion_persistableToString}
 				\caption[\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów]{
@@ -715,6 +836,7 @@
 		}
 		\label{app:schema_org_agatom_springatom_model}
 	\end{figure}
+	\subsection{Schemat warstwy repozytoriów}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/springatom_model_repository}
