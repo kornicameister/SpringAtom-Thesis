@@ -4,11 +4,22 @@
 \section{Uzasadnienie i wybór tematu}
 	Od kilku lat obserwuje się wzrost znaczenie stron internetowych jako narzędzi pracy dla różnorodnych firm czy też przedsiębiorstw. Firmy produkcyjne, dystrybucyjne a także i sklepy korzystają z takich rozwiązań z uwagi na szybkość wymiany informacji i ich globalnego zasięgu, a także braku konieczności instalacji dodatkowych bibliotek jest niezaprzeczalną zaletą. Nie można w tym miejscu zapomnieć także o korzyściach finansowych wynikających ze spójności sposobu dostarczenia. 
 	Obecnie jednym z najpopularniejszych zastosowań języka Java jest tworzenie komercyjnych aplikacji internetowych. Nie wystarczające są rozwiązanie znane z początków tego języka w tym kontekście, z uwagi na wciąż rosnące potrzeby i wymagania klientów. Rezultatem tego były narodziny nowej gałęzi programów, a dokładniej ich zbioru - szkieletów aplikacji programistycznych, których głównym celem jest odciążenie programisty oraz wzrost jakości dostarczanych rozwiązań. Popyt generuje podaż - to zdanie jest wciąż bardzo aktualne ponieważ potrzeba lepszej jakości rozwiązań była motorem napędowym ich tworzenia i obecnie na rynku istnieje ponad 50 framework'ów otwarto źródłowych napisanych w języku Java i przeznaczonych dla pisania aplikacji JavaEE. 
-	Wybrany temat 
-	\todo[inline, color=blue!40]{In progress...}
+	Wybrany temat obrazuje użycie jednego ze szkieletów aplikacji dla przygotowania kompleksowego rozwiązania wspierającego warsztat samochodowy. 
 \section{Cel i zakres pracy}
-	Głównym celem pracy jest przygotowanie aplikacji internetowej z wykorzystaniem szkieletu aplikacji Spring, którego głównym zadaniem
+		Głównym celem pracy jest przygotowanie aplikacji internetowej z wykorzystaniem szkieletu aplikacji Spring, którego głównym zadaniem
 	jest globalne wsparcia pracy przedsiębiorstwa zajmującego się naprawą oraz serwisowaniem samochodów, zarówno osobowych jak i ciężarowych.
 	Szczególna uwaga zostanie poświęcona zagadnieniom związanym z tworzeniem efektywnego modelu danych oraz bezpieczeństwu wrażliwych danych takie jak dane osobowe, numery rejestracyjne oraz VIN pojazdów. Szczególna uwaga zostanie poświęcona rozpoznaniu i zaimplementowaniu mechanizmu wspierającego trzymanie
 	historii zmian dla zagadnień takich jak historia własności pojazdu czy też zmian w profilach użytkowników.
-	\todo[inline, color=blue!40]{In progress...} 
+		Z drugiej aplikacji ma dostarczyć wiedzy o budowania aplikacji biznesowej w języku Java przy wykorzystaniu Spring'a. Z tego powodu zagadnieniom takim jak:
+	\begin{itemize}
+		\item \textit{decoupling} - minimalizacja zależności poszczególnych modułów od siebie,
+		\item \textit{inteface based programming} - ukrywanie właściwych implementacji modułów, których funkcjonalność jest dostępna przez publiczne interfejsy,
+		\item uproszczenie konfiguracji aplikacji - poprzez zastosowania centralnych plików konfiguracyjnych wspartych plikami \textbf{*.properties} zawierającymi
+		właściwe ustawienie, co przekładać się ma na zwiększenie konfigurowalności aplikacji,
+		\item walidacją danych sprowadzającą się do właściwej konfiguracji aplikacji oraz dostarczeniu wymaganych adnotacji,
+		\item interakcją z użytkownikiem poprzez więcej niż tylko interfejs graficzny, ale także elementy takie jak wysyłania wiadomości oraz okresowe wykonywania określonych
+		zadań,
+		\item zminimalizowanie ilości koniecznego kodu do przygotowania działającej warstwy danych (repozytoria, serwisy),
+		\item zabezpieczeniu określonych elementów interfejsu użytkownika przez nieuprawnionym dostępem
+	\end{itemize}
+		

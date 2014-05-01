@@ -9,6 +9,7 @@
 	W kontekście aplikacji internetowej nie można zapominać o podstawowym celu tej nauki, ponieważ program jest niczym 
 	więcej niż zbiorem nic nie znaczących linii kodu, jeśli nie może przetwarzać danych i na ich podstawie generować nowych.
 	\todo[inline, color=blue!40]{In progress...}
+	
 \section{Znaczenie informatyki w świecie biznesu}
 	Przedsiębiorstwa inwestowały, inwestują i najprawdopodobniej będą dalej inwestować ogromne sumy pieniędzy na specjalistyczne programy 
 	komputerowe całkowicie dopasowane do ich indywidualnych potrzeb, do ich profilu działalności czy tez do procesu produkcyjnego.
@@ -17,5 +18,35 @@
 	rozwiązanie informatyczne, które z kolei znów napędza rozwój nauk, jest najlepszym przykładem znaczenie informatyki dla biznesu. 
 		
 	Świadczy to	o sile informatyki jako dziedziny, której obecność w firmie, znacząco podnosi wartość i jakość dostarczanych produktów lub usług. 
-\section{Aplikacje internetowe w biznesie}
+	Współcześnie propagowana oraz realizowana koncepcja biznesu opiera się na technologiach informatycznych i bez wątpienia bez nich możliwości
+	zaspokajania popytu konsumentów byłyby mocno upośledzone. Wszelkiego rodzaju systemy informatyczne, zintegrowana systemy informatyczne czy
+	też nawet programy obsługujące kasy fiskalne są efektem rozwoju nauk informatycznych. Wzajemne przenikanie się obu światów nie jest 
+	już zjawiskiem nadzwyczajnym.
+	
 \section{Przegląd internetowych szkieletów programistycznych}
+	\subsection{JBoss Seam Framework}
+		\textbf{Seam} był szkieletem aplikacji rozwijanym dla języka Java, zaprojektowanym do wspierania takich obszarów jak: warstwa web z użyciem 
+		technologii \textbf{Java Spring Faces}, warstwy logiki biznesowej (\textbf{EJB3}) oraz wykorzystaniem standardu \textbf{JPA} dla warstwy
+		danych. Rozwiązuje takie problemy jak:
+		\begin{itemize}
+			\item tworzenie architektury aplikacji opartego o wzorzec MVC,
+			\item związane z naturą aplikacji WWW (sesja, zachowanie stanu itp),
+			\item sterowania przepływem oparte o zdarzenia,
+			\item zarządzania transakcjami bazodanowymi,
+			\item konwersja typów oraz walidacja formularzy,
+			\item spójny sposób konfigurowania aplikacji
+		\end{itemize}
+	
+	\subsection{Google Guice}
+		\textbf{Google Guice} jest szkieletem aplikacji od \textbf{Google}. Podobnie jak \textbf{Spring} centralnym obszarem wspieranym przezeń jest
+		\textit{dependency injection}, które w znaczący sposób poprawia jakość kodu aplikacji poprzez zmniejszenie zależności poszczególnych klas
+		między sobą.
+	
+	\subsection{PicoContainer}
+		\textbf{PicoContainer} jest najmniejszym obecnie znanym szkieletem aplikacji wspierającym wzorzec odwróconego sterowania.
+		Niemniej z uwagi na swoje rozmiary jest to praktycznie jedyna większa funkcjonalność tego szkieletu. Z uwagi na to jest to dobry wybór jeżeli
+		jedynym zadaniem, do którego go potrzebujemy jest zmniejszenie zależności klas w aplikacji. 
+		
+	\subsection{GWT}
+	\subsection{Vaadin}
+	\subsection{Struts}

@@ -52,6 +52,69 @@
 			}
 			\label{app:infoPage}
 		\end{figure}	
+		
+	\subsubsection{Kreator nowego użytkownika}
+		Kreator nowego użytkownika pozwala na tworzenie nowych użytkowników systemu dla uprawnionych osób. 
+		Kwestia uprawnień jest tutaj szczególnie ważna z uwagi na to, że w przewodniku wybierany jest zestaw ról.
+		Role do których przypisany jest użytkownik stanowią późniejszą bazę do weryfikacji dostępności funkcji systemu
+		dla poszczególnych użytkowników. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newUser-basic}
+			\caption[Kreator nowego użytkownika - dane podstawowe]{
+				Kreator nowego użytkownika - dane podstawowe	
+			}
+			\label{app:newUser_basic}
+		\end{figure}	
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newUser-roles}
+			\caption[Kreator nowego użytkownika - uprawnienia użytkownika]{
+				Kreator nowego użytkownika - uprawnienia użytkownika
+			}
+			\label{app:newUser_roles}
+		\end{figure}	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newUser-contacts}
+			\caption[Kreator nowego użytkownika - dane kontaktowe]{
+				Kreator nowego użytkownika - dane kontaktowe
+			}
+			\label{app:newUser_contacts}
+		\end{figure}	
+		
+	\subsubsection{Kreator nowego samochodu}
+		Kreator nowego samochodu został zaprojektowany aby wprowadzić do systemu nowy samochód (centralny obiekt danych). 
+		Pierwszym krokiem jest podanie \textbf{numeru VIN}, z którego system odczytuje wszelkie możliwe informacje, które
+		da się odkodować korzystając z informacji dostępnych publicznie. Na obecną chwilę są to:
+		\begin{itemize}
+			\item rok produkcji, zwracany jako lista lat w których samochód mógł być wyprodukowany,
+			\item kraj, w którym samochód został wyprodukowany.
+		\end{itemize}
+		W drugim kroku kreator nowego samochodu podaje takie informacje jak:
+		\begin{itemize}
+			\item markę oraz model,
+			\item numer tablicy rejestracyjnej,
+			\item rok produkcji,
+			\item rodzaj paliwa,
+			\item właściciela.
+		\end{itemize}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newCar-vin}
+			\caption[Kreator nowego samochodu - numer VIN]{
+				Kreator nowego samochodu - numer VIN
+			}
+			\label{app:newCar_vin}
+		\end{figure}	
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=1.0\textwidth]{images/newCar-data}
+			\caption[Kreator nowego samochodu - pozostałe dane]{
+				Kreator nowego samochodu - pozostałe dane
+			}
+			\label{app:newCar_data}
+		\end{figure}
 	
 	\subsubsection{Organizator spotkań}
 		Organizator spotkań jest komponentem wspierającym zarządzania tym typem obiektów. 
@@ -883,6 +946,17 @@
 			\textbf{Terminarz spotkań}		&
 			Ukończenie prac nad terminarzem spotkań. Obecna funkcjonalność pozwala na tworzenie obiektów, które następnie
 			można przeglądać z użyciem kalendarza (podobny do używanego w programie Outlook). 	
+											\tabularnewline		
+			\emph{11}						&
+			\textbf{Dekodowane numeru VIN}		&
+			Rozszerzenie obecnych możliwości dekodera numeru VIN o pobierania informacji takich jak:
+			\begin{itemize}
+				\item wytwórca samochodu,
+				\item marka oraz model,
+				\item typ nadwozia,
+				\item typ paliwa,
+				\item typ silnika
+			\end{itemize}
 											\tabularnewline								
 		\end{longtable}
 		\label{app:changes_in_future}
