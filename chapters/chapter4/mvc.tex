@@ -1,0 +1,188 @@
+\subsubsection{Model - Warstwa danych}
+	Warstwa modelu danych została zaprojektowana przy użyciu adnotacji \ref{tech:jpa} \textbf{JPA}. Korzystanie ze standardu, stanowczo podnosi przenośność aplikacji i zwiększa możliwości modyfikacji kodu w późniejszych etapach rozwoju. Adnotacje byłyby bez znaczenie bez kolejnego szkielety aplikacji. \textbf{Hibernate} \ref{tech:hibernate}. Mimo że został on zaprojektowany do większej ilości zadań, niż jedynie zarządzania serializacją oraz deserializacją obiektów z/do bazy danych, jest wykorzystywany jedynie w tym kierunku. Dostarczona funkcjonalność do tworzenia zapytań bazodanowych niestety ma kilka wad, które w kontekście aplikacji były nie do akceptowania.
+	
+	Po pierwsze tworzone kwerendy nie są typizowane, co wymusza konieczność rzutowania typów i niskopoziomowych operacji na zwracanych strukturach danych. Na dłuższą metę jest to rozwiązanie nieefektywne i generuje zbyt duża ilość zbędnego kodu, który można by zastąpić lepszym, pochodzącym z innych bibliotek. Ostatecznie problematyczne zarządzania sesją oraz błędy wynikające z przedwczesnego jej zamknięcia, generowałoby dalsze problemy w momencie serializacji danych do formatu przenośnego przez sieć internet, jak na przykład JSON. Niemniej czynnikiem decydującym był brak możliwości integracji z pozostałymi modułami szkieletu aplikacji \textbf{Spring}.
+		
+	Model danych jest w niektórych przypadkach wersjonowany. Oznacza to, że dla wybranych obiektów, \textbf{Hibernate} trzyma ich historię zmian
+	w bazie danych. Modyfikacja każdego lub jedynie wybranych pól (jest to zależne od konfiguracji danego obiektu domenowego), powoduje nie tyle
+	zapisywanie zmian do bazy co utworzenie nowych rekordów w tabelach:
+	\begin{itemize}
+		\item \textbf{revinfo} - zawiera następujące kolumny:
+		\begin{itemize}
+			\item datę utworzenia rewizji,
+			\item login użytkownika, który dokonał zmiany,
+		\end{itemize} 
+		\item \textbf{revchanges} - zawiera następujące kolumny:
+		\begin{itemize}e
+			\item numer rewizji,
+			\item nazwę (pełna nazwa klasy) modelu,
+		\end{itemize}
+		\item \textbf{nazwa\_tabeli\_history} - zawiera ona te pola, które został wybrane jako kandydaci do prowadzenia 
+		dziennika zmian, dla danego obiektu domenowego.
+	\end{itemize}
+	
+\subsubsection{Model - Warstwa repozytoriów}
+	Repozytoria w aplikacji demonstracyjnej są niczym więcej jak jedynie zdefiniowanymi w odpowiedni sposób interfejsami. Odpowiedni sposób oznacza, że dla każdego z nich, pierwszym interfejsem w drzewie dziedziczenia jest \textbf{Repository}. Jest to kluczowe ponieważ w ten sposób szkielet aplikacji \textbf{Spring} rozpoznaje repozytoria podczas skanowania \textbf{classpath}\footnote{\textbf{Classpath scanning} - przeszukiwania wszystkich załadowanych klas}. Programista jest zobowiązany jedynie, w przypadku chęci skorzystania, do utworzenia w swojej klasie pola typu interfejsu, a właściwa referencja do obiektu zostanie umieszczona poprzez \textbf{dependency injection}. Kod na listingu \ref{app:scarmaster_repo} pokazuję deklarację repozytorium. 
+	\begin{listing}[H]
+		\inputminted[
+			lineos=true,
+			firstline=38,
+			lastline=69,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{../SpringAtom_thesis/src/main/java/org/agatom/springatom/server/repository/repositories/car/SCarMasterRepository.java}
+		% src file used
+		\caption[\textbf{SCarMasterRepository} - interfejs repozytorium dla modelu \textbf{SCarMaster}]{
+			\textbf{SCarMasterRepository} - interfejs repozytorium	 pokazujący użycie metod mapowanych
+			na kwerendy oraz bardziej skomplikowanego zapytania z użyciem adnotacji \textbf{Query}
+		}
+		\label{app:scarmaster_repo}
+	\end{listing}
+	\pagebreak
+	Repozytoria zostały dostosowane do wymagań aplikacji, celem umożliwiania wyszukiwania obiektów w konkretnych rewizjach lub ich zakresach. Z tego powodu zostało wprowadzone abstrakcyjne repozytorium \textbf{SRepository}.
+	\begin{listing}[H]
+		\inputminted[
+			lineos=true,
+			firstline=36,
+			lastline=79,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/repository/SRepository.java}}
+		% src file used
+		\caption[\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji]{
+			\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji
+		}
+		\label{app:srepository}
+	\end{listing}
+	
+	Z uwagi na to, że funkcjonalność tego interfejsu nie jest dostępna w klasach dostarczonych przez \textbf{Spring Data JPA}, musiałaby być ona zaimplementowana. Niemniej nie odniosło by to skutku bez wprowadzenie dodatkowo elementu - fabryki, która nadpisywała proces tworzenia repozytoriów. Poniższa klasa \textbf{SRepositoriesFactoryBean} działa wybiórczo, tj. dobiera konkretne implementacje, zależnie od faktycznego typu repozytorium. Rozstrzygającym kryterium jest to, czy dane repozytorium jest przeznaczone dla obiektów wersjonowanych. 
+	\begin{listing}[H]
+		\inputminted[
+			lineos=true,
+			firstline=49,
+			lastline=117,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/repository/factory/SRepositoriesFactoryBean.java}}
+		% src file used
+		\caption[\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności]{
+			\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności
+		}
+		\label{app:srepositories_factory_bean}
+	\end{listing}
+	
+\subsubsection{Model - Warstwa serwisów}
+	Serwisy	stanowią w aplikacji element realizujący logikę biznesową. Nie odnoszą się one jednak jedynie do operacji
+	na modelu danych. Również inne moduły aplikacji korzystają z własnych serwisów, jako miejsc gdzie funkcjonalność została
+	zebrana i jest gotowa do użycia. 	
+	\begin{listing}[h]
+		\inputminted[
+			lineos=true,
+			firstline=33,
+			lastline=57,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/service/domain/SPersonService.java}}
+		% src file used
+		\label{app:sperson_service}
+		\caption[\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}]{
+			\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}
+		}
+	\end{listing}
+	
+	Serwisy zostały zaprojektowane aby korzystać z repozytoriów danych. Ma to swoje pozytywne skutki
+	i nie jest wcale oznakę nadmiarowości kodu, czy też jego duplikowania. Z uwagi na fakt, ze serwisy
+	odwołują się do danych poprzez interfejsy repozytorii, podnosi to znacząco możliwości 
+	późniejszych zmian w postaci silnika bazy danych. Dodatkową korzyścią jest zwiększenie możliwości testowania
+	interesujących funkcji bez konieczności posiadania działającego połączenia z bazą danych.
+	
+\subsubsection{Widok - Warstwa widoku}
+	Warstwa widoku została zaprojektowana z wykorzystaniem standardowej biblioteki tagów \textbf{JSTL}, plików \textbf{JSP} oraz biblioteki \textbf{Apache Tiles} \ref{tech:tiles}. Dzięki \textbf{Tiles} udało się zminimalizować zbędny kod w plikach \textbf{JSP} definiujący elementy, takie jak nagłówek strony, element \textit{<head>}. Do gotowego widoku można się było następnie odwoływać po unikatowej nazwie. 
+	\begin{listing}[h]
+		\inputminted[
+			lineos=true,
+			firstline=23,
+			lastline=36,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{xml}{../SpringAtom_thesis/src/main/webapp/ui/core/core-page-view.xml}
+		% src file used
+		\caption[Definicja \textit{tile} - podstawowego elementu widoku]{
+			Definicja \textit{tile} - podstawowy element widoku w rozumieniu technologi Apache Tiles		
+		}
+		\label{app:apache_tiles_example}
+	\end{listing} 
+	
+	Listing \ref{app:apache_tiles_example} pokazuje deklarację abstrakcyjnej \textit{płytki}. Abstrakcyjność jest tutaj kwestią umowną ponieważ
+	można by tę \textit{płytkę} zwrócić z dowolnego kontrolera i została by ona zrenderowana do poprawnego widoku HTML. Elementem, który jest w tej definicji
+	zadeklarowany, lecz nie zdefiniowany jest \textit{content} - faktyczna zawartość danej strony. Mimo to plik \textbf{JSP} odpowiadający tej płytce
+	zawiera kod, który umieści ją w ostatecznej strukturze DOM. 
+	\begin{listing}[H]
+		\inputminted[
+			lineos=true,
+			firstline=18,
+			lastline=60,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{jsp}{../SpringAtom_thesis/src/main/webapp/ui/core/page.jsp}
+		% src file used
+		\label{app:apache_tiles_example_jsp}
+		\caption[Plik \textbf{JSP} odpowiadający płytce \ref{app:apache_tiles_example}]{
+			Plik \textbf{JSP odpowiadający płytce \ref{app:apache_tiles_example}}
+		}
+	\end{listing}
+		 
+\subsubsection{Globalna - Warstwa konwersji}
+	Warstwa konwersji typów jest modułem \textbf{Spring}, który wykorzystywany jest w momencie, kiedy z obiektu typu A programista chce uzyskać obiekt typu B. Dobrym przykładem jest najczęściej moment, w którym w kodzie JSP umieszczamy bezpośrednio nasz obiekt, korzystając z biblioteki tagów dostarczonej przez \textbf{Spring}. W tym momencie uruchamiany jest proces, mający na celu konwersję obiektu do reprezentatywnej postaci łańcucha znakowego, który można będzie wkomponować do drzewa DOM. Jest to rozwiązanie efektywne, niemniej posiadające jedno uchybienie. W przypadku, gdy programista chciałby uzyskać selektywny sposób, zależny od kontekstu, w jakim znajduje się obiekt lub też chęci uzyskania wartości jednego z atrybutów, nie jest on w stanie osiągnąć zamierzonego rezultatu, z uwagi na sposób, w jaki działa konwersja typów. Znalezienie pierwszego konwertera, który jest w stanie przeprowadzić żądaną transformację kończy proces wyszukiwania. Nie oznacza to wcale, że uzyskany wynik będzie zgodny z oczekiwanym. Z tego powodu aplikacja demonstracyjna rozszerza istniejącą funkcjonalność przez umożliwienie wybiórczego konwertowania między poszczególnymi typami. Na obecną chwilę zostało to zaimplementowane dla obiektów domenowych, a klasą kontrolującą selektywny proces jest \textbf{PersistableConverterPicker}.
+	\begin{listing}[h]
+		\inputminted[
+			lineos=true,
+			firstline=51,
+			lastline=68,
+			fontfamily=monospace,
+			obeytabs=true, 
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
+		\label{app:conversion_persistableToString}
+		\caption[\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów]{
+			\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów
+		}
+	\end{listing}
+	\textbf{PersistableConverterPicker} posiada metody które pozwalają na wybór selektywnego konwertera do wykonania operacji
+	transformacji. Zostało również zapewnione wsparcia dla istniejącej funkcjonalności, bez użycia selektora. Ta część realizowana jest w 
+	metodzie \textbf{getDefaultConverter(...)}.
+	\begin{listing}[h]
+		\inputminted[
+			lineos=true,
+			firstline=71,
+			lastline=101,
+			fontfamily=monospace,
+			obeytabs=true, 
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
+		\label{app:conversion_defaultConverter}
+		\caption[\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu]{
+			\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu
+		}
+	\end{listing}
+	
+	Selektywne konwertery różnią się od normalnych jedynie
+	użyciem specjalnej adnotacji, która pozwala na ustalenie, że:
+	\begin{itemize}
+		\item konwerter jest domyślny, jeśli nie został zdefiniowany klucz,
+		\item konwerter jest selektywny, jeśli istnieje zdefiniowany klucz.
+	\end{itemize}

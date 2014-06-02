@@ -1,0 +1,122 @@
+Aplikacja demonstracyjna jest obecnie na etapie dalszego rozwoju. Posiada szeroko zdefiniowane moduły zaprojektowane, aby wspierać takie
+rejony jak:
+\begin{itemize}
+	\item generyczna warstwa operacji bazodanowych,
+	\item warstwa logiki biznesowej udostępnionej przez serwisy,
+	\item moduł komponentów dla budowy tabel oraz stron obiektów domenowych,
+	\item selektywna warstwa konwersji,
+	\item tagi oddelegowane dla przewodników opartych o Spring Web Flow,
+	\item model danych wraz z jego abstrakcyjną warstwą (interfejsy) do użytku zewnętrznego,
+	\item moduł obsługujący funkcjonalność raportowania.
+\end{itemize}
+
+W większości przypadków uzyskana funkcjonalność jest jednak na etapie implementacji i niektóre z niedopracowanych elementów 
+ulegną zmianie, celem uproszczenia zarządzania złożonością projektu oraz usunięcia nadmiarowych klas oraz słabo
+konfigurowalnych części.
+Plany rozwojowe aplikacji zostały przedstawione w tabeli \ref{app:changes_in_future}.
+\begin{center}
+	\begin{longtable}{|l|l|p{10cm}|}
+		\caption[Plany rozwojowe aplikacji demonstracyjnej]{
+			Plany rozwojowe aplikacji demonstracyjnej
+		}
+		\label{app:changes_in_future}
+		\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{LP}} 			&
+			\multicolumn{1}{|c|}{\textbf{Moduł}}		&
+			\multicolumn{1}{|c|}{\textbf{Opis zmian}}	\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{LP}} 			&
+			\multicolumn{1}{|c|}{\textbf{Moduł}}		&
+			\multicolumn{1}{|c|}{\textbf{Opis zmian}}	\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+		\endfoot
+		\hline
+		\endlastfoot	
+		
+		\emph{1}					&
+		\textbf{ComponentBuilder}	&
+		\begin{itemize}
+			\item optymalizacja kodu oraz wsparcie dla cache'owania raz załadowanych
+			\item przeniesienie definicji stron do deklaratywnego języka XML.
+			Będzie to możliwe po usprawnieniu działania selektywnych konwerterów oraz 
+			zwiększy możliwość zmian zgodnie z wymaganiami, bez konieczności zmian w plikach Java,
+			\item prawdopodobne przeprojektowanie operacji ładowania 
+			strony obiektu domenowego. Na obecną chwilę ładowany jest gotowy widok,
+			jednakże z uwagi na możliwie duży narzut 
+			przesłanych danych bardziej optymalnym rozwiązaniem jest załadowanie pojedynczo 
+			każdego z panelu zdefiniowanego na danej stronie,
+			\item przeniesienie kodu widoku stron domenowych do łatwiejszego w zarządzaniu oraz utrzymaniu kodu ExtJS
+		\end{itemize}
+		\hline			
+		\emph{2}					&
+		\textbf{ComponentBuilder}	&
+		Połączenie kontrolerów odpowiedzialnych za obsługę żądań pochodzących od komponentów typu \textbf{tabele} oraz \textbf{strony domenowe}. 
+		Celem tego działania jest ujednolicenie adresów sugerujące, że oba komponenty służą podobnemu celowi.
+		\hline		
+		\emph{3}					&
+		\textbf{ComponentBuilder}	&
+		Wprowadzenie automatycznego mechanizmu generującego przekierowania do stron obiektów domenowych
+		\hline					
+		\emph{4}					&
+		\textbf{WebFlow}			&
+		Zaprojektowanie biblioteki wspierającej 
+		funkcjonalność \textbf{Spring Web Flow} dla biblioteki ExtJS. Decyzja podyktowana jest 
+		chęcią zminimalizowania użycia różnorodnych bibliotek JavaScript. Gotowa biblioteka
+		byłaby udostępniona na licencji OpenSource.
+		\hline
+		\emph{5}						&
+		\textbf{Selektywne konwertery}	&
+		Rozszerzenie możliwości selektywnych konwerterów o obiekty inne niż domenowe oraz
+		wsparcie dla możliwości definiowana powtarzających się selektorów - kluczy w kontekście
+		globalnym, ale unikatowych w kontekście danego obiektu podlegającego konwersji.
+		\hline
+		\emph{6}						&
+		\textbf{Kod ogólny}				&
+		Usunięcie pozostałości nadmiarowego kodu, który pozostał po uaktualnieniu aplikacji,
+		do korzystania z najnowszej wersji (4.0.0) szkieletu aplikacji \textbf{Spring}.
+		\hline
+		\emph{7}						&
+		\textbf{Widok}					&
+		Wsparcia dla ExtJS - migracja istniejących komponentów warstwy widoku użytkownika do 
+		szkieletu aplikacji ExtJS. Prawdopodobnym wyborem będzie wykorzystanie ExtJS w wersji 4.x.x z uwagi
+		na lepszą wydajność i większe możliwości biblioteki. 
+		\hline
+		\emph{8}						&
+		\textbf{ReportBuilder}			&
+		Zrezygnowania z ciężkiego w użyciu oraz utrzymaniu sposobu generowania raportów w aplikacji poprzez
+		bibliotekę \textbf{DynamicJasper}. Przeniesienie bezpośredniego generowania raportów do tabelek oraz
+		inwestygacja możliwych technologii do wykorzystania w przypadku eksportowania raportu do formatów takich jak
+		HTML, CSV, PDF oraz XLS.		
+		\hline
+		\emph{9}						&
+		\textbf{Przewodniki}			&
+		Ukończenie wszystkich wymaganych kreatorów służących zarówno do modyfikacji, jak i tworzenia nowych obiektów domenowych	
+		\hline
+		\emph{10}						&
+		\textbf{Terminarz spotkań}		&
+		Ukończenie prac nad terminarzem spotkań. Obecna funkcjonalność pozwala na tworzenie obiektów, które następnie
+		można przeglądać z użyciem kalendarza (podobny do używanego w programie Outlook). 	
+		\hline
+		\emph{11}						&
+		\textbf{Dekodowane numeru VIN}		&
+		Rozszerzenie obecnych możliwości dekodera numeru VIN o pobieranie informacji, takich jak:
+		\begin{itemize}
+			\item wytwórca samochodu,
+			\item marka oraz model,
+			\item typ nadwozia,
+			\item typ paliwa,
+			\item typ silnika
+		\end{itemize}							
+	\end{longtable}
+\end{center}

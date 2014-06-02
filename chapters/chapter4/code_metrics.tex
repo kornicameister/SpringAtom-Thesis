@@ -1,0 +1,235 @@
+	Kod aplikacji jest zbiorem funkcjonalności zaimplementowanych zarówno dla części serwerowej, jak i klienckiej. Z tego powodu liczba linii kodu
+została podzielona na odpowiednie grupy, zgodne z językami użytymi do stworzenia aplikacji demonstracyjnej.
+\subsection{Liczba linii kodu aplikacji}
+\begin{center}
+	\begin{longtable}{|l|l|l|l|l|}
+		\caption[Liczba linii kodu według języka programowania]{
+			Liczba linii kodu według języka programowania
+		}
+		\label{app:code_metric_loc}
+		\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Język}} 			&
+			\multicolumn{1}{|c|}{\textbf{LOC}} 			&
+			\multicolumn{1}{|c|}{\textbf{LOC (SC)}} 		&
+			\multicolumn{1}{|c|}{\textbf{LOC (C)}} 		&
+			\multicolumn{1}{|c|}{\textbf{LOC (EL)}} 		\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Język}} 			&
+			\multicolumn{1}{|c|}{\textbf{LOC}} 			&
+			\multicolumn{1}{|c|}{\textbf{LOC (SC)}} 		&
+			\multicolumn{1}{|c|}{\textbf{LOC (C)}} 		&
+			\multicolumn{1}{|c|}{\textbf{LOC (EL)}} 		\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+		\endfoot
+		\hline
+		\endlastfoot	
+		
+		\emph{Java}		& 29555	 	& 16628 	& 9136 		& 3791 	\hline
+		\emph{JS} 		& 1044	 	& ? 		& ? 		& ? 	\hline
+		\emph{JSP} 		& 2122	 	& ? 		& ? 		& ? 	\hline
+		\emph{Razem} 	& 32721	 	& 16628 	& 9136 		& 3791  \hline
+	\end{longtable}
+	\begin{tabular}{l l}
+			LOC 		& Całkowita liczba linii kodu 	\\
+			LOC (SC)	& Liczba linii kodu źródłowego \\
+			LOC (C)		& Liczba linii komentarzy		\\
+			LOC (EL)	& Liczba linii pustych
+	\end{tabular}	
+\end{center}
+
+\subsection{Java}
+Tabela \ref{app:code_metric_loc} obrazuje złożoności projektu składającego się z 5 głównych modułów:
+\begin{itemize}
+	\item \textbf{AOP} - funkcjonalność opierająca się o \textit{Aspect Oriented Programming} zakresem obejmująca całą aplikację,
+	\item \textbf{Core} - zbiór artefaktów (klas, klas abstrakcyjnych, interfejsów oraz typów wyliczeniowych) przeznaczonych do wykorzystania,
+	\item \textbf{Server} - zadaniem klas tego modułu jest dostarczenie modelu danych, wsparcia jego walidacji oraz wersjonowania, definicji interfejsów repozytoriów, serwisów odpowiedzialnych za logikę biznesową,
+	\item \textbf{Web} - artefakty tego modułu oferują definicje obiektów opisujących strony domenowe, tabele, przewodniki, raporty. Zawierają również klasy odpowiedzialne za
+	dynamiczny i elastyczny model akcji. 
+	\item \textbf{WebMVC}
+\end{itemize}	
+
+\subsubsection{Strukturalne metryki kodu}
+\begin{center}
+	\begin{longtable}{|l|l|l|l|l|l|}
+		\caption[Liczba klas / Liczba linii kodu modułów]{
+			Liczba klas / Liczba linii kodu modułów	
+		}
+		\label{app:modules_code_metrics}	
+		\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Moduł}} 			&
+			\multicolumn{1}{|c|}{\textbf{LK}} 				&			
+			\multicolumn{1}{|c|}{\textbf{LOC}}				&		
+			\multicolumn{1}{|c|}{\textbf{CD}}				&	
+			\multicolumn{1}{|c|}{\textbf{D}}				&
+			\multicolumn{1}{|c|}{\textbf{TD}}				
+			\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Moduł}} 			&
+			\multicolumn{1}{|c|}{\textbf{LK}} 				&			
+			\multicolumn{1}{|c|}{\textbf{LOC}}				&		
+			\multicolumn{1}{|c|}{\textbf{CD}}				&	
+			\multicolumn{1}{|c|}{\textbf{D}}				&
+			\multicolumn{1}{|c|}{\textbf{TD}}					
+			\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+		\endfoot
+		\hline
+		\endlastfoot	
+		
+		\emph{Aop}			&  3/3			& 	192/192			& 	0		& 	0		&	0		\hline
+		\emph{Core}			&  13/1.86		& 	628/89.71		&	0		&	0.25	&	0.25	\hline
+		\emph{Server}		&  187/3.07		& 	10806/183.15	&	0.82	&	3.32	&	23.48	\hline
+		\emph{Web}			&  188/2.89		& 	10803/166.20	&	0.3		&	3.28	&	14.01	\hline
+		\emph{WebMVC}		&  37/2.85		& 	2262/174		&	0		&	4.27	&	37.73	\hline
+	\end{longtable}	
+	\begin{tabular}{l l}
+			LK 		& 	Liczba klas/Średnia liczba klas				\\
+			LOC		& 	Liczba linii kodu/Średnia liczba linii kodu	\\
+			D		& 	Średnia liczba cyklicznych zależności			\\
+			CD		& 	Średnia liczba zależności						\\
+			TD		& 	Średnia liczba zależności przechodnich			\\
+	\end{tabular}	
+\end{center}
+
+\subsubsection{Metryka Chidamber-Kemerer}
+Zadaniem metryki jest analiza następujących właściwości kodu \cite{chidamberKemerer}:
+\begin{itemize}
+	\item \textbf{WMC} - liczba metod zdefiniowanych w klasie,
+	\item \textbf{DIT} - głębokość drzewa dziedziczenia,
+	\item \textbf{SUB} - liczba bezpośrednich potomków w hierarchii dziedziczenia,
+	\item \textbf{CBO} - stopień zależności od pozostałych artefaktów,
+	\item \textbf{RFC} - ilość metod obiektu danej klasy, które mogę być wywołane w odpowiedzi na wywołania jednej metody tej klasy,
+	\item \textbf{LCOM} - współczynnik kohezji, im wyższy, tym większa jest zależność między poszczególnymi artefaktami
+\end{itemize}
+
+\begin{center}
+	\begin{longtable}{|l|l|l|l|l|l|l|}
+		\caption[Metryka Chidamber - Kemerer]{
+			Metryka Chidamber - Kemerer	
+		}
+		\label{app:chidamberKemerer}
+		\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Moduł}} 			&
+			\multicolumn{1}{|c|}{\textbf{CBO}}				&		
+			\multicolumn{1}{|c|}{\textbf{DIT}}				&	
+			\multicolumn{1}{|c|}{\textbf{LCOM}}			&
+			\multicolumn{1}{|c|}{\textbf{RFC}}				&	
+			\multicolumn{1}{|c|}{\textbf{SUB}}				&
+			\multicolumn{1}{|c|}{\textbf{WMC}} 			\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Moduł}} 			&
+			\multicolumn{1}{|c|}{\textbf{CBO}}				&		
+			\multicolumn{1}{|c|}{\textbf{DIT}}				&	
+			\multicolumn{1}{|c|}{\textbf{LCOM}}			&
+			\multicolumn{1}{|c|}{\textbf{RFC}}				&	
+			\multicolumn{1}{|c|}{\textbf{SUB}}				&
+			\multicolumn{1}{|c|}{\textbf{WMC}} 			\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+		\endfoot
+		\hline
+		\endlastfoot	
+		
+		\emph{Aop}			&  0		& 	1.00	& 	2.33	& 	12.00	&	0		&	6		\hline
+		\emph{Core}			&  2.25		& 	1.50	&	1.00	&	34.60	&	0.62	&	5.12	\hline
+		\emph{Server}		&  6.50		& 	2.35	&	1.64	&	282.30	&	0.77	&	7.16	\hline
+		\emph{Web}			&  5.78		& 	2.03	&	1.74	&	194.33	&	0.64	&	7.47	\hline
+		\emph{WebMVC}		&  5.00		& 	2.94	&	1.33	&	213.22	&	0.18	&	5.03	\hline
+		\emph{Razem}		&  5.78		&	2.22	&	1.65	&	222.44	&	0.62	&	6.98	\hline
+	\end{longtable}
+\end{center}
+
+Na uwagę zasługują w tym miejscu niskie wartości takich współczynników jak \textbf{DIT}, gdzie średnia wartość nie przekroczyła wartości 3, począwszy od korzenia wszystkich klas definiowanych w języku Java - \textbf{Object}. Przyjmuje się, że wartość graniczna dla większości aplikacji wynosi 5. Niemniej wartość średnia nie oddaje pojedynczych przypadków nadużyć. Większość takich sytuacji, występujących aplikacji demonstracyjnej, gdzie przekroczono graniczną wartość, odnosi się do klas rozszerzających standardowe możliwości szkieletu aplikacji, celem dostosowania ich do konkretnych przypadków użycia. Ponadto ważna jest głębokość drzewa dziedziczenia, przekraczająca przyjętą wartość w klasach opisujących biznesowy model danych. Fakt ten można pominąć z uwagi na to, że wspomniane artefakty służą wsparciu dla dziedziczenia wspólnych atrybutów dla konkretnych gałęzi klas oraz tym, że są to w klasy definiujące, prócz wspomnianych już pól, metody dostępowe, popularnie nazywane \textbf{gettery} oraz \textbf{settery}. W nielicznych przypadkach część funkcjonalności biznesowej została zamknięta w obiektach domenowych z uwagi na rozbieżność w sposobie przechowywania danych, a tym, jak są one udostępniane innym klasom. 
+
+W tym miejscu warto wspomnieć o wartości jaką uzyskano dla wskaźnika \textbf{SUB}, który jest blisko związany z poprzednio omawianym \textbf{DIT}. Podczas gdy \textbf{DIT} opisuje głębokość drzewa dziedziczenia, co przekłada się na zwiększenie zarówno ilości atrybutów, jak i metod będących kandydatami do ponownego wykorzystania (nadpisania), \textbf{SUP} odnosi się do szerokości drzewa dziedziczenia, czyli ilości dzieci będących bezpośrednimi potomkami analizowanej klasy. Przyjęto, że niska wartość \textbf{DIT} jest zdecydowanie lepsza od \textbf{SUB}. Tak też jest w przypadku aplikacji demonstracyjnej, gdzie wartości tych dwóch współczynników charakteryzują się następującymi wartościami \textbf{DIT} równe 2.22, a \textbf{SUB} - 0.62. Widać wyraźnie, że zdecydowana większość klas definiuje swoją rolę poprzez mechanizm polimorfizmu.
+
+Największym problem aplikacji okazała się wysoka wartość współczynnika \textbf{RFC}. Im jest ona wyższa, tym bardziej aplikacja narażona jest na błędy, a istniejąca złożoność utrudnia zrozumienie oraz testowanie aplikacji. 
+
+\subsubsection{Metryka MOOD}
+Metryki \textbf{MOOD} zostały zaprojektowane do mierzenia jakości aplikacji realizowanych z użyciem technik programowania obiektowego \cite{moodMetrics}. Analiza projektu nimi jest szczególnie użyteczna dla obszernych projektów. Duża ilość klas oraz istniejące plany rozwojowe sugerujące dalszy wzrost ilości linii kodu sprawiają, że stanowi ona cenna źródło wiedzy o strukturze programu i możliwości poprawienia rejonów szczególnie ważnych w kontekście właściwego wykorzystania paradygmatu programowania obiektowego.  
+\begin{center}
+	\begin{longtable}{|l|l|l|l|l|l|l|}
+		\caption[Metryka MOOD]{Metryka MOOD}
+		\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{AHF}}				&		
+			\multicolumn{1}{|c|}{\textbf{AIF}}				&	
+			\multicolumn{1}{|c|}{\textbf{CF}}				&
+			\multicolumn{1}{|c|}{\textbf{MHF}}				&	
+			\multicolumn{1}{|c|}{\textbf{MIF}}				&
+			\multicolumn{1}{|c|}{\textbf{PF}} 				\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{AHF}}				&		
+			\multicolumn{1}{|c|}{\textbf{AIF}}				&	
+			\multicolumn{1}{|c|}{\textbf{CF}}				&
+			\multicolumn{1}{|c|}{\textbf{MHF}}				&	
+			\multicolumn{1}{|c|}{\textbf{MIF}}				&
+			\multicolumn{1}{|c|}{\textbf{PF}} 				\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+		\endfoot
+		\hline
+		\endlastfoot	
+		
+		100.0\%{} 	& 
+		0.00\%{} 	& 
+		0.00\%{}	& 
+		53.85\%{}	& 
+		0.00\%{} 	& 
+		100.0\%{} 	\tabularnewline
+	\end{longtable}
+	\label{app:moodMetrics}
+	\begin{tabular}{l l}
+			AHF 	& 	Współczynnik enkapsulkacji pól klas			\\
+			AIF		& 	Współczynnik dziedziczenia atrybutów			\\
+			CF		& 	Współczynnik powiązań							\\
+			MHF		& 	Współczynnik enkapsulkacji metod				\\
+			MIF		& 	Współczynnik dziedziczenia metod				\\
+			PF		& 	Współczynnik polimorfizmu						\\
+	\end{tabular}	
+\end{center} 
+
+Na istotną uwagę zasługują dwa wskaźniki \textbf{PF=100\%{}} oraz \linebreak \textbf{MHF=53.85\%{}}. Pierwszy z wyników odnosi się do polimorfizmu. Wynik z pewnością wskazuje na dobry projekt systemu wykazującego duży poziom abstrakcyjność, co usprawnia późniejsze modyfikacje na poziomie zmiany sposobów realizacji konkretnych bloków funkcjonalnych. Stałym artefaktem podczas takiej zmiany jest interfejs, definiujący kontrakt konkretnej gałęzi klas, podczas gdy zmiana zachodzi na poziomie poszczególnych jego implementacji.
+
+ Drugi ze wskaźników odnosi się do współczynnika enkapsulacji metod. Obliczany jest z następującego wzoru: \[ MHF = 1 - \frac{\sum{MV}}{(C-1)} \] \textbf{MV} - liczba klas, gdzie dana metoda jest widoczna oraz \textbf{C} - ilość klas. Nie ma jednoznacznie przyjętej poprawnej wartości tej metryki, niemniej uznaje się, że im wyższa wartość tym jakość kodu jest większa, a potencjalne błędy skupione i łatwe do zlokalizowania. Z drugiej strony wysoka wartość oznacza wysoką specjalizację klas przy jednocześnie niskim poziomie funkcjonalności, która rozsiana jest między poszczególnymi elementami systemu. 

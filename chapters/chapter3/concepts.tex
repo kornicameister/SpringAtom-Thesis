@@ -1,0 +1,106 @@
+\begin{center}
+	\begin{longtable}{| p{3cm} | p{13cm} |}
+		\caption[Adnotacje Spring opisujące poziom abstrakcji cache]{
+			Adnotacje Spring opisujące poziom abstrakcji cache				
+		}\tabularnewline	
+		
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Pojęcie}} 		&
+			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\tabularnewline
+		\hline
+		\endfirsthead
+		
+		\multicolumn{2}{c}
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		\hline
+			\multicolumn{1}{|c|}{\textbf{Pojęcie}} 		&
+			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\tabularnewline
+		\hline
+		\endhead
+			
+		\hline
+			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline
+		\hline
+		\endfoot
+
+		\hline
+		\endlastfoot	
+		
+		\textbf{Obiekt domenowy}								&
+		\label{concept:domain_object}
+		Klasy takich obiektu zdefiniowane są w modelu danych. 
+		Innymi słowy dostarczają one definicji informacji 
+		opisujących, w sposób abstrakcyjny, 
+		rzeczywiste obiekty wykorzystywane w aplikacji.	
+		\tabularnewline
+		\hline
+		\textbf{Repozytorium}									&
+		\label{concept:repository}
+		Abstrakcyjne pojęcie odnoszące się do klasy obiektów - interfejsów leżących na linii
+		baza danych - aplikacja, pośredniczących w operacjach zapisu/odczytu. Implementują ideę
+		stojącą za pojęciem CRUD.
+		\tabularnewline
+		\hline
+		\textbf{CRUD}
+		\label{concept:crud}									&
+		Anglojęzyczny skrót wykorzystywany w programowaniu opisujący 4 podstawowe operacje wykonywany
+		na pewnym źródle danych. 
+		\begin{itemize}
+			\item create - utworzyć,
+			\item read - odczytać,
+			\item update - uaktualnić, zmodyfikować, 
+			\item delete - usunąć
+		\end{itemize}	
+		\tabularnewline
+		\hline
+		\textbf{Cache}											&
+		\label{concept:cache}
+		Cache jest specjalnym obiektem przeznaczonym do czasowego przechowywania danych
+		w pamięci dla zapewnienia szybszego dostępu niż w przypadku odwoływania się do 
+		bazy danych, plików lub metod wykonujących kosztowne 
+		obliczeniowo operacje.
+		\tabularnewline
+		\hline
+		\textbf{ATP}											&
+		\label{concept:atp}
+		Pojęcie odnosi się do przetwarzania adnotacji języka Java i wykonywania pewnych operacji
+		i/lub generowania wyniku.
+		\tabularnewline
+		\hline
+		\textbf{Adnotacje}										&
+		\label{concept:annotation}
+		Ideą adnotacji jest dodawanie do kodu źródłowego 
+		aplikacji metadanych.
+		\tabularnewline
+		\hline
+		\textbf{AOP}											&
+		\label{concept:aop}
+		\textbf{Aspect Oriented Programming} jest paradygmatem programistycznym zwiększającym
+		skalowalność, zmniejszającym kohezję klas i tym samym eliminującym tak zwana \textit{ścisłe zależności}. 
+		Programowanie z jego wykorzystaniem odwołuje się do organizacji kodu w tak zwane \textit{aspekty} realizujące
+		pewną logikę. Aspekt swoim zasięgiem jest w stanie objęć więcej niż jeden poziom abstrakcji
+		zdefiniowanego z użyciem technik programowania obiektowego jak na przykład wzorce strategii 
+		czy też fabryk.
+		\tabularnewline
+		\hline 
+		\textbf{Kohezja}										&
+		\label{concept:cohesion}
+		Kohezja, w odniesieniu do programowania, 
+		oznacza stopień w jakim dwie klasy są zależne 
+		od siebie.
+		\tabularnewline
+		\hline 
+		\textbf{Getter/Setter}									&
+		\label{concept:getter_setter}
+		Zwyczajowe pojęcia opisujące metody 
+		dostępowe klasy służące do pobierania lub ustawienia 
+		wartości pól danej obiektu tej klasy
+		\tabularnewline
+		\hline
+		\textbf{API}											&
+		\label{concept:api}
+		Ściśle określony zbiór reguł i metod, dzięki którym program może się komunikować ze sobą lub z innym programem.
+		\label{concept:api}  
+	\end{longtable}
+	\label{app:ehcache:spring_caches}
+\end{center}

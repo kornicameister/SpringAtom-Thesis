@@ -2,48 +2,40 @@
 \label{chapter:libs}
 
 \section{Wybór narzędzi do pracy}
-	Złożoność aplikacji, opisana w rozdziale \ref{chapter:app_functional_requirements}, wymagała narzędzia lub narzędzi potrzebnych do sprostania poszczególnym wymogom funkcjonalnym. Z prostej przyczyny opcja wielu zewnętrznych bibliotek została odrzucona. Zbyt wielka ich ilość z czasem mogłaby stać się nie zaletą a problemem z uwagi na ewentualne konflikty między nimi lub wzrost liczby zależności przechodnich\footnote{Zależność przechodnia - zależność od jednej biblioteki od innej, a w efekcie zależność aplikacji od tej ostatniej z bibliotek w łańcuchu zależności.}. Spośród wielu dostępnych szkieletów aplikacji zdecydowano się w pierwszej kolejności na wybór wspierających \textbf{Dependency Injection} oraz \textbf{Inversion Of Control}. Obie techniki pozwalają znacząco podnieść jakość kodu oraz zminimalizować stopień kohezji oraz zależności między klasami. Jest to możliwe ponieważ odpowiedzialność za sterowanie przepływem programu zostaje przeniesiona na kod użytej biblioteki, co odciąża programistę od konieczności kontrolowania tychże aspektów. Po analizie takich rozwiązań jak \textbf{JBoss Seam Framework}, \textbf{Google Guice}, \textbf{PicoContainer}, \textbf{Spring Framework} okazuje się, że wszystkie z nich wspierają wymienione techniki. Niemniej stopień w jakim można by użyć jednego z nich do kompleksowego wsparcia aplikacji praktycznej nie jest już jednakowy. Zaczynając od \textbf{PicoContainer} oferującego wsparcia jedynie dla \textbf{Dependency Injection}, a kończąc na \textbf{Spring Framework} oraz \textbf{JBoss Seam Framework} posiadających najbogatszy wachlarz możliwości, najlepszym wyborem okazuje się być \textbf{Spring}. Z uwagi na popularność w środowisku programistów stanowi on doskonały kompromis między tym co oferuje, a tym czego wymaga. Pozwalając na przygotowania aplikacji bez żadnego wyraźnego nacisku na technikę czy też inne technologię jest wysoce konfigurowalnym fundamentem dla dowolnego programu. 
+	Złożoność aplikacji, opisana w rozdziale \ref{chapter:app_functional_requirements}, wymagała narzędzi potrzebnych do sprostania poszczególnym wymogom funkcjonalnym. Z prostej przyczyny opcja wielu zewnętrznych bibliotek została odrzucona: zbyt wielka ich ilość z czasem mogłaby stać się problemem, z uwagi na ewentualne konflikty między nimi lub wzrost liczby zależności przechodnich\footnote{Zależność przechodnia - zależność jednej biblioteki od innej, a w efekcie zależność aplikacji od ostatniej z wykorzystanych w łańcuchu bibliotek.}. Spośród wielu dostępnych szkieletów aplikacji zdecydowano się, w pierwszej kolejności, na wybór tych, które wspierają \textbf{Dependency Injection} oraz \textbf{Inversion Of Control}. Obie techniki pozwalają znacząco podnieść jakość kodu, zminimalizować stopień kohezji oraz zależności między klasami. Jest to możliwe, ponieważ odpowiedzialność za sterowanie przepływem programu zostaje przeniesiona na kod użytej biblioteki, co odciąża programistę od konieczności kontrolowania tych aspektów. Po analizie takich rozwiązań jak \textbf{JBoss Seam Framework}, \textbf{Google Guice}, \textbf{PicoContainer}, \textbf{Spring Framework} okazuje się, że wszystkie z nich wspierają wymienione techniki. Niemniej stopień w jakim można by użyć jednego z nich do kompleksowego wsparcia aplikacji praktycznej nie jest już jednakowy. Zaczynając od \textbf{PicoContainer} oferującego wsparcia jedynie dla \textbf{Dependency Injection}, a kończąc na \textbf{Spring Framework} oraz \textbf{JBoss Seam Framework} posiadających najbogatszy wachlarz możliwości, najlepszym wyborem okazuje się być \textbf{Spring}. Z uwagi na popularność w środowisku programistów stanowi on doskonały kompromis między tym, co oferuje, a tym czego wymaga. Pozwalając na przygotowania aplikacji bez żadnego wyraźnego nacisku na technikę czy też inne technologie, jest wysoce konfigurowalnym fundamentem dla dowolnego programu. 
 	
 \section{Znaczenie szkieletów aplikacji}
-	Internetowe szkielety aplikacji nie są same w sobie bibliotekami programistycznymi. Stanowią one raczej ich zbiór oraz nierzadko i narzędzi mających na celu ułatwienie programiście implementacji własnego rozwiązanie. Bardzo często są one również praktyczną implementacją standardów (tak jak \textbf{Seam Framework}) i tak zwanych \textbf{best practices}\footnote{Zalecane i pożądane sposoby realizacji często spotykanych problemów}. Jest to szczególnie użyteczne ponieważ nierzadko zdarza się, że programista popełnia błąd na pewnym etapie projektowanie lub implementacji pewnego modułu, którego późniejsze konsekwencje wymagają stworzenie niepotrzebnego i nadmiarowego kodu, czego dałoby by się uniknąć, gdyby podążano już wyznaczonymi ścieżkami. Prawdziwe w takim wypadku staje się również zdanie, że jeden błąd generuje kolejne, a te mogą być zalążkiem następnych.
+	Internetowe szkielety aplikacji nie są same w sobie bibliotekami programistycznymi. Stanowią one raczej ich zbiór, jak również zestaw narzędzi, mających na celu ułatwienie programiście implementacji własnego rozwiązania. Bardzo często są one również praktyczną implementacją standardów (tak jak \textbf{Seam Framework}) i tak zwanych \textbf{best practices}\footnote{Zalecane i pożądane sposoby realizacji często spotykanych problemów}. Jest to szczególnie użyteczne ponieważ nierzadko zdarza się, że programista popełnia błąd na pewnym etapie projektowanie lub implementacji określonego modułu, którego późniejsze konsekwencje wymagają stworzenia niepotrzebnego i nadmiarowego kodu, czego dałoby by się uniknąć, gdyby podążano już wyznaczonymi ścieżkami. Prawdziwe w takim wypadku staje się również zdanie, że jeden błąd generuje kolejne, a te mogą być zalążkiem następnych.
 	
-	To czym są szkielety aplikacji u samego źródła ich istnienia jest zapobiegać takim sytuacjom poprzez proponowanie już gotowych modułów, które są przetestowane i ciągle modyfikowane przez doświadczone osoby celem dostarczenia jeszcze lepszych rozwiązań\cite{art_of_java_web_dev}.
+	Powodem istnienia szkieletów aplikacji jest więc zapobieganie takim sytuacjom, poprzez proponowanie już gotowych modułów, które są przetestowane i ciągle modyfikowane przez doświadczone osoby, celem dostarczenia jeszcze lepszych rozwiązań\cite{art_of_java_web_dev}.
 	
-	Oprogramowanie zorientowane obiektowo jest doskonałym zobrazowaniem koncepcji wykorzystanie szkieletu jako fundamentu do budowy własnego rozwiązania. Na najniższym poziomie szczegółowości każdy program czy też moduł większej części jest zbiorem klas posiadającym jasno określony zbiór ról - obowiązków, a których obiekty współpracują ze sobą celem dostarczenie gotowego wyniku lub jego części. Wspólnie te obiekty reprezentują pewną koncepcję, dla której został utworzone. W kontekście szkieletu aplikacji internetowych można więc wyróżnić klasy przeznaczone dla kooperacji z bazą danych, odpowiedzialnych za walidacji informacji czy też pomocnych w momencie renderowania widoku. Warto nadmienić, że te zasady są równie ważne dla małych systemów, jak i dla dużych. Niemniej w pierwszym przypadku, gdzie poziom skomplikowania jest niski nie ma potrzeby definiowania wielu poziomów abstrakcji ułatwiających określone czynności, jak na przykład wcześniej wymienione walidacje danych. Niestety z czasem, początkowo prosty system, staje się coraz bardziej skomplikowany i bardzo często programista nie jest już wtedy w stanie zapanować na chaosem oraz dostarczyć zunifikowanego sposobu rozwiązywania powtarzalnych czynności. Z tego powodu dobry framework charakteryzuje się jasno, ale nie sztywno, zdefiniowanymi granicami między poszczególnymi zbiorami funkcjonalnymi. Wprowadzone poziomy abstrakcji, często więcej niż jeden dla pojedynczego celu jak na przykład sposób interakcji systemu i jego klientów, są wynikiem wieloletnich zmian podczas kiedy zidentyfikowano wiele wspólnych problemów i dla których znaleziono rozwiązanie w postaci ram projektowych czy też \textbf{best pratices}, będących ostatecznie właściwą esencją znaczenie szkieletu aplikacji\cite{framework_design_-_a_role_modeling_approach}.
+	Oprogramowanie zorientowane obiektowo jest doskonałym zobrazowaniem koncepcji wykorzystania szkieletu jako fundamentu do budowy własnego rozwiązania. Na najniższym poziomie szczegółowości każdy program czy też moduł większej części, jest zbiorem klas posiadającym jasno określony zbiór ról - obowiązków, a których obiekty współpracują ze sobą, celem dostarczenia gotowego wyniku lub jego części. Wspólnie te obiekty reprezentują pewną koncepcję, dla realizacji której zostały utworzone. 
 	
-	Dobrymi przykładami tutaj będą z pewnością warstwy abstrakcji dla obsługi operacji bazodanowych. Zawierając konkretne implementacje, które już posiadają funkcjonalność odpowiedzialną za wykonanie tychże operacji na praktycznie elementarnym poziomie, a zostawiając właściwą warstwę logikę w kontekście tworzonej aplikacji, odciążają one programistę od przysłowiowego wynajdowania koła od nowa.Praktyczną realizacją tej koncepcji jest na przykład \textbf{Spring Data}, które pozwala na napisania kodu, którego głównymi zaletami będzie odseparowanie logiki biznesowej od wybranej bazy danych oraz wyraźny podział na klasy odpowiedzialne za operacje \textbf{CRUD} na danych, jak i te wykonujące operacje biznesowe. Inne przykłady to między innymi \textbf{EJB} czy też moduł innego szkieletu programistycznego \textbf{GWT} wykonującego identyczne zadanie. Warto nadmienić, że również warstwy odpowiedzialne za tworzenie i zarządzanie widokiem (warstwa prezentacji) oraz takie których nadrzędnym celem jest pośredniczenie między widokiem, a danymi są potencjalnymi kandydatami do wyodrębnienie pewnego zbioru funkcjonalności jako części składowych gotowe szkieletu aplikacji. 
+	W kontekście szkieletu aplikacji internetowych można więc wyróżnić klasy przeznaczone do kooperacji z bazą danych, odpowiedzialnych za walidację informacji czy też pomocnych w momencie renderowania widoku. Warto nadmienić, że te zasady są równie ważne dla małych systemów, jak i dla dużych. Niemniej, w pierwszym przypadku, gdzie poziom skomplikowania jest niski, nie ma potrzeby definiowania wielu poziomów abstrakcji ułatwiających określone czynności, jak na przykład wcześniej wymienione walidacje danych. Niestety z czasem, początkowo prosty system, staje się coraz bardziej skomplikowany i bardzo często programista nie jest już wtedy w stanie zapanować na chaosem oraz dostarczyć zunifikowanego sposobu rozwiązywania powtarzalnych czynności. Z tego powodu dobry framework charakteryzuje się jasno, ale nie sztywno zdefiniowanymi granicami między poszczególnymi zbiorami funkcjonalnymi. Wprowadzone poziomy abstrakcji, często więcej niż jeden dla pojedynczego celu, jak na przykład sposób interakcji systemu i jego klientów, są wynikiem wieloletnich zmian, podczas których zidentyfikowano wiele wspólnych problemów i dla których znaleziono rozwiązanie w postaci ram projektowych czy też \textbf{best pratices}, będących ostatecznie właściwą esencją znaczenia szkieletu aplikacji\cite{framework_design_-_a_role_modeling_approach}.
+	
+	Dobrymi przykładami tutaj będą z pewnością warstwy abstrakcji dla obsługi operacji bazodanowych. Zawierają one konkretne implementacje, posiadające funkcjonalność odpowiedzialną za wykonanie tych operacji na praktycznie elementarnym poziomie, zostawiając właściwą warstwę logiki w tworzonej aplikacji, odciążają one programistę od przysłowiowego wynajdowania koła od nowa. Praktyczną realizacją tej koncepcji jest na przykład \textbf{Spring Data} pozwalające na napisanie kodu, którego głównymi zaletami będzie odseparowanie logiki biznesowej od wybranej bazy danych oraz wyraźny podział na klasy odpowiedzialne za operacje \textbf{CRUD} na danych, jak i te wykonujące operacje biznesowe. Inne przykłady to między innymi \textbf{EJB}, czy też moduł innego szkieletu programistycznego \textbf{GWT} wykonującego identyczne zadanie. Warto nadmienić, że również warstwy odpowiedzialne za tworzenie i zarządzanie widokiem (warstwa prezentacji) oraz takie, których nadrzędnym celem jest pośredniczenie między widokiem a danymi, są potencjalnymi kandydatami do wyodrębnienia pewnego zbioru funkcjonalności, jako części składowych gotowego szkieletu aplikacji. 
 	
 	\subsection{Funkcjonalność szkieletów aplikacji}
 		Do najczęściej implementowanych funkcjonalności szkieletów aplikacji internetowych należą:
 		\begin{itemize}
-			\item internacjonalizacja oraz lokalizacja tworzonych stron w dowolnym języku oraz wsparcia dla efektywnego przełączanie między nimi
-			\item wsparcia dla technologi widoku innych niż strony \textbf{JSP} lub takich, które je wykorzystują ale definiują inny sposób korzystania z nich
-			\item integracja z językiem szablonów innym niż \textbf{JSTL}
-			\item walidacja danych
-			\item mapowanie żądań HTTP do tzw. \textbf{kontrolerów}\footnote{Kontrolery należy rozumieć jako tzw. \textbf{POJO} które same w sobie są zwykłymi klasami, ale w kontekście framework'a nabierają konkretne znaczenie jako wykonawcy pewnej logiki właściwej dla danej aplikacji}
-			\item wsparcie dla popularnych języków transportu danych jak JSON czy też jego odpowiednik XML. 
+			\item internacjonalizacja oraz lokalizacja tworzonych stron w dowolnym języku oraz wsparcie dla efektywnego przełączania między nimi,
+			\item wsparcie dla technologii widoków innych niż strony \textbf{JSP} lub takich, które je wykorzystują, ale definiują odmienny sposób korzystania z nich,
+			\item integracja z językiem szablonów innym niż \textbf{JSTL},
+			\item walidacja danych,
+			\item mapowanie żądań HTTP do tzw. \textbf{kontrolerów}\footnote{Kontrolery należy rozumieć jako tzw. \textbf{POJO} które same w sobie są zwykłymi klasami, ale w kontekście framework'a nabierają konkretnego znaczenia jako wykonawcy pewnej logiki właściwej dla danej aplikacji},
+			\item wsparcie dla popularnych języków transportu danych, jak JSON czy też jego odpowiednik XML. 
 		\end{itemize}
 	
 		\subsection{Problemy szkieletów aplikacji}
-			Mimo że szkielety aplikacji znacząco podnoszą jakość kodu aplikacji oraz obniżają późniejsze koszty jej utrzymania nie są doskonałym
-		narzędziem. Większość niedociągnięć, które można zaobserwować związane jest z:
+			Mimo że szkielety aplikacji znacząco podnoszą jakość kodu oraz obniżają późniejsze koszty jej utrzymania, nie są doskonałym narzędziem. Większość niedociągnięć, które można zaobserwować związane są z:
 		\begin{itemize}
-			\item \textit{złożonością klas} - obiekty klas zaimplementowane w szkielecie aplikacji współpracują ze sobą, wielokrotnie w
-			więcej niż jednym kontekście. Definiowania funkcjonalności danej klasy poprzez użycie pojedynczej klasy abstrakcyjnej lub
-			interfejsu jest rozwiązanie zbyt sztywnym ponieważ często większa część zdefiniowanych metod nie będzie wykorzystana 
-			w innym miejscu,
-			\item \textit{skupieniem się na szczególe} - w momencie projektowania klas, tj. kreowania późniejszego celu istnienia 
-			ich obiektów, zdarza się, że gubi się obraz całości zbytnio skupiając się na poszczególnych przypadkach, 
-			\item \textit{złożoność współpracy} - mechanizmy współpracy obiektów odpowiadających za, na przykład, komunikacją klient-serwer
-			mogą stać się zbyt skomplikowane,
-			\item \textit{trudnością użycia} - brak drobiazgowej dokumentacji może skutkować użyciem szkieletu w sposób niezamierzony przez
-			jego tworców, co może skutkować implementowaniem tzw. \textbf{work arounds}\footnote{Technika programistyczna, której celem jest
-			naprawa jakiegoś błędu bądź uzyskanie zamierzonego celu podczas gdy używany framework lub biblioteka nie pozwalają na dotarcie
-			doń.} lub błędami funkcjonalnymi\cite{framework_design_-_a_role_modeling_approach}. 
+			\item \textit{złożonością klas} - obiekty klas zaimplementowane w szkielecie aplikacji współpracują ze sobą, wielokrotnie w więcej niż jednym kontekście. Definiowanie funkcjonalności danej klasy poprzez użycie pojedynczej klasy abstrakcyjnej lub interfejsu jest rozwiązaniem zbyt sztywnym, ponieważ często większa część zdefiniowanych metod nie będzie wykorzystywana w innym miejscu,
+			\item \textit{skupieniem się na szczególe} - w momencie projektowania klas, tj. kreowania późniejszego celu istnienia ich obiektów, zdarza się, że gubi się obraz całości zbytnio skupiając się na poszczególnych przypadkach,  \item \textit{złożoność współpracy} - mechanizmy współpracy obiektów odpowiadających, przykładowo za komunikację klient-serwer, mogą stać się zbyt skomplikowane,
+			\item \textit{trudnością użycia} - brak drobiazgowej dokumentacji może skutkować użyciem szkieletu w sposób niezamierzony przez jego twórców, co może skutkować implementowaniem tzw. \textbf{work arounds}\footnote{Technika programistyczna, której celem jest naprawa jakiegoś błędu bądź uzyskanie zamierzonego celu podczas, gdy używany framework lub biblioteka nie pozwalają na dotarcie do niego.} lub błędami funkcjonalnymi\cite{framework_design_-_a_role_modeling_approach}. 
 		\end{itemize}
 
 \section{Spring Framework}
-	\textbf{Spring} jest szkieletem tworzenia aplikacji w języku Java dla platformy Java (Standard Edition oraz Enterprise Edition) opisywanym jako \textit{lekki szkielet aplikacji}. Lekkość szablonu odnosi się tutaj nie do rozmiarów całości, ale do filozofii, jaka przyświecała i cały czas przyświeca \textbf{Spring'owi}, która nie wymusza konkretnego stylu programowania czy też używania konkretnych zewnętrznych bibliotek, jednocześnie dając możliwość integracji praktycznie dowolnej. Dobrym przykładem jest mnogość opcji do wyboru w przypadku pisania warstwy widoku aplikacji internetowej. Spring oferuje wsparcia czystego JSP (ze wsparciem tagów JSTL) jednocześnie dając możliwość użycia takich bibliotek jak Velocity, FreeMarker, XSLT czy Apache Tiles.
+	\textbf{Spring} jest szkieletem tworzenia aplikacji w języku Java dla platformy Java (Standard Edition oraz Enterprise Edition) opisywanym jako \textit{lekki szkielet aplikacji}. Lekkość szablonu odnosi się tutaj nie do rozmiarów całości, ale do filozofii, jaka przyświecała i cały czas przyświeca \textbf{Spring'owi}. Nie wymusza konkretnego stylu programowania czy też używania konkretnych zewnętrznych bibliotek, jednocześnie dając możliwość praktycznie dowolnej integracji. Dobrym przykładem jest mnogość opcji, które można wybrać w przypadku pisania warstwy widoku aplikacji internetowej. Spring oferuje wsparcie czystego JSP (ze wsparciem tagów JSTL) jednocześnie dając możliwość użycia takich bibliotek jak Velocity, FreeMarker, XSLT czy Apache Tiles.
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=0.95\textwidth]{images/spring-overview}
@@ -53,220 +45,166 @@
 		}
 		\label{c3:information_level_figure}
 	\end{figure}	
-	 \textbf{Spring} składa się z ponad 20 samodzielnych modułów pogrupowanych zgodnie z obszarem, które wspierają:
+	 \textbf{Spring} składa się z ponad 20 samodzielnych modułów pogrupowanych zgodnie z obszarem:
 	 \begin{itemize}
-	 	\item \textbf{Core Container} - fundament szkieletu na którym oparte są pozostałe modułu. Definiuje funkcjonalność \textbf{Dependency Injection} oraz odwróconego sterowania\footnote{IoC - Inversion Of Control} oraz posiada definicję obiektów takich jak \textbf{Bean}, \textbf{Context}. Ostatecznie zawiera w sobie klasy niezbędne do ładowania zasobów, lokalizacji\footnote{Lokalizacja - internacjonalizacja aplikacja, wsparcie dla więcej niż jednego języka} oraz \textbf{Expression Language} - manipulowania obiektami poprzez wyrażanie zapisane czystym tekstem, które później są tłumaczone na odpowiednie wywołania programowe,
-	 	\item \textbf{Data Access/Integration} - określa sposób dostępu dla takich źródeł danych jak bazy danych, pliki XML, zdalne źródła danych dostępne przez protokół JMS. Najważniejszą zaletą jest maksymalizacja wykorzystanie spójnych interfejsów do dostępu do danych i ukrycie ich źródła.  
-	 	\item \textbf{Web} - jego zadaniem jest umieszczenia aplikacji działającej w kontenerze Spring w kontekście kontenera servlet'ów\footnote{Servlet Container - komponent serwera aplikacji internetowej zarządzający między innymi cyklem życia servlet'ów, mapowaniem adresów URL}. 
+	 	\item \textbf{Core Container} - fundament szkieletu na którym oparte są pozostałe modułu. Definiuje on funkcjonalność \textbf{Dependency Injection} oraz odwróconego sterowania\footnote{IoC - Inversion Of Control}, a także posiada definicję obiektów takich jak \textbf{Bean}, \textbf{Context}. Ostatecznie zawiera w sobie klasy niezbędne do ładowania zasobów, lokalizacji\footnote{Lokalizacja - internacjonalizacja aplikacja, wsparcie dla więcej niż jednego języka} oraz \textbf{Expression Language} - manipulowania obiektami poprzez wyrażania zapisane czystym tekstem, które są później tłumaczone na odpowiednie wywołania programowe,
+	 	\item \textbf{Data Access/Integration} - określa sposób dostępu dla takich źródeł danych jak bazy danych, pliki XML, czy też zdalne źródła danych dostępne przez protokół JMS. Najważniejszą zaletą jest maksymalne wykorzystanie spójnych interfejsów do dostępu do danych i ukrycie ich źródła.  
+	 	\item \textbf{Web} - jego zadaniem jest umieszczenie aplikacji działającej w kontenerze Spring w kontekście kontenera serwletów\footnote{Servlet Container - komponent serwera aplikacji internetowej zarządzający między innymi cyklem życia serwletów, mapowaniem adresów URL}. 
 	 	\item \textbf{AOP} - dostarcza sposoby oraz środki do programowania aspektowego\footnote{Aspect Oriented Programming - sposób na zmniejszenie wzajemnej zależności klas oraz objęciem pewną funkcjonalnością pewnych obszarów aplikacji bez jawnego wykorzystania w nich konkretnych klas. Logika zdefiniowana w pojedynczym miejscu jest wykorzystywana w wielu miejscach}.
 	 \end{itemize}
-	 Modularna budowa jest praktyczną realizacją koncepcji odseparowania obszarów funkcjonalnych. Dzięki temu podejściu \textbf{Spring Framework} można użyć w dowolnej konfiguracji, korzystając jedynie z wstrzykiwania zależności lub odwróconego sterowania, ale także możliwe jest dodania kolejnych jego elementów odpowiedzialnych za architekturę MVC dla aplikacji trójwarstwowych lub \textbf{AOP}, jeśli w konkretnym przypadku użycia istnieje konieczność dostarczenie pewnego kodu realizującego funkcje tak jak walidacja dostępu na podstawie uprawnień. Implementacja bez użycia \textbf{AOP} wymagała by wprowadzenia do każdej z metod kodu sprawdzającego dostęp i podniosła niechciany współczynnik ścisłej zależności między klasami. 
+	 Modularna budowa jest praktyczną realizacją koncepcji odseparowania obszarów funkcjonalnych. Dzięki temu podejściu \textbf{Spring Framework} może być użyty w dowolnej konfiguracji, korzystając jedynie z wstrzykiwania zależności, odwróconego sterowania lub kolejnych modułów odpowiedzialnych za architekturę MVC dla aplikacji trójwarstwowych, dostępu do danych, a także przesyłania danych protokołem JMS.
 		
 	\subsection{Użyte moduły Spring'a}
+	
+		\subsubsection{Spring MVC}
+		\label{app:spring_mvc}
+		\textbf{Spring MVC} jest zorganizowany wokół centralnego servletu \texbf{DispatcherServlet} oraz klas opatrzonych adnotacjami: \texbf{@Controller} lub \texbf{@RestController} - \textbf{kontrolerów}. Kontrolery są punktem łączącym warstwę widoku oraz logiki biznesowej. Konfigurowane za pomocą adnotacji są alternatywą dla standardowych serwletów. Ich główną zaletą jest możliwość ich wykorzystania w wielu przypadkach użycia, jako obiektów wywołujących operacje warstwy logiki biznesowej lub wspierających przetwarzanie danych z formularzy. Korzystając z takiego podejścia, programista nie jest zmuszony do definiowania kilku, bądź kilkunastu oddzielnych serwletów, z których każdy odpowiadałby innemu przypadkowi użycia\footnote{\textbf{Przypadek użycia} (ang. usecase) jest sposobem opisu wymagań aplikacji na poziomie interakcji między użytkownikiem końcowym (aktorem), a systemem} lub pisania własnego silnika, który pozwalałby na generyczne i automatyczne wywołania konkretnych metod w zależności od adresu odpowiadającemu danemu kontrolerowi. 
 		
-	\paragraph{Spring MVC}\label{app:spring_mvc}
-	\textbf{MVC}\footnote{\textbf{M}odel-\textbf{V}iew-\textbf{C}ontroller} jest wzorcem programistycznym właściwym dla implementowania warstwy interfejsu użytkownika, gdzie nacisk położony jest na ścisłe odseparowanie warstw \textbf{widoku},\textbf{dostępu do danych} oraz \textbf{logiki biznesowej}. \textbf{Spring MVC} jest zorganizowany wokół centralnego servletu \texttt{DispatcherServlet} oraz klas z adnotacjami\texttt{@Controller} lub \texttt{@RestController} - \textbf{kontrolerów}. Adnotacje są implementacją konfigurowalnego mapowania adresów. Korzystając z takiego podejścia, programista nie jest zmuszony do definiowania kilku, bądź kilkunastu oddzielnych servletów, z których każdy odpowiada innemu przypadkowi użycia\footnote{\textbf{Przypadek użycia} (ang. usecase) jest sposobem opisu wymagań aplikacji na poziomie interakcji między użytkownikiem końcowym (aktorem), a systemem} lub pisania własnego silnika, który pozwalał by na generyczne i automatyczne wywołania konkretnych metod lub klas w zależności od podanego adresu lub jego części. Oprócz kontrolerów, \texttt{DispatcherServlet} wspiera także klasy, których zadaniem jest implementacja walidacji obiektów używanych w formularzach. Same obiekty nie podlegają żadnym konkretnym regułom wymuszonym przez framework. Są to tak zwane \textbf{POJO}. Spring jest odpowiedzialny za ewentualne walidacja, transformacje (z/do XML'a lub JSON'a) lub konwersje. Ostatecznie programista nie jest zmuszony do wykorzystanie konkretnej warstwy widoku, ponieważ \textbf{Spring MVC} daje możliwości korzystania z wielu różnych widoków w wielu różnych kontekstach. Zależnie więc od przypadku użycia widok może być rozumiany jako zwykły plik JSP, jako część lub konkretny widok w technologii \textbf{Apache Tiles}, a nawet plik PDF. Ponadto istnieje wsparcie dla widoków ładowanych przez \textbf{Ajax}, co bezpośrednio przekłada się na zoptymalizowanie częściowe ładowania stron.
+		W warstwie kontrolerów wykorzystywany jest wysoce elastyczny mechanizm odpowiedzialny za konwertowanie danych między niekompatybilnymi typami. Dzięki niemu praktycznie nie istnieje konieczność tworzenia własnych mechanizmów przeznaczonych do tego celu. Ponadto wszelkie błędy związane z tym procesem nie są traktowane jako błędy systemu, ale jako błędy konwersji. Odciąża to programistę od implementowania kolejnych klas, których pola odpowiadają skomplikowanym cechom właściwego modelu danych, a które, z uwagi na brak możliwości przedstawienia ich w pierwotnej formie, musiałyby być przedstawione jako typy znakowe. 
+		
+		Ostatecznie \textbf{Spring MVC} oferuje wsparcie dla operacji, której celem jest zrenderowanie pewnego widoku. Kontroler jest najczęściej odpowiedzialny za przygotowanie danych, które zostaną umieszczone w odpowiedzi wysłanej do klienta, oraz wybranie widoku poprzez unikatową nazwę. Dalszy proces zależy od wybranej technologii, użytej dla implementacji warstwy widoku. Istnieje możliwość wykorzystania zarówno plików JSP, jak i bibliotek gdzie końcowy widok jest złożeniem kilku innych. Z drugiej strony, kontroler nie jest ograniczony jedynie do wybrania widoków. Programista ma możliwość zwracania kompletnych kolekcji obiektów, które później zostaną wysłane do klienta w formacie JSON lub XML. Wybrany format może zostać łatwo zmieniony poprzez odpowiednią konfigurację projektu. 
+		
+		Głównymi zaletami \textbf{SpringMVC} są:
+		\begin{itemize}
+			\item wyraźny podział obowiązków pomiędzy poszczególnymi artefaktami (kontrolery, walidatory, formularze),
+			\item uproszczona oraz wysoce elastyczna konfiguracja:
+			\begin{itemize}
+				\item adres pod którym kontroler jest dostępny,
+				\item typ żądania: \textbf{GET}, \textbf{POST}, \textbf{DELETE}, \textbf{PUT},
+				\item typ zwracanych danych: \textbf{nazwa widoku}, \textbf{JSON}, \textbf{XML},
+			\end{itemize}
+			\item brak konieczności duplikowania modelu danych,
+			\item wsparcia dla różnorodnych technologi widoku: \textbf{JSP}, \textbf{Velocity}, \textbf{Apache Tiles} lub \textbf{JSF},
+		\end{itemize}
+		
+		\subsubsection{Spring Data}
+		\label{app:spring_data}
+		Jest to praktyczne rozwiązanie problemu związanego z implementacją warstwy dostępu do danych. Eliminuje konieczność implementacji szablonowego i powtarzalnego kodu, którego głównym zadaniem jest wykonanie operacji na bazie danych określanych skrótem \textbf{CRUD}\footnote{CRUD - \textit{Create}-\textit{Read}-\textit{Update}-\textit{Delete} - zbiór czterech podstawowych funkcji w aplikacji korzystających z pamięci trwałej jako nośnika przechowywania danych, które umożliwiają zarządzanie nimi.}. Warto w tym miejscu zwrócić uwagę na generyczne API, które przekłada się na wysoki poziom abstrakcji, dzięki któremu możliwe jest korzystanie z praktycznie dowolnego źródła danych poprzez jednolity interfejs. Nie ważne staje się, czy dane przechowywane są w bazie danych \textbf{MySQL} lub \textbf{Oracle}, czy też w bazach nierelacyjnych, jak na przykład \textbf{MongoDB}. 
+		
+		\subsubsection{Spring Data JPA}
+		\label{tech:spring_data_jpa}
+		\textbf{Spring Data JPA} jest częścią \textbf{Spring Data}, zawierającym artefakty szczególnie użytecznie dla relacyjnych baz danych, jak na przykład MySQL. Jednym z tych elementów są repozytoria. Repozytorium jest niczym innym jak obiektem w naszej aplikacji dzięki któremu uzyskujemy faktyczny dostęp do danych i możemy nimi zarządzać. Co ważniejsze pojęcie to jest znacznie szersze niż mogłoby się wydawać, zwłaszcza w kontekście operacji wyszukiwania. Poniższy przykład kodu (\ref{tech:jpa_repo}) pokazuje klasę \textbf{JpaRepository}. Istniejące tam deklaracje metod są jedynie rozszerzeniem tych zdefiniowanych w kolejnych interfejsach: \textbf{PagingAndSortingRepository} oraz \textbf{CrudRepository}. Niemniej widać, że nawet na wyższym poziomie abstrakcji programiści \textbf{Spring Data} zadbali o bardzo wiele możliwych przypadków użycia, co przekłada się na końcową produktywność programisty. 
+		\begin{code}
+			\inputminted[
+				lineos=true,
+				fontfamily=monospace,
+				obeytabs=true,
+				samepage=true,
+				fontsize=\scriptsize
+			]{java}{codeSamples/jpa_repo.java}
+			\caption[\textbf{JpaRepository}]{\textbf{JpaRepository} interfejs dla operacji bazodanowych na relacyjnej bazie danych w \textbf{Spring Data}}
+			\label{tech:jpa_repo}
+		\end{code}
+		Ponadto nie ma konieczności implementacji takiego interfejsu. Aby utworzyć nowe repozytorium dla konkretnego obiektu domenowego należy utworzyć nowy interfejs. Zostanie on zaimplementowany podczas działania programu poprzez proxy. W tym miejscu proxy jest pośrednikiem, gdzie odbywa się proces tłumaczenia wywołań metod repozytorium na kwerendy SQL. Repozytoria posiadają także inną, bardzo interesującą cechę - automatyczne mapowanie metod na kwerendy. Jest to alternatywa dla nazywanych kwerend znanych ze standardu \textbf{JPA}. Zapytanie SQL pobierane jest z nazwy metody, co oczywiście wymusza pewną konwencję nazewnictwa. Niemniej jest to koncepcja ciekawa i idealnie nadaje się do tworzenia zapytań odnoszących się do 1 lub 2 atrybutów danego obiektu, których użycie jest równoznaczne z wykorzystaniem operatora \textbf{where} języka SQL. Wywołanie jest silnie typizowane, dlatego programista ma pewność, że obiekt będzie tego typu, który go interesuje. Dla bardziej skomplikowanych kwerend istnieje możliwość zadeklarowanie metody i oznaczenia jej adnotacją \textit{\@{}Query} z kodem JPQL \cite{jpql} \cite{spring_data}.
+			
+		Głównymi zaletami \textbf{Spring Data JPA} są:
+		\begin{itemize}
+			\item silne typizowanie danych,
+			\item automatyczne tłumaczenie nazw metod na kwerendy SQL,
+			\item szeroka gama operacji wyszukiwania,
+			\item gotowa implementacja operacji \textbf{CRUD},
+			\item uproszczona konfiguracja,
+			\item jednolite interfejsy dostępu do danych, niezależne od źródła danych,
+			\item minimalna ilość kodu niezbędna do utworzenia repozytoriów dla obiektów modelu danych
+		\end{itemize}
+		
+		\subsubsection{Spring Security}	
+		W momencie pisania aplikacji w technologii \textbf{Java EE}\footnote{Java Enterprise Editition} nie można zapomnieć o problemie nieautoryzowanego dostępu do strony lub do niektórych jej części. Sposób uzyskania takiej funkcjonalności jest zależny od kontenera w którym działamy. Inaczej to zagadnienie rozwiązywane jest w przypadku \textbf{Apache Tomcat}, a inaczej w przypadku \textbf{JBoss}. Oba z nich są serwerami aplikacji Javy, niemniej tak samo jak identyczny jest cel ich istnienia, tak samo różna jest implementacja kwestii autoryzacji. Dzięki \textbf{Spring Security} programista może korzystać z niezależnego od kontenera, wysoce konfigurowalnego mechanizmu kontroli dostępu do zasobów. W tym miejscu warto nadmienić, że moduł można dostosować do weryfikacji użytkowników zarówno z wykorzystaniem bazy danych, jak i stałej listy zawierającej nazwy użytkowników posiadających dostęp do aplikacji. Ponadto niewielkim nakładem pracy można dodać mechanizm kontroli, znany pod nazwą \textbf{Access Control List}. Jest to koncepcja, gdzie prawa dostępu (zarówno zapisu, odczytu czy tez modyfikacji) związane są z konkretnym typem obiektu. Wszystkie wyżej wymienione cechy czynią \textbf{Spring Security} doskonałym wyborem do ochrony wrażliwych elementów aplikacji internetowej. 
+		
+		\subsubsection{Spring HATEOAS}
+		\label{tech:spring_heatoas}
+		\cite{spring_hateos} Jest to praktyczna implementacja paradygmatu znanego jako \textbf{HATEOAS - Hypermedia as the Engine of Application State}. W przypadku \textbf{HATEOAS} duży procent funkcjonalności aplikacji jest oferowany w postaci hiperłączy powiązanych z obiektami. To, co wyróżnia to podejście to fakt, że klienci nie muszą znać funkcjonalności do momentu, kiedy jest ona im prezentowana na stronie internetowej. Przykładowa odpowiedź w rozumieniu tego paradygmatu mogłaby wyglądać następująco:
+		\begin{code}
+			\begin{minted}[fontfamily=courier,obeytabs=true,samepage=true,fontsize=\small]{json}
+	{
+	    "name"	   : "John",
+	    "lastname"	: "Doe",
+	    "links"	   : [
+	        {
+	            "rel" : "self",
+	            "href": "http://localhost/customer/1"
+	        },
+	        {
+	            "rel" : "parent",
+	            "href": "http://localhost/customer/1/parent"
+	        }
+	    ]
+	}
+			\end{minted}
+			\caption[Spring HATEOAS - Przykładowa odpowiedź]{Przykładowa odpowiedź serwera na akcję w rozumieniu paradygmatu HATEOAS}
+			\label{app:spring_hetoas_response_example}
+		\end{code}
+		
+		\subsubsection{Spring Web Flow}	
+		\label{tech:spring_web_flow}
+		\begin{quotation}
+			``Przemieszczenia się kogoś, czegoś, przekazywanie, obieg czegoś.''\cite{polish_dictionary}
+		\end{quotation}
+		\textbf{SWF}\footnote{Skrót od Spring Web Flow} jest szczególnie użyteczne gdy aplikacja wymaga powtarzalności tych samych kroków w więcej niż jednym kontekście. Czasami taka sekwencja operacji jest częścią większego komponentu, co desygnuje je do wyodrębnienia ich jako samodzielnego modułu. Najlepszym przykładem użycia są w tym wypadku różnego rodzaju formularze służące do rejestracji użytkowników czy też kreatory nowych obiektów, gdzie umieszczenie wszystkich wymaganych pól na jednej stronie mogłoby zaciemnić obraz i uniemożliwić użytkownikowi zrozumienie działania. Ponieważ \textbf{SWF} jest modułem Spring, jest on w pełni zintegrowany z platformą \textbf{Spring MVC} \ref{app:spring_mvc} oraz silnikiem walidacji i konwersji typów.
+		
+		\textbf{Flow} \cite{spring_swf_reference} - jest centralnym obiektem modułu, w którym definiowane są kolejne kroki przepływu. Dzięki deklaratywnemu językowi XML definicje są czytelne, a możliwości których dostarcza \textbf{SWF} pozwala na kreowanie sekwencji w dowolny sposób, łączenie kroków z modelem danych, korzystania z podstawowych jak i zaawansowanych mechanizmów implementacji akcji. Akcje zawierają właściwą logikę biznesową dla konkretnej fazy przepływu, ale także pozwalają na pobieranie danych wejściowych oraz zwracanie wyników na ich podstawie. Są także zalecanym sposobem obsługi błędów związanych z logiką biznesową. 
+		
+		\begin{code}
+			\inputminted[
+				lineos=true,
+				firstline=47,
+				lastline=55,
+				fontfamily=monospace,
+				obeytabs=true,
+				samepage=true,
+				fontsize=\scriptsize
+			]{xml}{../SpringAtom/src/main/webapp/ui/wizard/NewReportWizard/flow.xml}
+			\caption[Deklaratywna deklaracja stanu - kroku dla przepływu w rozumieniu \textbf{Spring Web Flow}}
+			\label{app:swf_view_state}
+		\end{code}
+		Przykład \ref{app:swf_view_state} pokazuje kod XML, który definiuje jeden z kroków - stanów. Powyższy przykład korzysta z klasy \begin{code}org.springframework.webflow.action.FormAction\end{code}. Metoda \begin{code}setupForm\end{code} może służyć między innymi do wprowadzenia danych wejściowych do kontekstu przepływu.
+		\begin{code}
+			\inputminted[
+				lineos=true,
+				firstline=69,
+				lastline=76,
+				fontfamily=monospace,
+				obeytabs=true,
+				samepage=true,
+				fontsize=\scriptsize
+			]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
+			% src file used
+			\caption[Metoda \textit{setupForm} dla \textbf{Spring Web Flow}]{\textit{PickEntityFormAction\#{}setupForm} - metoda
+				\textit{setupForm} wykorzystywana w definicji kroku \ref{app:swf_view_state} do umieszczenia danych w kontekście
+				przepływu
+			}
+			\label{app:swf_setupForm}
+		\end{code}
+	
+\section{JPA - Java Persistance API}
+\label{tech:jpa}
+	\textbf{JPA - Java Persistance API} jest standardem określającym reguły opisu mapowania obiektowo-relacyjnego dla języka \textbf{Java}. W aplikacji demonstracyjnej \textbf{JPA} została zastosowana do opisania wszystkich obiektów należących do modelu danych na poziomie nazw tabel, nazw kolumn oraz wzajemnych powiązań między różnymi obiektami, czyli innymi słowy relacji klucz główny - klucz obcy na poziomie tabel w bazie danych. Użycie standardu jako sposobu specyfikacji modelu danych, zostało podyktowane wykorzystaniem tego samego standardu przez inne biblioteki, a w konsekwencji moduły aplikacji. 
+	
+\section{Hibernate - Object Relational Mapping}
+\label{tech:hibernate}
+	Wykorzystanie \textbf{Hibernate} w aplikacji jest w głównej mierze transparentne. Dzięki \textbf{Spring Data (\ref{app:spring_data})} rola silnika ORM zostaje zmniejszona do wykonawcy mapowania obiektowo relacyjnego. W swojej najnowszej wersji \textbf{Hibernate}, pomijając część specyficznych dla siebie sytuacji, opiera się o standard \textbf{JPA} \ref{tech:jpa}. Takie podejście pozwala ponownie na zaprojektowanie modelu danych, którego przenośność jest wysoka, a migracja do innego szkieletu aplikacji ORM ogranicza się do wybrania takiego, który obsługiwałby standard. 
 
-	\paragraph{Spring Data - Spring Data JPA}\label{app:spring_data}
-	\textbf{Spring Data} jest praktycznym rozwiązaniem problemu związanego z implementacją warstwy dostępu do danych. Ów problem odnosi się do pisania szablonowego kodu, którego głównym zadaniem jest wykonanie operacji określanych skrótem \textbf{CRUD}\footnote{CRUD - \textit{Create}-\textit{Read}-\textit{Update}-\textit{Delete} - zbiór czterech podstawowych funkcji w aplikacji korzystających z pamięci trwałej jako nośnika przechowywania danych, które umożliwiają zarządzanie nimi.}. Przy jednoczesnym zapewnieniu prostoty użytkowania, bardzo wysokim poziomie abstrakcji jest to biblioteka dzięki której ilość właściwego kodu, a przez to jego efektywność, realizującego specyficzne wymagania danej aplikacji jest maksymalnie niska. Warto w tym miejscu zwrócić uwagę na generyczne API, które przekłada się na wspomniany poziom abstrakcji, dzięki któremu możliwe jest korzystania z praktycznie dowolnego źródła danych przez zunifikowany interfejs. Nie ważne staje się, czy dane przechowywane są w bazie danych \textbf{MySQL} lub \textbf{Oracle}, czy też w bazach nierelacyjnych jako \textbf{Mongo}. Dzięki temu otrzymany kod jest wysoce przenośny, a zmiana źródła danych wiążę się jedynie z poprawkami w definicji modelu danych. Ponadto elementy takie ujednolicona hierarchia wyjątków, rozszerzalność stanowią wspólnie o sile \textbf{Spring Data}.
-	
-	\label{tech:spring_data_jpa}
-	\textbf{Spring Data JPA} jest pod modułem \textbf{Spring Data}, które zawiera klasy oraz interfejsy szczególnie użytecznie jeśliźródło danych aplikacji jest relacyjną bazą danych jak na przykład MySQL. Jednym z tych elementów są repozytoria.Repozytorium jest niczym innym jak obiektem w naszej aplikacji dzięki któremu uzyskujemy faktyczny dostęp do danych i możemynimi zarządzać dzięki wspomnianym operacjom CRUD. Co ważniejsze pojęcie to jest znacznie szersze niż mogłobysię wydawać, zwłaszcza w kontekście operacji wyszukiwania. Poniższy przykład kodu pokazuje jedynie klasę \textbf{JpaRepository}. Istniejące tam deklaracje metod są jedynie rozszerzeniem tych zdefiniowanych w dwóch interfejsach, kolejne z siebie dziedziczących, z których \textbf{JPA Repository} rozszerza. Niemniej widać, że nawet na wyższym poziomie programiści \textbf{Spring Data} zadbali o bardzo wiele możliwych przypadków użycia, co przekłada się na końcową produktywność programisty. 
-	\begin{code}
-		\inputminted[
-			lineos=true,
-			fontfamily=monospace,
-			obeytabs=true,
-			samepage=true,
-			fontsize=\scriptsize
-		]{java}{codeSamples/jpa_repo.java}
-		\label{tech:jpa_repo}
-		\caption[\textbf{JpaRepository}]{\textbf{JpaRepository} interfejs dla operacji bazodanowych na relacyjnej bazie danych w \textbf{Spring Data}}.
-	\end{code}
-	Ponadto programista nie jest zmuszony do implementacji takiego interfejsu, a jedynym jakie zadanie jest stworzenie własnego interfejsu, który będzie posiadał typy generyczne zgodne z jego przeznaczeniem. Klasa zostanie zaimplementowana podczas działania programu poprzez proxy. Repozytoria posiadają także inną bardzo interesującą cechą - automatyczne mapowaniem metod na kwerendy. Jest to pewna alternatywa dla znanych ze standardu \textbf{JPA} nazywanych kwerend (named queries). Definicja zapytania SQL pobierana jest z nazwy metody, co oczywiścia wymusza pewną konwencję nazewnictwa. Niemniej jest to koncepcja ciekawa i idealnie nadaje się do tworzenia zapytań odnoszących się do 1 lub 2 atrybutów danego obiektu. Wywołanie jest silnie typizowane dlatego programista ma pewność, że obiekt typu, który go interesuje zostanie zwrócony. Dla bardziej skomplikowanych kwerend istnieje możliwość zadeklarowanie metody i oznaczenia ją adnotacją \textit{\@{}Query} z kodem JPQL\cite{jpql} dla interesującego nasz przypadku\cite{spring_data}.
-	
-	Jak widać \textbf{Spring Data} jest dobrze zaprojektowanym modułem, dzięki któremu programista może oszczędzić dużo czasu, którego potrzebowałby na przygotowanie całej warstwy abstrakcji potrzebnej do wykonywania wszelakiego rodzaju operacji, bez skupienia się na źródle swojego problemu - logice aplikacji. 
-
-	\paragraph{Spring Security}	
-	W momencie pisania aplikacji w technologii \textbf{Java EE}\footnote{Java Enterprise Editition} nie można zapomnieć o problemie nieautoryzowanego dostępu do strony lub do niektórych jej części. Sposób uzyskania takiej funkcjonalności jest zależny od kontenera w którym działamy. Inaczej to zagadnienie rozwiązywane jest w przypadku \textbf{Apache Tomcat},a inaczej w przypadku \textbf{JBoss}. Oba z nich są serwerami aplikacji Javy, niemniej tak samo jak identyczny jest cel ich istnienia, tak samo różna jest implementacja kwestii autoryzacji. Dzięki \textbf{Spring Security} programista może korzystać z niezależnego od kontenera wysoce konfigurowalnego mechanizmu kontroli dostępu do zasobów. W tym miejscu warto nadmienić, że moduł można dostosować do korzystanie weryfikacji użytkowników zarówno z wykorzystaniem bazy danych, stałej listy. Ponadto niewielkim nakładem pracy można dodać mechanizm kontroli znany pod nazwą \textbf{Access Control List}. Jest to koncepcja gdzie prawa dostępu (zarówno zapisu, odczytu czy tez modyfikacji) związane są z konkretnym typem obiektu. Wszystkie wyżej wymienione cechy czynią \textbf{Spring Security} doskonałym wyborem do ochrony wrażliwych elementów aplikacji internetowej. 
-
-	\paragraph{Spring HATEOAS}\cite{spring_hateos}
-	Jest to praktyczna implementacja paradygmatu znanego jako \textbf{HATEOAS - Hypermedia as the Engine of Application State} dla aplikacji wykorzystujących inny ze znanych koncepcji - \textbf{REST}. W przypadku \textbf{HATEOAS} duży procent funkcjonalności aplikacji jest oferowany w postaci hiperłączy powiązanych z obiektami. To co wyróżnia to podejście jest fakt, że klienci nie muszą znać funkcjonalności do momentu kiedy jest ona im prezentowana na stronie internetowej. Jest to możliwe ponieważ poza łączami przekierowującymi lub uruchamiającymi konkretne funkcje z serwera przekazywana są etykiety, które w czytelny sposób sygnalizują efekt akcji. 
-	W kontekście \textbf{Spring HATEOAS} należy wspomnieć, że rozwiązane jest zintegrowane z \textbf{Spring Data} i korzysta z tzw. repozytoriów danych jako źródła przez które udostępnia akcje - łącza dla każdego z obiektów. Przykładowa odpowiedź w rozumieniu tego paradygmatu mogłaby wyglądać następująco:
-	\begin{code}
-		\begin{minted}[fontfamily=courier,obeytabs=true,samepage=true,fontsize=\small]{json}
-{
-    "name"	   	: "John",
-    "lastname"	: "Doe",
-    "links"	   	: [
-        {
-            "rel" : "self",
-            "href": "http://localhost/customer/1"
-        },
-        {
-            "rel" : "parent",
-            "href": "http://localhost/customer/1/parent"
-        }
-    ]
-}
-		\end{minted}
-		\label{app:spring_hetoas_response_example}
-		\caption[Spring HATEOAS - Przykładowa odpowiedź]{Przykładowa odpowiedź serwera na akcję w rozumieniu paradygmatu HATEOAS}
-	\end{code}
-
-	\paragraph{Spring Web Flow}	
-	\begin{quotation}
-		``Przemieszczenia się kogoś, czegoś, przekazywanie, obieg czegoś.''\cite{polish_dictionary}
-	\end{quotation}
-	\textbf{SWF}\footnote{Skrót od Spring Web Flow} jest szczególnie użyteczne gdy aplikacja wymaga powtarzalności tych samych kroków
-	w więcej niż jednym kontekście. Czasami taka sekwencja operacji jest częścią większego komponentu co desygnuje je do wyodrębnienia
-	ich jako re używalnego komponentu. Najlepszym przykładem użycia są w tym wypadku różnego rodzaju formularze służące do rejestracji
-	użytkowników czy tez kreatory nowych obiektów, gdzie umieszczenie wszystkich wymaganych pól na jednej stronie mogłoby zaciemnić obraz
-	i uniemożliwić użytkownikowi zrozumienie działania. 
-	Z racji, ze \textbf{SWF} jest modułem Spring, jest on w pełni zintegrowany z platformę \textbf{Spring MVC}\ref{app:spring_mvc} oraz
-	silnikiem walidacji i konwersji, dzięki czemu programista nie jest zmuszony do tworzenia własnych rozwiązań tego typu. 
-	
-	\textbf{Flow}\cite{spring_swf_reference} - jest centralnym obiektem modułu, w którym definiowane są kolejne kroki przepływu. Dzięki
-	deklaratywnemu językowi XML definicje są czytelne, a możliwości których dostarcza \textbf{SWF} pozwala na kreowania sekwencji
-	w dowolny sposób, łączenie kroków z modelem danych, korzystania z podstawowych jak i zaawansowanych mechanizmów implementacji
-	akcji. Akcje zawierają właściwą logikę biznesową dla konkretnej fazy działania, w której możemy definiowania operacje takie
-	jak pobranie danych wejściowych czy też obsługa wyjątków. 
-	
-	\begin{code}
-		\inputminted[
-			lineos=true,
-			firstline=47,
-			lastline=55,
-			fontfamily=monospace,
-			obeytabs=true,
-			samepage=true,
-			fontsize=\scriptsize
-		]{xml}{../SpringAtom/src/main/webapp/ui/wizard/NewReportWizard/flow.xml}
-		% src file used
-		\label{app:swf_view_state}
-		\caption[Definicja kroku Spring Web Flow]{\textit{../NewReportWizard/flow.xml} - deklaratywna deklaracja stanu - kroku 
-		dla przepływu w rozumieniu \textbf{Spring Web Flow}}.
-	\end{code}
-	Przykład \ref{app:swf_view_state} pokazuje kod XML, który definiuje jeden z kroków - stanów. Powyższy przykład korzysta z klasy
-	\begin{code}org.springframework.webflow.action.FormAction\end{code}. Przykładowo metoda \begin{code}setupForm\end{code} może
-	służyć między innymi do wprowadzenia danych wejściowych do kontekstu przepływu.
-	\begin{code}
-		\inputminted[
-			lineos=true,
-			firstline=69,
-			lastline=76,
-			fontfamily=monospace,
-			obeytabs=true,
-			samepage=true,
-			fontsize=\scriptsize
-		]{java}{../SpringAtom/src/main/java/org/agatom/springatom/web/flows/wizards/wizard/rbuilder/PickEntityFormAction.java}
-		% src file used
-		\label{app:swf_setupForm}
-		\caption[Metoda \textit{setupForm} dla \textbf{Spring Web Flow}]{\textit{PickEntityFormAction\#{}setupForm} - metoda
-		\textit{setupForm} wykorzystywana w definicji kroku \ref{app:swf_view_state} do umieszczenia danych w kontekście
-		przepływu.}
-	\end{code}
-
-	\paragraph{Spring Test}
-	Testowanie w aplikacjach, zarówno biznesowych, ale także i tych których zasięg ograniczony jest do lokalnych odbiorców, jest
-	krytycznym punktem każdego programu. Test, w rozumieniu języków programowania, należy rozumieć jako kod, a dokładniej pojedynczą
-	metodą lub ich zbiór, które wywołują inne metody i weryfikują poprawność zwróconych danych pod kątem zadanych danych wejściowych.
-	Jeśli wyniki różnią się od oczekiwanych oznacza to, że test nie wykonał się poprawny.
-	Dobry test jednostkowy charakteryzuje się:
-	\begin{itemize}
-		\item powinien być zautomatyzowany i wykonywalny wielokrotnie,
-		\item powinien być łatwy w implementacji,
-		\item raz napisany, powinien być wykorzystywany,
-		\item nie powinien pozostawiać w testowanym systemie pozostałości swojego działania,
-		\item powinien wykonywać się w miarę szybko.
-	\end{itemize} \cite{the_art_of_unit_testing}.
-	
-	\textbf{Spring Test} zostało stworzone aby uprościć proces testowania kodu aplikacji. Oferuje wsparcia dla wielu różnych
-	framework'ów przeznaczonych do testów jednostkowych takich jak \textbf{JUnit} lub \textbf{TestNG}, czy też bibliotekami, których
-	celem jest dostarczanie rozwiązań umożliwiających tak zwane \textit{mockowanie}\footnote{Mock - obiekt, który symuluje działanie
-	prawdziwego obiektu. Tworzony jest aby kontrolować przebieg testu w symulowanych warunkach}. 
-	
-	Z racji tego, że omawiany tutaj moduł jest częścią \textbf{Spring Framework} należy wspomnieć o pełnej integracji z poszczególnymi
-	funkcjami. Elementy takie jak wsparcie dla \textit{Dependency Injection}, pozwalają pisać testy dla obiektów działających w
-	środowisku \textbf{MVC} czy też serwisów bazodanowych\footnote{Serwis bazodanowy - Klasa opatrzona adnotacją \textit{\@{}Service}.
-	Różni się ona od klas obsługujących operacje \textbf{CRUD} z uwagi na to, że ich głównym zadaniem jest dostarczanie funkcjonalności
-	logiki biznesowej}. 
-	
-	% modules descriptions goes here
-	
-\section{JPA - Java Persistance API}\label{tech:jpa}
-	\textbf{JPA - Java Persistance API} jest standardem określającym reguły opisu mapowania obiektowo-relacyjnego dla języka \textbf{Java}. W aplikacji demonstracyjnej \textbf{JPA} została zastosowana do: opisania wszystkich obiektów należących do modelu danych na poziomie nazw tabel, nazw oraz ograniczeń kolumn oraz wzajemnych powiązań między różnymi obiektami, czyli innymi słowy relacji klucz główny-klucz obcy na poziomie tabel w bazie danych. Użycie standardu jako sposobu specyfikacji modelu danych, zostało podyktowane wykorzystaniem tego samego standardu przez inne biblioteki, a w konsekwencji moduły aplikacji. 
-	
-\section{Hibernate - Object Relational Mapping}\label{tech:hibernate}
-	Wykorzystanie \textbf{Hibernate} w aplikacji jest w głównej mierze transparentne. Dzięki wykorzystaniu \textbf{Spring Data (\ref{app:spring_data})} rola silnika ORM może zostać zostaje zmniejszona do wykonawcy mapowania obiektowo relacyjnego. W swojej najnowszej wersji \textbf{Hibernate}, pomijając część wyjątkowych sytuacji specyficznych dla siebie, opiera się o standard \textbf{JPA}(\ref{app:jpa}). Takie podejście pozwala ponownie na zaprojektowanie modelu danych, którego przenośność jest wysoka, a migracja do innego szkieletu aplikacji ORM ogranicza się do wybrania takiego, który obsługiwałby standard. 
-
-\section{c3pO}
-	\textbf{c3p0} jest łatwą do użycia biblioteką zaprojektowaną dla \textbf{Java}, której głównym zadaniem jest realizacja postulatów zdefiniowanych przez specyfikacją \textbf{jdbc3}. Dzięki powyższej bibliotece można w łatwy sposób zdefiniować \emph{n} - połączeń z bazą danych, gdzie kolejne z nich będą wykorzystywane jeśli kolejka żądań do innych będzie już pełna. Także elementy takie jak zarządzania zajętymi zasobami, ich zwalnianie są obsługiwane przez \textbf{c3p0}. Dzięki wsparciu dla szkieletu aplikacji \textbf{Spring} konfiguracja okazuje się trywialna i polega na zadeklarowaniu
-	odpowiedniego \textbf{bean'a} w konfiguracji XML lub Java \cite{c3p0}.
+\section{c3p0}
+\label{tech:c3p0}
+	\textbf{c3p0} jest łatwą do użycia biblioteką zaprojektowaną dla \textbf{Java}, której głównym zadaniem jest realizacja postulatów zdefiniowanych przez specyfikacje \textbf{jdbc3}. Dzięki powyższej bibliotece można w łatwy sposób zdefiniować \emph{n} - połączeń z bazą danych, gdzie kolejne z nich będą wykorzystywane jeśli kolejka żądań do innych będzie już pełna. Także elementy takie jak zarządzanie zajętymi zasobami, ich zwalnianie są obsługiwane przez \textbf{c3p0}. Dzięki wsparciu dla szkieletu aplikacji \textbf{Spring} konfiguracja okazuje się trywialna i polega na zadeklarowaniu odpowiedniego obiektu w pliku konfiguracyjnym XML lub adnotacji na poziomie języka Java \cite{c3p0}.
 	
 \section{QueryDSL}
-	\textbf{QueryDSL} jest projektem \textit{OpenSource}, którego użyciu wynika z korzystania z \textbf{Spring Data JPA (\ref{app:spring_data})}. Jego główną zaletą jest możliwość interakcji z bazą danych na wysokim poziomie abstrakcji, gdzie nie jest znane, ponieważ nie ma takiej potrzeby, z jakiego silnika bazy danych korzysta aplikacja. Ponadto, w porównaniu z API Hibernate, \textbf{QueryDSL} pozwala na konstruowania silnie typizowanych zapytań lub bardziej ogólnie kwerend \textbf{HQL}\footnote{Hibernate Query Language - język kwerend SQL zorientowany obiektowo} konstruowanych w oparciu o typ znakowy \textsc{java.lang.String}. Dzięki temu programista nie jest zmuszony do rzutowania oraz wcześniejszego sprawdzania, czy obiekt który chce uzyskać odpowiada jego wymaganiom. Podczas pracy z \textbf{QueryDSL} najistotniejszym elementem jest model, który generowany jest z modelu danych podczas kompilacji przez \textbf{ATP}. Ważną cechą meta modelu jest jego niezależność od faktycznie używanego silnika danych, a najważniejszą zaletą jest to, że uzyskanym efektem są zwykłe klasy Java, dzięki czemu programista ma możliwość konstruowania kwerend ze wsparciem uzupełniania składni. 
+\label{tech:queryDSL}
+	\textbf{QueryDSL} jest projektem wspierającym \textbf{Spring Data JPA \ref{app:spring_data}}. Z tego powodu, podobnie jak \textbf{Spring Data JPA}, \textbf{QueryDSL} zostało zaprojektowane aby dostarczyć wysoko poziomowego interfejsu budowania zapytań do bazy danych. Ponadto, w porównaniu z API Hibernate, \textbf{QueryDSL} pozwala na konstruowanie silnie typizowanych zapytań. Dzięki temu programista nie jest zmuszony do rzutowania oraz wcześniejszego sprawdzania, czy obiekt, który chce uzyskać odpowiada jego wymaganiom. Podczas pracy z \textbf{QueryDSL} najistotniejszym elementem jest meta model, który generowany jest z modelu danych podczas kompilacji przez \textbf{ATP}. To, co świadczy najlepiej o \textbf{QueryDSL} to fakt, że wspomniany meta model to klasy języka Java. Wynikająca z tego korzyść polega na tym, że wraz z meta modelem, można tworzyć zapytania korzystając z uzupełnia składni, oferowanego przez praktycznie wszystkie środowiska programistyczne. Inną ważną zaletą są pola klas meta modelu. Odpowiadają one atrybutom biznesowego modelu danych, dzięki czemu nie ma konieczności pamiętania o ich wewnętrznych nazwach\footnote{Wewnętrzna nazwa - nazwa kolumn odpowiadającej danemu atrybutowi klasy modelu danych}, jakby to miało miejsce podczas pisania identycznego zapytania opartego o łączenia łańcuchów znakowych.
 	
 \section{Ehcache}
-	\textbf{Ehcache} jest biblioteką \textit{OpenSource} dostarczającą funkcjonalność pamięci podręcznej dla aplikacja Java oraz Java Enterprise. Główną zaletą posiadania takiego rozwiązania jest odciążanie bazy danych, ponieważ 	część zapytań oraz ich wyników zapisana jest w pamięci lub w systemie plików. Użyteczność tej biblioteki potwierdza zasada znana, jako \textbf{zasada Pareto}, czyli stosunku 80:20. Jeśli weźmiemy pod uwagę 20\% obiektów (np. rekordów z bazy danych),które używane są przez 80\% czasu działania aplikacji to używając pamięci podręcznych możemy poprawić wydajność aplikacji o koszt uzyskania 20\% obiektów.
+	\textbf{Ehcache} jest biblioteką dostarczającą funkcjonalność pamięci podręcznej dla aplikacji Java oraz Java Enterprise. Główną zaletą posiadania takiego rozwiązania jest odciążanie bazy danych, ponieważ część zapytań oraz ich wyników zapisana jest w pamięci lub w systemie plików. Użyteczność tej biblioteki potwierdza zasada znana, jako \textbf{zasada Pareto}, czyli stosunku 80:20. Jeśli weźmiemy pod uwagę 20\% obiektów (np. rekordów z bazy danych), które używane są przez 80\% czasu działania aplikacji to używając pamięci podręcznych możemy poprawić wydajność aplikacji o koszt uzyskania 20\% obiektów.
 	
-	W ogólnym zarysie idea działania pamięci podręcznej opiera się na tablicy asocjacyjnej, gdzie każdemu z unikatowych kluczy odpowiada pewna wartość. Podczas umieszczanie obiektu do pamięci obliczana jest unikatowa wartość klucza, po której owa wartość będzie identyfikowana. Samą pamięć można opisać jako, miejsce gdzie umieszcza się obiekty, które duplikują inne, ale do których dostęp jest bardziej długotrwały i wymaga dostępu np. do bazy danych, lub do obiektów, które są wynikami pewnych obliczeń. Podczas próby pobrania elementu z cache'u można mówić o pojęciu \textbf{hit} - element dla danego klucza zostaje znaleziony oraz o pojęciu \textbf{miss}, kiedy element o danym kluczu nie istnieje w pamięci podręcznej.\cite{ehcache_documentation_ref}
-	
-	\subsection{Warstwa abstrakcji Spring dla cache'owania obiektów}
-		W aplikacji demonstracyjnej \textbf{Ehcache} nie jest używany bezpośrednio, pomijając tworzenie domyślnych cache'ów. Cała funkcjonalność odnosząca się do ewentualnego pobierania, umieszczania oraz usuwania obiektów z odpowiadających im pamięci podręcznych realizowana jest na poziomie adnotacji:
-		\begin{center}
-			\begin{longtable}{| p{3cm} | p{13cm} |}
-				\caption[Adnotacje Spring opisujące poziom abstrakcji cache]{
-					Adnotacje Spring opisujące poziom abstrakcji cache				
-				}\tabularnewline	
-				
-				\hline
-					\multicolumn{1}{|c|}{\textbf{Adnotacja}} &
-					\multicolumn{1}{|c|}{\textbf{Funkcjonalność}} \tabularnewline
-				\hline
-				\endfirsthead
-				
-				\multicolumn{2}{c}
-				{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
-				\hline
-					\multicolumn{1}{|c|}{\textbf{Adnotacja}} &
-					\multicolumn{1}{|c|}{\textbf{Funkcjonalność}} \tabularnewline
-				\hline
-				\endhead
-					
-				\hline
-					\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
-				\endfoot
-
-				\hline \hline
-				\endlastfoot	
-				
-				\emph{Cacheable}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/Cacheable.html}} &
-				Adnotacja odnosi się do konkretnej metody lub całej klasy (w tym wypadku 
-				wszystkich zdefiniowanych w niej metod) i wskazuje, że ich argumenty mają być użyte 
-				od obliczenie klucza a wartości zwracane przez te metody będą odpowiadać wartościom klucza. 
-				Faktyczne umieszczenie obiektu w pamięci podręcznej może być pominięte
-				jeśli istnieje on już w cache'u \tabularnewline
-				\hline
-				\emph{CachePut}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/CachePut.html}} &
-				Działa podobnie jak powyższa adnotacja z tą różnicę, że każdorazowe 
-				wywołania metody opatrzonej tą adnotacją powoduje umieszczenie obiektu
-				w pamięci podręcznej \tabularnewline
-				\hline
-				\emph{CacheEvict}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/CacheEvict.html}} &
-				W przeciwieństwie to \emph{CachePut} oraz \emph{Cachable} wskazuje, 
-				że wywołania metody nią opatrzonej spowoduje usunięcie z pamięci podręcznej obiektu
-				o danym kluczu
-			\end{longtable}
-			\label{app:ehcache:spring_caches}
-		\end{center}
+	W ogólnym zarysie idea działania pamięci podręcznej opiera się na tablicy asocjacyjnej, gdzie każdemu z unikatowych kluczy odpowiada pewna wartość. Podczas umieszczania obiektu do pamięci obliczana jest unikatowa wartość klucza dla tego obiektu. Samą pamięć można opisać jako miejsce, w którym czasowo przechowuje się obiekty pochodzące z bazy danych lub wyniki długotrwałych obliczeń. Podczas próby pobrania elementu z cache można mówić o pojęciu \textbf{hit} - element dla danego klucza zostaje znaleziony oraz o pojęciu \textbf{miss}, kiedy element o danym kluczu nie istnieje w pamięci podręcznej \cite{ehcache_documentation_ref}.
 		
 \section{Apache Tiles}\label{tech:tiles}
-	\textbf{Apache Tiles} to biblioteka umożliwiająca dekompozycję widoku aplikacji na wiele niezwiązanych ze sobą bezpośrednio elementów - płytek \footnote{Z angielskiego tiles może oznaczać płytkę, w kontekście technologii ApacheTiles należy rozumieć to wyrażenie, jako element, który można wykorzystać w dowolnym szablon}. Płytki można potem dowolnie łączyć w konkretne widoki definiując je na poziomie plików XML. Główną zaletą korzystanie z podejścia ze wzorca kompozycji jest wyeliminowanie powielania się elementów stron i zastąpienie ich szablonami gotowymi do użycia w dowolnym miejscu. Dodatkową zaletą użycia tej biblioteki było gotowe wsparcie dla modułu Spring’a – Spring Webflow\ref{app:techonlog_spring_webflow}, gdzie jedną z preferowanych technologii widoku jest właśnie Apache Tiles, a także możliwość prostszego wsparcia dla \textbf{partial rendering}\footnote{Partial rendering należy rozumieć, jako usunięcie konieczności przeładowania całej strony WEB, a jedynie jej konkretnej części.} stron, gdzie podczas przechodzenia do innego adresu w rzeczywistości zamiast ładować całość strony wraz ze wszystkimi plikami \textit{CSS} oraz \textit{JavaScript}, ładuje się jedynie konkretną zawartość.
+	\textbf{Apache Tiles} to biblioteka umożliwiająca dekompozycję widoku aplikacji na wiele niezwiązanych ze sobą bezpośrednio elementów - płytek \footnote{Z angielskiego \textit{tiles} może oznaczać płytkę, w kontekście technologii \textbf{Apache Tiles} należy rozumieć to wyrażenie, jako element, który można wykorzystać w dowolnym szablonie}. Płytki można dowolnie łączyć w konkretne widoki, definiując je na poziomie plików XML. Główną zaletą korzystanie ze wzorca kompozycji jest wyeliminowanie powielania się elementów stron i zastąpienie ich szablonami gotowymi do użycia w dowolnym miejscu. Narzut obliczeniowy potrzebny na połączenie kilkunastu płytek w gotowy szablon jest akceptowalny z uwagi na obniżenie złożoności pojedynczych plików JSP oraz wyeliminowanie problemu duplikowanego kodu JSP. 
+	Dodatkową zaletą użycia tej biblioteki było gotowe wsparcie dla modułu Spring’a – Spring Webflow \ref{tech:spring_web_flow}, gdzie jedną z preferowanych technologii widoku jest właśnie Apache Tiles, a także możliwość prostszego wsparcia dla \textbf{partial rendering}\footnote{Partial rendering należy rozumieć, jako usunięcie konieczności przeładowania całej strony WEB, a jedynie jej konkretnej części.} stron, gdzie podczas przechodzenia do innego adresu w rzeczywistości zamiast ładować całość strony wraz ze wszystkimi plikami \textit{CSS} oraz \textit{JavaScript}, ładuje się jedynie treść danej strony. 
 	
 \section{Jasper Reports/Dynamic Jasper}\label{tech:jasperReports}
-	\textbf{Jasper Reports} to kompleksowe rozwiązanie dla języka \textbf{Java} wspierające tworzenie oraz generowanie reportów biznesowych dla wielu różnorodnych formatów wyjściowych: \textbf{PDF}, \textbf{XLS}, \textbf{CSV} i wielu innych. Jego główną zaletą jest pojedynczy format przechowywania raportu oraz mnogość formatów reprezentacji, a także ogromna ilość  narzędzi oraz bibliotek wspierających tworzenie, modyfikacje raportów. 
-	Z drugiej strony wiele tych narzędzi jest aplikacjami uruchamianymi na komputerach użytkowników, a nie zaprojektowanych do wykorzystania w środowisku aplikacji WEB. Z tego powodu właściwą biblioteką, która została użyta celem utworzenia raportu jest \textbf{Dynamic Jasper}. Działając po stronie serwera oraz bazując na danych wejściowych uzyskanych od użytkownika pozwala na kompilację do pliku \textit{*.jasper}. Możliwe jest ustalenie takich właściwości jak nagłówki, styl, ilość kolumn oraz typ danych w nich przechowywanych.
+	\textbf{Jasper Reports} to kompleksowe rozwiązanie dla języka \textbf{Java} wspierające tworzenie oraz generowanie raportów biznesowych dla różnorodnych formatów wyjściowych: \textbf{PDF}, \textbf{XLS}, \textbf{CSV}. Jego główną zaletą jest pojedynczy format przechowywania raportu oraz mnogość formatów reprezentacji, a także ogromna ilość  narzędzi oraz bibliotek wspierających tworzenie i modyfikacje raportów. Z drugiej strony wiele tych narzędzi jest aplikacjami uruchamianymi na komputerach użytkowników, a nie zaprojektowanych do wykorzystania w środowisku aplikacji WEB. Z tego powodu właściwą biblioteką, która została użyta celem utworzenia raportu jest \textbf{Dynamic Jasper}. Działając po stronie serwera oraz bazując na danych wejściowych uzyskanych od użytkownika pozwala na kompilację do pliku \textit{*.jasper}. Możliwe jest ustalenie takich właściwości jak nagłówki, styl, ilość kolumn oraz typ danych w nich przechowywanych.
 
 \section{Dandelion Datatables}\label{tech:dandelion}
-	\textbf{Dandelion-Datatables} jest biblioteką zaprojektowaną dla języka \textbf{Java}, której zadaniem jest wsparcie dla tworzenie tabel korzystając z użyciem tagów JSP. Instrukcje dostarczane tą drogą uruchamiają proces generowania kodu JavaScript dla wtyczki \textbf{jQuery} - \textbf{DataTables}. Nie ma konieczności bezpośredniego pisania kodu JS co pozwala na budowania responsywnych tabel bez znajomości języka JavaScript. \textbf{Dandelion Datables} pozwala na bezproblemowe sortowanie, filtrowanie oraz eksportowanie danych. 
+	\textbf{Dandelion-Datatables} jest biblioteką zaprojektowaną dla języka \textbf{Java}, której zadaniem jest wsparcie dla tworzenia tabel korzystając z użyciem tagów JSP. Instrukcje dostarczane tą drogą uruchamiają proces generowania kodu JavaScript dla wtyczki \textbf{jQuery} - \textbf{DataTables}. Nie ma konieczności bezpośredniego pisania kodu JS co pozwala na budowania responsywnych tabel bez znajomości języka JavaScript. \textbf{Dandelion Datables} pozwala na bezproblemowe sortowanie, filtrowanie oraz eksportowanie danych. 
+
+\section{Słownik pojęć} \input{chapters/chapter3/concepts.tex}
