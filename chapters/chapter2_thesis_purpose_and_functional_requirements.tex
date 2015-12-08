@@ -1,54 +1,65 @@
 \chapter{Wymogi funkcjonalne aplikacji}
 \label{chapter:app_functional_requirements}
-
-	\section{Głowna funkcjonalność biznesowa}
-		Analiza istniejących rozwiązań pozwoliła ustalić, że minimalna funkcjonalność programu realizujące wsparcie dla przedsiębiorstwa prowadzącego warsztat samochodowy nie powinna się ograniczać jedynie do wspomagania procesów: wymiany płynów eksploatacyjnych czy też napraw. Prowadzenia ewidencji klientów, pojazdów oraz ich wzajemnych powiązań przekłada się na efektywność pracy, dając jednocześnie dostęp do danych historycznych. Jest to szczególnie użyteczne w przypadku okresowych wymian oleju silnikowego czy też płynu chłodniczego, kiedy można odwołać się do danych z poprzedniej wizyty danego klienta i uzupełnić ewentualne braki magazynowe. Funkcjonalność programu dla warsztatów samochodowych to między innymi wsparcie w następujących obszarów:
-		\begin{enumerate}
-			\item \textbf{klienci}:
-			\begin{enumerate}
-				\item ewidencja, możliwość rejestracji nowych klientów,
-				\item powiązania z samochodem
-			\end{enumerate}
-			\item \textbf{samochody}:
-			\begin{enumerate}
-				\item historia własności,
-				\item historia wizyt
-			\end{enumerate}
-			\item \textbf{zlecenia serwisowe}:
-			\begin{enumerate}
-				\item wprowadzenia nowych zleceń,
-				\item edytowanie zleceń które nie zostały jeszcze zamknięte (nie minął termin ich wykonania)
-				\item tworzenia listy zadań dla każdego zlecenia,
-				\item usuwania zleceń,
-				\item powiązania zlecenie - samochód - klient
-			\end{enumerate}
-			\item \textbf{powiadomienia} - wewnętrzny system wiadomości:
-			\begin{enumerate}
-				\item powiadomienia o nowym zleceniu,
-				\item powiadomienia o zbliżającym się zleceniu,
-				\item powiadomienia o zmianie stanu zlecenia
-			\end{enumerate}
-		\end{enumerate}
+	\section{Wymogi biznesowe}
 	
-	\section{Architektura aplikacji}
-		Aplikacja została zrealizowana w architekturze trójwarstwowej według modelu MVC\footnote{Model-View-Controller}, poprzez wzgląd na rozmiar aplikacji oraz mnogość funkcji implementowanych przez program. Niejednokrotnie, z uwagi na szczegółowość modelu danych, wygodniejsze okazuje się przetwarzanie danych na poziomie serwera, co dodatkowo przemawia za wybraną architekturą. Dzięki warstwie kontrolerów można uzyskać wydajny sposób na przekazywanie informacji na linii klient-serwer, wykonanie operacji zgodnych z jej treścią i odesłanie wyniku. Skomplikowana logika biznesowa, w której na poszczególne wydarzenia należy reagować inaczej, zależnie od parametrów, jest powodem dla którego praca z danymi na poziomie klienta aplikacji mogłaby się okazać, z uwagi na konieczność pobrania dodatkowych danych z serwera, utrudniona bądź niemożliwa. Złożone przypadki można wydajniej i dokładniej obsłużyć mając dostęp do pełnego modelu danych oraz interfejsów operacji bazodanowych. Niemniej logika biznesowa nie jest jedynym powodem dla którego wybrana została architektura MVC. Kolejną przyczyną był poziom skomplikowania modelu danych, odnoszący się do ilości atrybutów oraz zależności między poszczególnymi obiektami. Powiązania, a także możliwe akcje wynikające z paradygmatu \textbf{CRUD}, wymusiły konieczność zastosowania efektywnego rozwiązania, dzięki któremu można by reagować na wspomniane akcje. 
-	\section{Minimalizacja własnego kodu}
-		W momencie projektowanie nowej aplikacji bardzo często początki pracy to tworzenie kodu potrzebnego do wykonywania powtarzalnych operacji, takich jak zapis i odczyt z bazy danych, reagowanie na zdarzenia interfejsu użytkownika czy też walidacja danych wejściowych. Nie jest to problematyczne dla małych projektów. Niestety, wraz ze wzrostem ilości linii kodu, złożoności klas czy też skomplikowania logiki biznesowej, okazuje się, że początkowo proste moduły rozrastają się w niekontrolowany sposób. Odwrotnie proporcjonalnie zmniejsza się możliwość na utrzymanie i rozbudowę kodu aplikacji. Dodatkowe problemy pojawią się wraz z wprowadzeniem do programu cache'owania, konwertowania danych między niekompatybilnymi typami, transakcji operacji bazodanowych. W tym momencie wzrost ogólnej złożoności kodu, nie będącego częścią właściwej funkcjonalności, jest jedynie jednym z problemów. Rosnąca zależność klas miedzy sobą, głębokości drzewa dziedziczenia dla klas oraz konieczność objęcia wspomnianymi elementami kolejnych obszarów programu przekłada się na zmniejszenie jakości kodu. Z tego powodu głównym założeniem części praktycznej jest wykorzystanie możliwie jak najwięcej funkcji oferowanych przez wybrane biblioteki do realizacji powtarzalnych operacji:
-		\begin{itemize}
-			\item generowanie zapytań SQL,
-			\item operacje zapisu i odczytu z/do bazy danych,
-			\item obsługa transakcji bazodanowych,
-			\item walidacja danych pod kątem logiki biznesowej,
-			\item konwertowanie danych miedzy niekompatybilnymi typami,
-			\item efektywne reagowanie na zdarzanie interfejsu użytkownika,
-			\item minimalizacja ilości kodu linii JSP, skupienie się na właściwych stronach dostarczających interfejs,
-			\item zmniejszenie kohezji między klasami,
-			\item zmniejszenie głębokości drzew dziedziczenia
-		\end{itemize}
-		Podniesienie jakości kodu oraz możliwości jego późniejszego utrzymania oraz rozszerzenia o nowe funkcje stanowi o sile każdej aplikacji. Z tego powodu był to główny wyznacznik przy projektowaniu i implementacji części praktycznej pracy dyplomowej.
-	\subsection{Generyczne moduły}
-		Generyczne moduły są odpowiedzią na podniesienie optymalności oraz możliwości późniejszego rozszerzenia aplikacji. Koszt zaprojektowania niezależnych elementów realizujących pewne zadania jest akceptowalny z uwagi na fakt, że teoretyczny moduł przeznaczony, w którym dane wejściowe to obiekty modelu danych, można następnie użyć dla nowych obiektów tego typu bez konieczności modyfikacji lub nieznacznej zmiany istniejącej funkcjonalności.
-	\section{Przewodniki - kreatory nowych obiektów}
-		Biorąc pod uwagę funkcjonalność w zakresie realizacji celów biznesowych jednym z nadrzędnych celów jest dostarczenie możliwości tworzenia nowych obiektów modelu danych. Z uwagi na stopień skomplikowania modelu, jego wzajemnych relacji, pojedyncze formularze to zły wybór. Podzielenie całego procesu na sekwencję kroków, gdzie w kolejnych etapach wprowadzamy logicznie ze sobą powiązane informacje odpowiadające pewnym cechą danego obiektu, daje możliwość, w kolejnych krokach przewodnika, uwzględniania wcześniej wpisanych treści. Ponadto przetwarzanie danych odbywa się na serwerze. Dzięki czemu istnieje dostęp do istniejących mechanizmów walidacji oraz innych danych na podstawie których możliwa jest wstępna weryfikacja obiektu na poziomie powiązań z innymi obiektami. Tym samym możliwość wprowadzenia niepoprawnych informacji, których ewentualne sprawdzenie pod kątem długości łańcuchów znakowych mogłoby nie przechwycić, zostaje zmniejszona.
-	\section{Terminarz - organizacja wizyt}
-		Z uwagi na specyfikę aplikacji, jako narzędzia służącego przede wszystkim organizacji pracy warsztatu, terminarz jest funkcją której nie można pominąć. Intuicyjne używanie kalendarza jako terminarza, gdzie zapisywane są poszczególne spotkania, wizyty czy też zadania do wykonania, jest niezwykle przydatne w tego typu aplikacjach. Terminarz przygotowany w części praktycznej posiadać będzie 3 tryby widoku: \textbf{dzienny}, \textbf{miesięczny}, \textbf{tygodniowy}. Z uwagi na częstotliwość wizyt, ilość mechaników, a co ważniejsze ilość klientów, tym samym ich samochodów, podane 3 tryby pracy z terminarzem są koniecznością. Z poziomu kalendarza będzie można tworzyć nowe wizyty, zmieniać ich godziny lub je edytować. 
+		\subsection{Główna funkcjonalność biznesowa}
+			Analiza istniejących rozwiązań pozwoliła ustalić, że minimalna funkcjonalność programu realizującego wsparcie dla przedsiębiorstwa prowadzącego warsztat samochodowy nie powinna się ograniczać jedynie do wspomagania procesów: wymiany płynów eksploatacyjnych czy też napraw. Prowadzenie ewidencji klientów, pojazdów oraz ich wzajemnych powiązań przekłada się na efektywność pracy, dając jednocześnie dostęp do danych historycznych. Jest to szczególnie użyteczne w przypadku okresowych wymian oleju silnikowego czy też płynu chłodniczego, kiedy można odwołać się do informacji z poprzedniej wizyty klienta i sprawdzić, co zostało wykonane. Funkcjonalność programu dla warsztatów samochodowych to między innymi wsparcie w następujących obszarach:
+			\begin{enumerate}
+				\item \textbf{klienci}:
+				\begin{enumerate}
+					\item ewidencja, możliwość rejestracji nowych klientów,
+					\item powiązania z samochodem
+				\end{enumerate}
+				\item \textbf{samochody}:
+				\begin{enumerate}
+					\item historia własności,
+					\item historia wizyt
+				\end{enumerate}
+				\item \textbf{zlecenia serwisowe}:
+				\begin{enumerate}
+					\item wprowadzenia nowych zleceń,
+					\item edytowanie zleceń które nie zostały jeszcze zamknięte (nie minął termin ich wykonania)
+					\item tworzenia listy zadań dla każdego zlecenia,
+					\item usuwania zleceń,
+					\item powiązania zlecenie - samochód - klient
+				\end{enumerate}
+				\item \textbf{powiadomienia} - wewnętrzny system wiadomości:
+				\begin{enumerate}
+					\item powiadomienia o nowym zleceniu,
+					\item powiadomienia o zbliżającym się zleceniu,
+					\item powiadomienia o zmianie stanu zlecenia
+				\end{enumerate}
+			\end{enumerate}
+			
+		\subsection{Przewodniki - kreatory nowych obiektów}
+			Biorąc pod uwagę funkcjonalność w zakresie realizacji celów biznesowych jednym z nadrzędnych aspektów jest dostarczenie możliwości tworzenia nowych obiektów modelu danych. Z uwagi na stopień skomplikowania modelu, jego wzajemnych relacji, pojedyncze formularze to zły wybór. Podzielenie całego procesu na sekwencję kroków, gdzie w kolejnych etapach wprowadzamy logicznie ze sobą powiązane informacje odpowiadające pewnym cechą danego obiektu, daje możliwość, w kolejnych krokach przewodnika, uwzględniania wcześniej wpisanych treści. Ponadto przetwarzanie danych odbywa się na serwerze. Dzięki czemu istnieje dostęp do istniejących mechanizmów walidacji oraz innych danych na podstawie których możliwa jest wstępna weryfikacja obiektu na poziomie powiązań z innymi obiektami. Tym samym możliwość wprowadzenia niepoprawnych informacji, których ewentualne sprawdzenie pod kątem długości łańcuchów znakowych mogłoby nie przechwycić, zostaje zmniejszona.
+		\subsection{Terminarz - organizacja wizyt}
+			Z uwagi na specyfikę aplikacji, jako narzędzia służącego przede wszystkim organizacji pracy warsztatu, terminarz jest funkcją której nie można pominąć. Intuicyjne używanie kalendarza jako terminarza, gdzie zapisywane są poszczególne spotkania, wizyty czy też zadania do wykonania, jest niezwykle przydatne w tego typu aplikacjach. Terminarz przygotowany w części praktycznej posiadać będzie 3 tryby widoku: \textbf{dzienny}, \textbf{miesięczny}, \textbf{tygodniowy}. Z uwagi na częstotliwość wizyt, ilość mechaników, a co ważniejsze ilość klientów, tym samym ich samochodów, podane 3 tryby pracy z terminarzem są koniecznością. Z poziomu kalendarza będzie można tworzyć nowe wizyty, zmieniać ich godziny lub je edytować. 
+
+	\section{Wymogi techniczne}
+	
+		\subsection{Architektura aplikacji}
+			Aplikacja, poprzez wzgląd na jej rozmiar oraz mnogość funkcji przez nią implementowanych, ma być zrealizowana w architekturze trójwarstwowej według modelu MVC\footnote{Model-View-Controller}. Niejednokrotnie, z uwagi na szczegółowość modelu danych, wygodniejsze okazuje się przetwarzanie danych na poziomie serwera, co dodatkowo przemawia za wybraną architekturą. Dzięki warstwie kontrolerów można uzyskać wydajny sposób na przekazywanie informacji na linii klient-serwer, wykonanie operacji zgodnych z jej treścią i odesłanie wyniku. Skomplikowana logika biznesowa, w której na poszczególne wydarzenia należy reagować inaczej, zależnie od parametrów, jest powodem dla którego praca z danymi na poziomie klienta aplikacji mogłaby się okazać, z uwagi na konieczność pobrania dodatkowych danych z serwera, utrudniona bądź niemożliwa. Złożone przypadki można wydajniej i dokładniej obsłużyć mając dostęp do pełnego modelu danych oraz interfejsów operacji bazodanowych. Niemniej logika biznesowa nie jest jedynym powodem dla którego wybrana została architektura MVC. Kolejną przyczyną był poziom skomplikowania modelu danych, odnoszący się do ilości atrybutów oraz zależności między poszczególnymi obiektami. Powiązania, a także możliwe akcje wynikające z paradygmatu \textbf{CRUD}, wymusiły konieczność zastosowania efektywnego rozwiązania, dzięki któremu można by reagować na wspomniane akcje. 
+		\subsection{Minimalizacja własnego kodu}
+			W momencie projektowanie nowej aplikacji bardzo często początki pracy to tworzenie kodu potrzebnego do wykonywania powtarzalnych operacji, takich jak zapis i odczyt z bazy danych, reagowanie na zdarzenia interfejsu użytkownika czy też walidacja danych wejściowych. Nie jest to problematyczne dla małych projektów. Niestety, wraz ze wzrostem ilości linii kodu, złożoności klas czy też skomplikowania logiki biznesowej, okazuje się, że początkowo proste moduły rozrastają się w niekontrolowany sposób. Odwrotnie proporcjonalnie zmniejsza się możliwość na utrzymanie i rozbudowę kodu aplikacji. Dodatkowe problemy pojawią się wraz z wprowadzeniem do programu cache'owania, konwertowania danych między niekompatybilnymi typami, transakcji operacji bazodanowych. W tym momencie wzrost ogólnej złożoności kodu, nie będącego częścią właściwej funkcjonalności, jest jedynie jednym z problemów. Rosnąca zależność klas miedzy sobą, głębokości drzewa dziedziczenia dla klas oraz konieczność objęcia wspomnianymi elementami kolejnych obszarów programu przekłada się na zmniejszenie jakości kodu. Z tego powodu głównym założeniem części praktycznej jest wykorzystanie możliwie jak najwięcej funkcji oferowanych przez wybrane biblioteki do realizacji powtarzalnych operacji:
+			\begin{itemize}
+				\item generowanie zapytań SQL,
+				\item operacje zapisu i odczytu z/do bazy danych,
+				\item obsługa transakcji bazodanowych,
+				\item walidacja danych pod kątem logiki biznesowej,
+				\item konwertowanie danych miedzy niekompatybilnymi typami,
+				\item efektywne reagowanie na zdarzanie interfejsu użytkownika,
+				\item minimalizacja ilości kodu linii JSP, skupienie się na właściwych stronach dostarczających interfejs,
+				\item zmniejszenie kohezji między klasami,
+				\item zmniejszenie głębokości drzew dziedziczenia
+			\end{itemize}
+			Podniesienie jakości kodu oraz możliwości jego późniejszego utrzymania oraz rozszerzenia o nowe funkcje stanowi o sile każdej aplikacji. Z tego powodu był to główny wyznacznik przy projektowaniu i implementacji części praktycznej pracy dyplomowej.
+		\subsection{Generyczne moduły}
+			Generyczne moduły są odpowiedzią na podniesienie optymalności oraz możliwości późniejszego rozszerzenia aplikacji. Koszt zaprojektowania niezależnych elementów realizujących pewne zadania jest akceptowalny z uwagi na fakt, że taki moduł może działać dla dowolnych danych wejściowych, zgodnych z jego specyfikacją, i nie ma potrzeby dostosowywania kodu do różnych typów danych. Moduły te są główną częścią aplikacji wspierającą realizację wymogów biznesowych.
+			
+		\subsubsection{Strony obiektów domenowych}
+			Strony obiektów domenowych realizować mają koncepcję dostępu do informacji, atrybutów danego obiektu, należącego do warstwy modelu danych, poprzez pojedynczą stroną internetową. Dla każdego obiektu przypisany będzie format adresu złożony z unikatowego klucza (innego dla każdego obiektu domenowego), klucza głównego (odpowiadającemu kluczowi głównego encji w bazie danych) i numeru wersji (dla obiektów wersjonowanych). Adres służyć będzie pobraniu definicji oraz informacji dla danej strony. Struktura opisywać będzie to, jakie atrybuty, i w jakiej postaci (jako wartość, tabela czy też hiperłącze), mają zostać zaprezentowane użytkownikowi. Dane, z drugiej strony, będą musiały być zgodne z wybraną dla nich reprezentacja. 
+		\subsubsection{Generowanie definicji i danych dla tabel}
+			Generowanie danych oraz definicji tabel będzie czynnością podobną, w kontekście algorytmu, do procesu prezentowania użytkownikowi strony obiektu domenowego. Główną różnicą będzie to, w jakim formacie zwracany będzie zbiór danych. Podczas, gdy dla pojedynczej strony, relacja komponent - strona to relacja jeden do jednego, tabela wyświetlać będzie wiele obiektów tego samego typu. 
+		\subsubsection{Generator szablonów dla raportów}
+			Szablony raportów będą grupą obiektów, gdzie każdy z nich zawierać będzie informacje niezbędne do utworzenia nowego raportu. Głównym wymogiem dla tego modułu będzie możliwość wybrania jednej z czterech możliwych reprezentacji: PDF, CSV, strona internetowa lub plik Excel. Ponadto, podczas tworzenia szablonu, można będzie wybrać jakie obiekty, oraz jakie atrybuty tych obiektów, znaleźć się mają w nowym szablonie. Dzięki temu, wybranego szablonu będzie można użyć w dowolnej chwili, dla dowolnego zbioru danych.

@@ -1,3 +1,4 @@
+Poniższa tabela przedstawia definicję pojęć technicznych wykorzystanych w pracy dyplomowej. 
 \begin{center}
 	\begin{longtable}{| p{3cm} | p{13cm} |}
 		\caption[Adnotacje Spring opisujące poziom abstrakcji cache]{
@@ -6,44 +7,61 @@
 		
 		\hline
 			\multicolumn{1}{|c|}{\textbf{Pojęcie}} 		&
-			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\tabularnewline
+			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\\
 		\hline
 		\endfirsthead
 		
 		\multicolumn{2}{c}
-		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+		{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \\
 		\hline
 			\multicolumn{1}{|c|}{\textbf{Pojęcie}} 		&
-			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\tabularnewline
+			\multicolumn{1}{|c|}{\textbf{Znaczenie}} 		\\
 		\hline
 		\endhead
 			
 		\hline
-			\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline
+			\multicolumn{2}{|r|}{{Następna strona...}} 	\\
 		\hline
 		\endfoot
 
 		\hline
 		\endlastfoot	
-		
+		% body of the table
+		\textbf{Dependency injection}							&
+		\label{concept:di}
+		Wstrzykiwanie zależności - jest to technika programistyczna, w której dana klasa nie jest odpowiedzialna za tworzenie obiektów od których zależy.
+		Zależność jest umieszczana w danym obiekcie, po jego utworzeniu, przez specjalnego zarządcę, posiadającego wiedzę o wszystkich obiektach istniejących w działającej aplikacji.
+		Pozwala to jednocześnie na obniżenie ścisłej zależności między dwoma klasami, a także zmniejsza zapotrzebowania na zasoby systemowe. Jest to możliwe, ponieważ, bardzo często,
+		obiekty, będące zależnościami dla innych, istnieją w kontekście danego programu, jako \textbf{singletony}. 
+		\hline
+		\textbf{Singleton}										&
+		\textbf{Singleton} jest wzorcem programistycznym, zakładającym istnienie tylko jednego obiektu danej klasy w całej aplikacji. Najczęściej taka funkcjonalność, realizowana jest poprzez
+		utworzenie klasy, która nie posiada publicznego konstruktora, a jej obiekt uzyskiwany jest poprzez statyczną metodę, zwracającą obiekt tej klasy. W kontekście szkieletów aplikacji, wspierających
+		\textbf{wstrzykiwanie zależności}, wzorzec singletonu realizowany jest na poziomie zarządcy.
+		\hline
+		\textbf{Zależność przechodnia}							&
+		\label{concept:indirect_dependency}
+		Taka zależność pojawia się w momencie kiedy aplikacja korzysta z biblioteki, która z kolei
+		korzysta z innych. Skutkiem tego jest, że aplikacja staje się zależna od bibliotek od których 
+		bezpośrednio nie zależy. Staje się to problematyczne, w momencie kiedy programista
+		zaczyna wykorzystywać funkcjonalność zdefiniowaną w nich, nie wiedząc o tym. Usunięcie bezpośredniej zależności,
+		skutkować będzie błędami kompilacji.
+		\hline
 		\textbf{Obiekt domenowy}								&
 		\label{concept:domain_object}
-		Klasy takich obiektu zdefiniowane są w modelu danych. 
-		Innymi słowy dostarczają one definicji informacji 
-		opisujących, w sposób abstrakcyjny, 
+		Klasy takich obiektów zdefiniowane są w modelu danych. 
+		Innymi słowy dostarczają one informacji opisujących, w sposób abstrakcyjny, 
 		rzeczywiste obiekty wykorzystywane w aplikacji.	
-		\tabularnewline
 		\hline
 		\textbf{Repozytorium}									&
 		\label{concept:repository}
 		Abstrakcyjne pojęcie odnoszące się do klasy obiektów - interfejsów leżących na linii
 		baza danych - aplikacja, pośredniczących w operacjach zapisu/odczytu. Implementują ideę
 		stojącą za pojęciem CRUD.
-		\tabularnewline
 		\hline
 		\textbf{CRUD}
 		\label{concept:crud}									&
-		Anglojęzyczny skrót wykorzystywany w programowaniu opisujący 4 podstawowe operacje wykonywany
+		Anglojęzyczny skrót wykorzystywany w programowaniu opisujący 4 podstawowe operacje, wykonywany
 		na pewnym źródle danych. 
 		\begin{itemize}
 			\item create - utworzyć,
@@ -51,7 +69,6 @@
 			\item update - uaktualnić, zmodyfikować, 
 			\item delete - usunąć
 		\end{itemize}	
-		\tabularnewline
 		\hline
 		\textbf{Cache}											&
 		\label{concept:cache}
@@ -65,42 +82,87 @@
 		\label{concept:atp}
 		Pojęcie odnosi się do przetwarzania adnotacji języka Java i wykonywania pewnych operacji
 		i/lub generowania wyniku.
-		\tabularnewline
 		\hline
 		\textbf{Adnotacje}										&
 		\label{concept:annotation}
 		Ideą adnotacji jest dodawanie do kodu źródłowego 
 		aplikacji metadanych.
-		\tabularnewline
 		\hline
 		\textbf{AOP}											&
 		\label{concept:aop}
 		\textbf{Aspect Oriented Programming} jest paradygmatem programistycznym zwiększającym
-		skalowalność, zmniejszającym kohezję klas i tym samym eliminującym tak zwana \textit{ścisłe zależności}. 
+		skalowalność, zmniejszającym kohezję klas i tym samym eliminującym tak zwane \textit{ścisłe zależności}. 
 		Programowanie z jego wykorzystaniem odwołuje się do organizacji kodu w tak zwane \textit{aspekty} realizujące
 		pewną logikę. Aspekt swoim zasięgiem jest w stanie objęć więcej niż jeden poziom abstrakcji
-		zdefiniowanego z użyciem technik programowania obiektowego jak na przykład wzorce strategii 
+		zdefiniowany z użyciem technik programowania obiektowego jak na przykład wzorce strategii 
 		czy też fabryk.
-		\tabularnewline
 		\hline 
 		\textbf{Kohezja}										&
 		\label{concept:cohesion}
 		Kohezja, w odniesieniu do programowania, 
 		oznacza stopień w jakim dwie klasy są zależne 
 		od siebie.
-		\tabularnewline
+		\hline 
+		\textbf{ORM}										&
+		\label{concept:orm}
+		Z angielskiego, \textbf{Object/Relational Mapping}, jest to technika programistyczna, w założeniu implementująca
+		proces konwertowania danych, które nie są obiektami, jak krotki w bazie danych, na model zaprojektowany, zgodnie
+		z wytycznymi programowania obiektowego. W wyniku tego, programista uzyskuje dostęp do wirtualnej bazy danych. 
 		\hline 
 		\textbf{Getter/Setter}									&
 		\label{concept:getter_setter}
 		Zwyczajowe pojęcia opisujące metody 
 		dostępowe klasy służące do pobierania lub ustawienia 
-		wartości pól danej obiektu tej klasy
-		\tabularnewline
+		wartości pól obiektów tej klasy
 		\hline
 		\textbf{API}											&
 		\label{concept:api}
 		Ściśle określony zbiór reguł i metod, dzięki którym program może się komunikować ze sobą lub z innym programem.
-		\label{concept:api}  
+		\hline
+		\textbf{JMS}											&
+		\label{concept:jms}
+		\textbf{Java Message Service} to część języka Java, która pozwala dwóm i więcej programom komunikować się
+		poprzez jednolity interfejs oraz format wiadomości \cite{java_jms}.
+		\hline
+		\textbf{JMX}											&
+		\label{concept:jmx}
+		\textbf{Java Management Extensions} jest technologią, która jest częścią standardowej biblioteki Java.
+		Dzięki JMX można kontrolować stan aplikacji i urządzeń oraz dynamicznie wpływać na ich stan \cite{java_jmx}.
+		\hline	
+		\textbf{Best practice}									&
+		\label{concept:best_practices}
+		Zalecane i pożądane sposoby realizacji często spotykanych problemów, które można napotkać, podczas projektowania
+		aplikacji			
+		\hline
+		\textbf{DRY}
+		\label{concept:dry}										&
+		\textbf{Dont Repeat Yourself} - zasada negująca implementacje rozwiązań problemów, które już zostały rozwiązane.
+		\hline
+		\textbf{Artefakt}										&
+		\label{concept:artifact}
+		Artefakt, w kontekście programowania obiektowego w Java, jest pojęciem jednocześnie opisującym takie elementy tego
+		języka jak klasy, interfejsy oraz paczki (zbiór klas i interfejsów).
+		\hline
+		\textbf{Predykat}										&
+		\label{concept:predicate}
+		Predykat, coś co umożliwia ustalenie czegoś. Predykat można rozumieć jako kompozycję wyrażań logicznych lub specjalny 
+		rodzaj metody weryfikującej zadany problem pod kątem ustalenia wartości prawda/fałsz.
+		\hline
+		\textbf{Classpath}										&
+		\label{concept:classpath}
+		\textbf{Classpath} - ścieżka klas, jest parametrem maszyny wirtualnej Java, który wskazuje na lokalizację folderu w systemie plików, gdzie znajduje 
+		się skompilowane klasy Javy.
+		\hline
+		\textbf{Rewizja}										&
+		\label{concept:revision}
+		Rewizja jest specjalnym numerem, który jest bezpośrednio związany z historią zmian obiektu domenowego. Każda modyfikacja takiego obiektu oznacza w 
+		praktyce utworzenie nowej rewizji. 
+		\hline
+		\textbf{Lokalizacja}									&
+		Lokalizacja, w kontekście dowolnej aplikacji, należy rozumieć jako możliwość programu do wsparcia więcej niż jednego języka interfejsu użytkownika.
+		\hline
+		\textbf{Przypadek użycia}								&
+		Sposób opisu wymagań aplikacji na poziomie interakcji między użytkownikiem aplikacji, a nią samą lub konkretna sytuacja występująca w programie.
 	\end{longtable}
 	\label{app:ehcache:spring_caches}
 \end{center}

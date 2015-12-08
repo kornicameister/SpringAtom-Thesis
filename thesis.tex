@@ -2,10 +2,28 @@
 \input{settings/packages.tex}
 \input{settings/settings.tex}
 
-\bibliography{books}
+\DeclareGraphicsExtensions{.pdf,.png}
 	
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}  
+
+\bibliographystyle{plunsrt}
+\bibliography{books}
+
 \begin{document}
 	% title page holder
+		\includepdf{title_page}
+		\clearpage
 	% title page holder
 	
 	% table of contents
@@ -22,5 +40,8 @@
 	% chapters
 	
 	\includeWithClear{listining_gen}
+	
+	\appendix
+	\includeWithClear{appendix/appendixes}
 
 \end{document}

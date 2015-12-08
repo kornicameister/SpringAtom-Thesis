@@ -1,90 +1,61 @@
-\subsubsection{ReportBuilder - reporty biznesowe}
-	\textbf{ReportBuilder} jest narzędziem będącym obecnie w fazie rozwoju, niemniej pozwalającym już teraz na tworzenie raportów biznesowych. Dedykowany dla użytkownika, daje mu możliwość wybrania zbioru interesujących go tabel, kolumn które zebrane razem stanowią logiczny zbiór używany w dalszej kolejności do konstrukcji zapytania do bazy danych i utworzenia gotowego raportu. Nie udało się znaleźć żadnego rozwiązania, które można by wykorzystać bezpośrednio w aplikacji WEB. Przewodnik składa się z 4 wymaganych kroków:
+Przewodniki tworzenia nowych obiektów zostały oparte o bibliotekę \textbf{Spring WebFlow} (\ref{tech:spring_web_flow}). Każdy z kreatorów opisany jest na trzech płaszczyznach. Jedną z nich jest warstwa widoku. Widok składa się z plików \textbf{JSP}, gdzie każdy z nich zawiera formularz pozwalający na wprowadzenie danych. Relacja między nimi a przewodnikiem opisana jest przez relację jeden do jednego - jeden formularz przypada na jeden plik \textbf{JSP}. Definicja pełnej sekwencji kroków zapisana jest w pliku \textbf{XML}, zrozumiały dla biblioteki \textbf{Apache Tiles}. Po drugiej stronie istnieje natomiast opis przepływu. Przepływ, w rozumieniu biblioteki \textbf{Spring WebFlow}, to sekwencja kolejnych widoków, prezentowanych użytkownikowi oraz możliwych przejść z danego kroku do innych. Trzecia płaszczyzna to klasy języka Java, w których zdefiniowana została logika dla każdego z kroków. Zadaniem tych klas jest przygotowanie danych, które przekazane zostaną do widoku tuż przed jego wyświetleniem, pozwalającym tym samym pokazać elementy takie jak listy rozwijane. Umożliwiają również przetworzenie surowych danych, które użytkownik wprowadził w formularzu, na zrozumiałą dla aplikacji postać. Współpraca wszystkich trzech płaszczyzn zapewniona jest przez bibliotekę \textbf{Spring WebFlow}, która efektywnie mapuje żądania pochodzące od klienta, na, w pierwszej kolejności właściwy moment przepływu, a w dalszej, na klasy obsługujące ten moment. 
+
+\subsection{Kreator nowego szablonu raportu}
+\label{wizard:rbuilder}
+	\textbf{ReportBuilder} jest narzędziem będącym obecnie w fazie rozwoju, niemniej pozwalającym już teraz na tworzenie raportów biznesowych. Dedykowany dla użytkownika, daje mu możliwość wybrania zbioru interesujących go tabel, kolumn które zebrane razem stanowią logiczny zbiór używany w dalszej kolejności do konstrukcji zapytania do bazy danych i utworzenia gotowego raportu. Przewodnik składa się z 3 kroków:
 	\begin{enumerate}
-		\item wybranie tabeli, dla której wygenerowany zostanie raport
+		\item wybranie tabeli lub tabel, dla której wygenerowany zostanie raport
 		\item dostosowanie formatowania kolumn,
-		\item podanie danych opisujących raport: tytuł, podtytuł, opis.
-	\end{enumerate}		
+		\item podanie danych opisujących raport: tytuł, podtytuł, komentarz
+	\end{enumerate}			
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/rbuilder_step1}
-		\caption[Kreator nowego raportu - krok 1]{
-			Kreator nowego raportu - krok 1
-		}
+		\includegraphics[width=0.80\textwidth]{images/rbuilder_step1}
+		\caption[Kreator nowego raportu - krok 1]{Kreator nowego raportu - krok 1, źródło: opracowanie własne}
 		\label{app:wizard_newReport_step1}
 	\end{figure}	
-	\begin{figure}[H]
+	\begin{figure}[h]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/rbuilder_step2}
-		\caption[Kreator nowego raportu - krok 2]{
-			Kreator nowego raportu - krok 2
-		}
+		\includegraphics[width=0.80\textwidth]{images/rbuilder_step2}
+		\caption[Kreator nowego raportu - krok 2]{Kreator nowego raportu - krok 2, źródło: opracowanie własne}
 		\label{app:wizard_newReport_step2}
 	\end{figure}		
-	\begin{figure}[H]
+	\begin{figure}[h]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/rbuilder_step3}
-		\caption[Kreator nowego raportu - krok 3]{
-			Kreator nowego raportu - krok 3
-		}
+		\includegraphics[width=0.80\textwidth]{images/rbuilder_step3}
+		\caption[Kreator nowego raportu - krok 3]{Kreator nowego raportu - krok 3, źródło: opracowanie własne}
 		\label{app:wizard_newReport_step2}
-	\end{figure}	
-	
-	\begin{wrapfigure}{r}{0.5\textwidth}
-		\centering
-		\includegraphics[width=1.0\textwidth]{images/rbuilder_generateReport}
-		\caption[Generowanie nowego raportu - wybór docelowego formatu]{
-			Generowanie nowego raportu - wybór docelowego formatu: \textbf{PDF}, \textbf{XLS}, \textbf{CSV}, \textbf{HTML}
-		}
-		\vspace{-10pt}
-		\label{app:wizard_newReport_generateReport}
-	\end{wrapfigure}
-	
-	Dzięki możliwości wykonywania akcji na poszczególnych wierszach tabeli, udało się przypisać dla każdego raportu link uruchamiający jego
-	generowania oraz usunięcie. Usunięcie jest operacją trywialną z punktu widzenia użytkownika, ponieważ nie widzi on niczego poza 
-	końcowym rezultatem. Z drugiej strony w momencie kliknięcia na przycisk \textbf{Generuj}, użytkownik ma możliwość
-	wybrania końcowego formatu w jakim chciałby zobaczyć swoje dane. 
-	Dalsza część funkcjonalności, czyli faktycznego zrenderowania gotowych danych została zaimplementowana z użyciem biblioteki wspierającej
-	\textbf{JasperReports}, pochodzącą ze szkieletu aplikacji \textbf{Spring}. Przykładowy raport wygląda w następujący sposób:
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1.0\textwidth]{images/rbuilder_report}
-		\caption[Gotowy raport utworzony przez komponent \textbf{RBuilder}]{
-			Gotowy raport utworzony przez komponent \textbf{RBuilder}
-		}
-		\label{app:wizard_newReport_report}
 	\end{figure}		
 
-\pagebreak
-\subsubsection{Kreator nowego użytkownika}
-	Kreator nowego użytkownika pozwala na tworzenie nowy obiektów klasy \textbf{SUser}. Kwestia uprawnień jest tutaj szczególnie ważna z uwagi na to, że w przewodniku wybierany jest zestaw ról. Role, do których przypisany jest użytkownik, stanowią późniejszą bazę do weryfikacji dostępności funkcji systemu dla poszczególnych użytkowników. 
-	\begin{figure}[H]
+\subsection{Kreator nowego użytkownika}
+	Kreator nowego użytkownika pozwala na tworzenie nowy obiektów klasy \textbf{SUser}. Kwestia uprawnień jest tutaj szczególnie ważna z uwagi na to, że w przewodniku wybiera się zestaw ról. Role, do których przypisany jest użytkownik, stanowią późniejszą bazę do weryfikacji dostępności funkcji systemu dla poszczególnych użytkowników. 
+	\begin{figure}[th]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/newUser-basic}
+		\includegraphics[width=0.8\textwidth]{images/newUser-basic}
 		\caption[Kreator nowego użytkownika - dane podstawowe]{
-			Kreator nowego użytkownika - dane podstawowe	
+			Kreator nowego użytkownika - dane podstawowe, źródło: opracowanie własne	
 		}
 		\label{app:newUser_basic}
 	\end{figure}	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/newUser-roles}
+		\includegraphics[width=0.8\textwidth]{images/newUser-roles}
 		\caption[Kreator nowego użytkownika - uprawnienia użytkownika]{
-			Kreator nowego użytkownika - uprawnienia użytkownika
+			Kreator nowego użytkownika - uprawnienia użytkownika, źródło: opracowanie własne
 		}
 		\label{app:newUser_roles}
 	\end{figure}	
-	\begin{figure}[H]
+	\begin{figure}[th]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/newUser-contacts}
+		\includegraphics[width=0.8\textwidth]{images/newUser-contacts}
 		\caption[Kreator nowego użytkownika - dane kontaktowe]{
-			Kreator nowego użytkownika - dane kontaktowe
+			Kreator nowego użytkownika - dane kontaktowe, źródło: opracowanie własne
 		}
 		\label{app:newUser_contacts}
 	\end{figure}	
 
-\subsubsection{Kreator nowego samochodu}
+\subsection{Kreator nowego samochodu}
 	Kreator nowego samochodu został zaprojektowany aby tworzyć nowe obiekty klasy \textbf{SCar}.	Pierwszym krokiem jest podanie \textbf{numeru VIN}, z którego system odczytuje wszelkie możliwe dane, które można odkodować korzystając z informacji dostępnych publicznie. Na obecną chwilę są to:
 	\begin{itemize}
 		\item rok produkcji, zwracany jako lista lat w których samochód mógł być wyprodukowany,
@@ -99,64 +70,30 @@
 		\item rodzaj paliwa,
 		\item właściciela.
 	\end{itemize}
-	\begin{figure}[H]
+	\begin{figure}[th]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/newCar-vin}
+		\includegraphics[width=0.9\textwidth]{images/newCar-vin}
 		\caption[Kreator nowego samochodu - numer VIN]{
-			Kreator nowego samochodu - numer VIN
+			Kreator nowego samochodu - numer VIN, źródło: opracowanie własne
 		}
 		\label{app:newCar_vin}
 	\end{figure}	
-	\begin{figure}[H]
+	\begin{figure}[th]
 		\centering
-		\includegraphics[width=1.0\textwidth]{images/newCar-data}
+		\includegraphics[width=0.9\textwidth]{images/newCar-data}
 		\caption[Kreator nowego samochodu - pozostałe dane]{
-			Kreator nowego samochodu - pozostałe dane
+			Kreator nowego samochodu - pozostałe dane, źródło: opracowanie własne
 		}
 		\label{app:newCar_data}
 	\end{figure}
 
-\subsubsection{Organizator spotkań}
-	Organizator spotkań jest komponentem wspierającym zarządzania tym typem obiektów. 
-	Pozwala na wgląd w listę wszystkich spotkań na 4 rożne sposoby:
-	\begin{itemize}
-		\item widok w kontekście wybranego dnia,
-		\item widok w kontekście wybranego tygodnia,
-		\item widok w kontekście wybranego miesiąca,
-		\item widok tabelaryczny wszystkich spotkań.
-	\end{itemize}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1.0\textwidth]{images/calendarComponent-organizer}
-		\caption[Komponent kalendarza wspierający organizację spotkań - organizer]{
-			Komponent kalendarza wspierający organizację spotkań - organizer		
-		}
-		\label{app:component_calendar_organizer}
-	\end{figure}	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=1.0\textwidth]{images/calendarComponent-table}
-		\caption[Komponent kalendarza wspierający organizację spotkań - tabela]{
-			Komponent kalendarza wspierający organizację spotkań - tabela	
-		}
-		\label{app:component_calendar_table}
-	\end{figure}	
-	
-	Z poziomu organizera możliwe jest natomiast otwarcie strony domenowej dla wybranego spotkania, dostarczającej znacznie więcej informacji niż sam organizator oraz uruchomienie przewodnika utworzenia nowego spotkania. Ważną cechą tego przewodnika jest to, że zakres dat wybrany w organizatorze jest zachowany. Sam kreator został napisany w oparciu o technologię \textbf{Spring Web Flow}, dzięki czemu na poziomie jednego komponentu można wprowadzić dane takie jak: 
-	\begin{itemize}
-		\item mechanik, który będzie odpowiedzialny za wizytę,
-		\item mechanik raportujący dane spotkanie, niemniej taką możliwość posiadają jedynie osoby uprawnione do tego,
-		\item wybrany samochód,
-		\item lista zadań do wykonania podczas wizyty,
-		\item opcjonalny komentarz dla wizyty.
-	\end{itemize}
+\subsection{Kreator nowego spotkania}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=1.0\textwidth]{images/newAppointment_step1}
 		\caption[Kreator nowego spotkania - krok 1]{
-			Kreator nowego spotkania - krok 1
+			Kreator nowego spotkania - krok 1, źródło: opracowanie własne
 		}
 		\label{app:wizard_newAppointment_step1}
 	\end{figure}
@@ -164,7 +101,7 @@
 		\centering
 		\includegraphics[width=1.0\textwidth]{images/newAppointment_step2}
 		\caption[Kreator nowego spotkania - krok 2]{
-			Kreator nowego spotkania - krok 2
+			Kreator nowego spotkania - krok 2, źródło: opracowanie własne
 		}
 		\label{app:wizard_newAppointment_step2}
 	\end{figure}
@@ -172,7 +109,7 @@
 		\centering
 		\includegraphics[width=1.0\textwidth]{images/newAppointment_step3}
 		\caption[Kreator nowego spotkania - krok 3]{
-			Kreator nowego spotkania - krok 3
+			Kreator nowego spotkania - krok 3, źródło: opracowanie własne
 		}
 		\label{app:wizard_newAppointment_step3}
 	\end{figure}		

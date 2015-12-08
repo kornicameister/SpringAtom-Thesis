@@ -3,36 +3,35 @@
 
 \section{Opis aplikacji wspomagającej warsztat samochodowy}
 	
-	Nadrzędnym celem aplikacji jest wsparcie dla misji przedsiębiorstwa\footnote{Misja przedsiębiorstwa - zestaw wartości opisujących rolę danego przedsiębiorstwa w jego otoczeniu} prowadzącego warsztat samochody, zajmujący się serwisowaniem samochodów, prowadzącym naprawy, przeglądy i dokonującym okresowych czynności eksploatacyjnych jak na przykład wymiana oleju czy filtrów. Z tego powodu w kolejnych modułach aplikacji została zrealizowana część zarówno serwerowa jak i kliencka dostarczająca funkcjonalności pozwalających na tworzenie, edycję oraz usuwanie obiektów biznesowych, a także przeglądanie informacji o nich. Duży nacisk został położony na zrealizowanie warstwy serwerowej z uwagi na jej krytyczne znaczenie. Jest ona odpowiedzialna za realizację postulatów logiki biznesowej, zarządzanie prawami dostępu, walidację i konwersję danych. Z uwagi na wymienione punkty wiele elementów zostało dopracowanych, a poszczególne autorskie implementacje pewnych problemów zastąpione lepiej przetestowanymi i wydajniejszymi bibliotekami.
+	Nadrzędnym celem aplikacji jest wsparcie dla misji przedsiębiorstwa\footnote{Misja przedsiębiorstwa - zestaw wartości opisujących rolę danego przedsiębiorstwa w jego otoczeniu} prowadzącego warsztat samochody, zajmujący się serwisowaniem samochodów, prowadzącym naprawy, przeglądy i dokonującym okresowych czynności eksploatacyjnych, jak na przykład wymiana oleju czy filtrów. Z tego powodu w kolejnych modułach aplikacji została zrealizowana część zarówno serwerowa, jak i kliencka dostarczająca funkcjonalności pozwalających na tworzenie, edycję oraz usuwanie obiektów biznesowych, a także przeglądanie informacji o nich. Duży nacisk został położony na zrealizowanie warstwy serwerowej, z uwagi na jej krytyczne znaczenie. Jest ona odpowiedzialna za realizację postulatów logiki biznesowej, zarządzanie prawami dostępu, walidację i konwersję danych. 
 		
 	\subsection{Funkcjonalność aplikacji}
-	W części praktycznej zrealizowane została następująca funkcjonalność:
+	W części praktycznej zrealizowana została następująca funkcjonalność:
 	\begin{enumerate}
-		\item weryfikacja dostępu do konkretnych stron:
+		\item zarządzanie dostępem do poszczególnych stron, z wykorzystaniem uprawnień użytkowników:
 		\begin{itemize}
-			\item aplikacja rozpoznaje czy użytkownik jest zalogowany, dostosowując ilość dostępnych funkcji,
-			w zależności od grupy (grup), w których użytkownik się znajduje,
-			\item weryfikacja jest jedno etapowa
+			\item aplikacja rozpoznaje czy użytkownik jest zalogowany, dostosowując ilość dostępnych funkcji, w zależności od grupy (grup), w których użytkownik się znajduje,
+			\item weryfikacja jest jednoetapowa,
+			\item proces weryfikacji opiera się o adres internetowy,
 		\end{itemize}
-		\item tworzenie nowych spotkań,
-		\item przeglądanie terminarza spotkań,
-		\item tworzenie nowych raportów, zapisywanie ich oraz późniejsze generowanie dla nich wyników,
+		\item zarządzanie spotkaniami:
+		\begin{itemize}
+			\item przeglądanie terminarza spotkań na poziomie dnia, tygodnia oraz miesiąca,
+			\item tworzenie nowych spotkań, dostępne z poziomu terminarza,
+		\end{itemize}
 		\item tworzenie nowych użytkowników:
 		\begin{itemize}
 			\item nazwa użytkownika oraz hasło,
-			\item zestaw ról definiujących poziom uprawnień,
-			\item dane kontaktowe
+			\item uprawnienia,
+			\item dane kontaktowe,
 		\end{itemize}
-		\item przeglądanie obiektów domenowych jako pojedynczych stron internetowych.
+		\item przeglądanie obiektów domenowych jako pojedynczych stron internetowych,
+		\item przeglądanie danych w formie tabelarycznej,
+		\item tworzenie nowych szablonów raportów biznesowych, zapisywanie ich oraz późniejsze generowanie wyniku
 	\end{enumerate}
-	
-	\subsection{Generyczny moduły} 							\input{chapters/chapter4/generic_modules.tex}	
-	\pagebreak	
-	\subsection{Przewodniki tworzenia nowych obiektów} 		\input{chapters/chapter4/wizards.tex}
-	\pagebreak	
-	\subsection{Architektura MVC} 								\input{chapters/chapter4/mvc.tex}
-	\pagebreak	
-	\subsection{Plany rozwojowe}								\input{chapters/chapter4/plans.tex}
-		
-\section{Diagramy UML, schemat bazy danych}  					\input{chapters/chapter4/uml.tex}		
-\section{Metryki kodu}											\input{chapters/chapter4/code_metrics.tex}
+
+\section{Architektura MVC} 								\input{chapters/chapter4/mvc.tex}
+\section{Przewodniki tworzenia nowych obiektów} 		\input{chapters/chapter4/wizards.tex}
+\section{Terminarz spotkań}								\input{chapters/chapter4/organizer.tex}
+\section{Generyczne moduły} 							\input{chapters/chapter4/generic_modules.tex}
+\section{Plany rozwojowe}								\input{chapters/chapter4/plans.tex}

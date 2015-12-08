@@ -1,0 +1,51 @@
+
+	
+	\subsection{Warstwa abstrakcji Spring dla cache'owania obiektów}
+		W aplikacji demonstracyjnej \textbf{Ehcache} nie jest używany bezpośrednio, pomijając tworzenie domyślnych cache'ów. Cała funkcjonalność odnosząca się do ewentualnego pobierania, umieszczania oraz usuwania obiektów z odpowiadających im pamięci podręcznych realizowana jest na poziomie adnotacji:
+		\begin{center}
+			\begin{longtable}{| p{3cm} | p{13cm} |}
+				\caption[Adnotacje Spring opisujące poziom abstrakcji cache]{
+					Adnotacje Spring opisujące poziom abstrakcji cache				
+				}
+				\tabularnewline	
+				\label{app:ehcache:spring_caches}
+				
+				\hline
+					\multicolumn{1}{|c|}{\textbf{Adnotacja}} 			&
+					\multicolumn{1}{|c|}{\textbf{Funkcjonalność}} 	\tabularnewline
+				\hline
+				\endfirsthead
+				
+				\multicolumn{2}{c}
+				{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \tabularnewline
+				\hline
+					\multicolumn{1}{|c|}{\textbf{Adnotacja}} 			&
+					\multicolumn{1}{|c|}{\textbf{Funkcjonalność}} 	\tabularnewline
+				\hline
+				\endhead
+					
+				\hline
+					\multicolumn{2}{|r|}{{Następna strona...}} \tabularnewline \hline
+				\endfoot
+
+				\hline \hline
+				\endlastfoot	
+				
+				\emph{Cacheable}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/Cacheable.html}} &
+				Adnotacja odnosi się do konkretnej metody lub całej klasy (w tym wypadku 
+				wszystkich zdefiniowanych w niej metod) i wskazuje, że ich argumenty mają być użyte 
+				do obliczenie klucza, a wartości zwracane przez te metody będą odpowiadać wartościom klucza. 
+				Faktyczne umieszczenie obiektu w pamięci podręcznej może być pominięte
+				jeśli istnieje on już w cache'u \tabularnewline
+				\hline
+				\emph{CachePut}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/CachePut.html}} &
+				Działa podobnie jak powyższa adnotacja z tą różnicę, że każdorazowe 
+				wywołania metody opatrzonej tą adnotacją powoduje umieszczenie obiektu
+				w pamięci podręcznej \tabularnewline
+				\hline
+				\emph{CacheEvict}\footnote{\url{http://docs.spring.io/spring/docs/4.0.0.RELEASE/javadoc-api/org/springframework/cache/annotation/CacheEvict.html}} &
+				W przeciwieństwie to \emph{CachePut} oraz \emph{Cachable} wskazuje, 
+				że wywołania metody nią opatrzonej spowodują usunięcie z pamięci podręcznej obiektu
+				o danym kluczu
+			\end{longtable}
+		\end{center}

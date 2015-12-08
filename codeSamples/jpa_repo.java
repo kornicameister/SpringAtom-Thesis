@@ -1,7 +1,5 @@
-@NoRepositoryBean
 public interface JpaRepository<T, ID extends Serializable> 
 		extends PagingAndSortingRepository<T, ID> {
-
 	List<T> findAll();
 
 	List<T> findAll(Sort sort);

@@ -1,11 +1,7 @@
-\subsubsection{Model - Warstwa danych}
-	Warstwa modelu danych została zaprojektowana przy użyciu adnotacji \ref{tech:jpa} \textbf{JPA}. Korzystanie ze standardu, stanowczo podnosi przenośność aplikacji i zwiększa możliwości modyfikacji kodu w późniejszych etapach rozwoju. Adnotacje byłyby bez znaczenie bez kolejnego szkielety aplikacji. \textbf{Hibernate} \ref{tech:hibernate}. Mimo że został on zaprojektowany do większej ilości zadań, niż jedynie zarządzania serializacją oraz deserializacją obiektów z/do bazy danych, jest wykorzystywany jedynie w tym kierunku. Dostarczona funkcjonalność do tworzenia zapytań bazodanowych niestety ma kilka wad, które w kontekście aplikacji były nie do akceptowania.
-	
-	Po pierwsze tworzone kwerendy nie są typizowane, co wymusza konieczność rzutowania typów i niskopoziomowych operacji na zwracanych strukturach danych. Na dłuższą metę jest to rozwiązanie nieefektywne i generuje zbyt duża ilość zbędnego kodu, który można by zastąpić lepszym, pochodzącym z innych bibliotek. Ostatecznie problematyczne zarządzania sesją oraz błędy wynikające z przedwczesnego jej zamknięcia, generowałoby dalsze problemy w momencie serializacji danych do formatu przenośnego przez sieć internet, jak na przykład JSON. Niemniej czynnikiem decydującym był brak możliwości integracji z pozostałymi modułami szkieletu aplikacji \textbf{Spring}.
+\subsection{Model - Warstwa danych}
+		Na warstwę modelu danych składają się klasy, zwane dalej obiektami domenowymi. Zdefiniowane w aplikacji praktycznej klasy, należące do tej warstwy, opisują obiekty rzeczywiste, związane ze specyfikacją działalności warsztatu samochodowego, a także takie, dzięki którym możliwe jest zarządzanie użytkownikami aplikacji oraz ich uprawnieniami. 
 		
-	Model danych jest w niektórych przypadkach wersjonowany. Oznacza to, że dla wybranych obiektów, \textbf{Hibernate} trzyma ich historię zmian
-	w bazie danych. Modyfikacja każdego lub jedynie wybranych pól (jest to zależne od konfiguracji danego obiektu domenowego), powoduje nie tyle
-	zapisywanie zmian do bazy co utworzenie nowych rekordów w tabelach:
+		W wybranych przypadkach (tabela \ref{app:model_list_of}), obiekty domenowe są wersjonowane. Oznacza to, że \textbf{Hibernate} trzyma historię zmian w bazie danych. Modyfikacja każdego lub jedynie wybranych pól (jest to zależne od konfiguracji danego obiektu domenowego), powoduje nie tyle zapisywanie zmian do bazy, co utworzenie nowych rekordów w tabelach:
 	\begin{itemize}
 		\item \textbf{revinfo} - zawiera następujące kolumny:
 		\begin{itemize}
@@ -13,21 +9,126 @@
 			\item login użytkownika, który dokonał zmiany,
 		\end{itemize} 
 		\item \textbf{revchanges} - zawiera następujące kolumny:
-		\begin{itemize}e
+		\begin{itemize}
 			\item numer rewizji,
 			\item nazwę (pełna nazwa klasy) modelu,
 		\end{itemize}
-		\item \textbf{nazwa\_tabeli\_history} - zawiera ona te pola, które został wybrane jako kandydaci do prowadzenia 
-		dziennika zmian, dla danego obiektu domenowego.
+		\item \textbf{\{nazwa\_tabeli\}\_history} - zawiera ona te pola, które zostały wybrane, co powoduje utworzenie nowej rewizji obiektu domenowego.
 	\end{itemize}
 	
-\subsubsection{Model - Warstwa repozytoriów}
-	Repozytoria w aplikacji demonstracyjnej są niczym więcej jak jedynie zdefiniowanymi w odpowiedni sposób interfejsami. Odpowiedni sposób oznacza, że dla każdego z nich, pierwszym interfejsem w drzewie dziedziczenia jest \textbf{Repository}. Jest to kluczowe ponieważ w ten sposób szkielet aplikacji \textbf{Spring} rozpoznaje repozytoria podczas skanowania \textbf{classpath}\footnote{\textbf{Classpath scanning} - przeszukiwania wszystkich załadowanych klas}. Programista jest zobowiązany jedynie, w przypadku chęci skorzystania, do utworzenia w swojej klasie pola typu interfejsu, a właściwa referencja do obiektu zostanie umieszczona poprzez \textbf{dependency injection}. Kod na listingu \ref{app:scarmaster_repo} pokazuję deklarację repozytorium. 
-	\begin{listing}[H]
+	Aby wskazać konkretny obiekt domenowy, dla którego wymagana jest wiedza o historii jego modyfikacji, należy użyć adnotacji \textbf{@Audited}. Jeśli zostanie nią opatrzona cała klasa, będzie to równoznaczne z tym, że wszystkie atrybuty tej klasy będą kandydatami do utworzenia nowej rewizji. Z drugiej strony możliwe jest podanie jedynie konkretnych pól. Fragment klasy \textbf{SCar} (listing \ref{app:scar_version}) pokazuje użycie adnotacji nad polem \textbf{licencePlate}. 
+	\begin{code}
 		\inputminted[
-			lineos=true,
-			firstline=38,
-			lastline=69,
+			linenos=true,
+			firstline=61,
+			lastline=65,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{../SpringAtom_thesis/src/main/java/org/agatom/springatom/server/model/beans/car/SCar.java}
+		% src file used
+		\caption[Użycie adnotacji \textbf{@Audited}]{
+			Użycie adnotacji \textbf{@Audited}, źródło: opracowanie własne
+		}
+		\label{app:scar_version}
+	\end{code}
+	
+	\begin{center}
+		\begin{longtable}{| p{4cm} | p{2cm} | p{8cm} |}
+			\caption[Lista obiektów domenowych]{Lista obiektów domenowych \label{app:model_list_of}}\tabularnewline	
+			
+			% header
+			\hline
+				\multicolumn{1}{|c|}{\textbf{Obiekt domenowy}} 		&
+				\multicolumn{1}{|c|}{\textbf{Wersjonowany}} 			&
+				\multicolumn{1}{|c|}{\textbf{Opis}} 					\\
+			\hline
+			\endfirsthead
+			
+			\multicolumn{2}{c}
+			{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} 	\\
+			\hline
+				\multicolumn{1}{|c|}{\textbf{Obiekt domenowy}} 		&
+				\multicolumn{1}{|c|}{\textbf{Wersjonowany}} 			&
+				\multicolumn{1}{|c|}{\textbf{Opis}} 					\\
+			\hline
+			\endhead
+				
+			\hline
+				\multicolumn{3}{|r|}{{Następna strona...}} 			\\
+			\hline
+			\endfoot
+	
+			\hline
+			\endlastfoot	
+			% end of header
+			
+			% body starts her
+			SAppointment 		& 
+			Nie			 		&
+			Pojedyncza wizyta danego pojazdu w warsztacie samochodowym, która wydarzyła się w konkretnym momencie czasu. Wizyta powiązana jest z konkretnym samochodem, będącym jej podmiotem oraz zawiera informacje 
+			o osobie, która zarejestrowała zgłoszenie i była jego wykonawcą (mogą to być inne osoby), a także listę czynności, jakie należało wykonać.
+			\hline
+			SAppointmentTask 	& 
+			Nie					&
+			Pojedyncza czynność, wykonana podczas wizyty. Czynność opisana jest przez jej typ (może to być, na przykład, wymiana oleju) oraz komentarz (dla wymiany oleju może to być informacja o tym, jaki olej został wymieniony). 
+			\hline
+			SAppointmentIssue 	& 
+			Nie					&
+			Opisuje problemową sytuację, związaną z danym spotkaniem. Dla pojedynczej wizyty sytuacją wyjątkową może być fakt nieodbycia się spotkania, ponieważ klient warsztatu, do który należy pojazd (podmiot wizyty), nie stawił się
+			na umówiony termin. Jednocześnie klasa \textbf{SAppointmentIssue} jest rozszerzeniem klasy \textbf{SIssue}, dziedziczy więc wszystkie jej atrybuty. 
+			\hline
+			SCarMaster 			&
+			Nie					& 
+			Zawiera informacje opisujące samochód, które nie zależą od jego konkretnej rewizji. Są to atrybuty takie jak marka, model, producent i kraj, z którego samochód pochodzi.
+			\hline
+			SCar 				&
+			Tak 				& 
+			Centralny obiekt domenowy systemu. Na jego opis składają się atrybuty zdefiniowane w klasie \textbf{SCarMaster}, a także numer rejestracyjny, numer VIN, rok produkcji, rodzaj spalanego paliwa. Pojedynczy samochód
+			powiązany jest z użytkownikiem systemu, będącym tym samym jego właścicielem. Samochód jest wersjonowany, a atrybuty, których zmiana powoduje utworzenie nowej rewizji to: właściciel, numer rejestracyjny oraz rodzaj paliwa. 
+			\hline
+			SIssue 				&
+		 	Nie 				&
+		 	\textbf{SIssue} opisuje sytuację wyjątkową, związaną z użytkownikiem systemu. Pojedynczy obiekt tego typu opisany jest przez użytkownika systemu, który zgłosił problem oraz użytkownika będącego podmiotem
+		 	problematycznej sytuacji. 
+		 	\hline
+			SPerson 			& 
+			Tak 				& 
+			Ten obiekt domenowy jest pojedynczą osobą w systemie. Obiekt tego typu nie jest tożsamy z użytkownikiem systemu. Atrybuty opisujące ten typ obiektu to: imię, nazwisko oraz dane kontaktowe. Zmiana któregokolwiek z tych	 atrybutów
+			równoznaczna jest z utworzeniem nowej rewizji. 
+			\hline
+			SPersonContact 		&
+			Nie 				&
+			Obiekt tego typu odnosi się do danych kontaktowych, które związane są osobą. Taki obiekt opisany jest przez atrybut, który odnosi się do tego, czy jest to numer telefonu komórkowego lub email. Drugim atrybutem jest
+			wartość danego kontaktu.
+			\hline
+			SReport 			&
+			Nie					& 
+			Obiekt będący częścią komponentu \textbf{RBuilder}. Dostarcza informacji o położeniu plików opisujących zarówno strukturę szablonu, jak i pomocnych w procesie generowania raportu.
+			\hline
+			SAuthority	 		&
+			Nie					& 
+			Obiekty tej klasy opisują uprawnienia jakie przypisane są pojedynczemu użytkowniki systemu. Dzięki nim możliwe jest kontrolowanie do jakich obszarów funkcjonalnych, pojedynczy użytkownik ma dostęp, a które
+			rejony są dla niego niedostępne. 
+			\hline
+			SUser 				&
+			Tak 				& 
+			\textbf{SUser} jest faktycznym użytkownikiem aplikacji. Pojedynczy obiekt opisany jest przez: login, hasło, zestaw zmiennych logicznych pozwalających określić stan konta (konto nieaktywne, zablokowane lub nieważne). Rola użytkownika, to kim on jest w kontekście systemu, opisane jest przez zbiór uprawnień. Modyfikacja atrybutów odnoszących się do nazwy użytkownika lub hasła skutkuje utworzeniem nowej rewizji obiektu. 
+			\hline
+			SUserNotification 	& 
+			Nie 				& 
+			Powiadomienie jest wiadomością jaka jest wysyłana użytkowniki systemu. Składa się z treści wiadomości oraz daty jej wysłania. Dodatkowym atrybutem jest zmienna logiczna odnosząca się do faktu, czy adresat odczytał powiadomienie. 
+		\end{longtable}
+	\end{center}	
+	
+\subsection{Model - Warstwa repozytoriów}
+	Repozytoria w aplikacji demonstracyjnej są niczym więcej jak jedynie zdefiniowanymi w odpowiedni sposób interfejsami. Odpowiedni sposób oznacza, że dla każdego z nich, pierwszym interfejsem w drzewie dziedziczenia jest \textbf{Repository}. Jest to kluczowe ponieważ w ten sposób szkielet aplikacji \textbf{Spring} rozpoznaje repozytoria podczas skanowania \textbf{classpath}. Programista jest zobowiązany jedynie, w przypadku chęci skorzystania, do utworzenia w swojej klasie pola typu tego interfejsu, a właściwa referencja do obiektu zostanie umieszczona poprzez \textbf{dependency injection}. Kod na listingu \ref{app:scarmaster_repo} pokazuję definicje repozytorium. 
+	\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=43,
+			lastline=77,
 			fontfamily=monospace,
 			obeytabs=true,
 			samepage=true,
@@ -36,79 +137,136 @@
 		% src file used
 		\caption[\textbf{SCarMasterRepository} - interfejs repozytorium dla modelu \textbf{SCarMaster}]{
 			\textbf{SCarMasterRepository} - interfejs repozytorium	 pokazujący użycie metod mapowanych
-			na kwerendy oraz bardziej skomplikowanego zapytania z użyciem adnotacji \textbf{Query}
+			na kwerendy oraz bardziej skomplikowanego zapytania z użyciem adnotacji \textbf{Query}, źródło: opracowanie własne
 		}
 		\label{app:scarmaster_repo}
-	\end{listing}
-	\pagebreak
-	Repozytoria zostały dostosowane do wymagań aplikacji, celem umożliwiania wyszukiwania obiektów w konkretnych rewizjach lub ich zakresach. Z tego powodu zostało wprowadzone abstrakcyjne repozytorium \textbf{SRepository}.
-	\begin{listing}[H]
+	\end{code}
+	 
+	\paragraph{Rozszerzenie natywnej funkcjonalności repozytoriów} \hspace{0pt} \\
+	Funkcjonalność repozytoriów dostarczona przez moduł \textbf{Spring Data JPA} (\ref{tech:spring_data_jpa}) została rozbudowana o kilka dodatkowych funkcji. Rozszerzenie dotyczyło operacji wykonywanych na obiektach wersjonowanych, a zdefiniowane zostało w klasie \textbf{SRepository}, widocznej na listingu \ref{app:srepository}. 	Dodatkowe funkcje pozwalają na wyszukiwanie obiektów domenowych według następujących kryteriów:
+	\begin{itemize}
+		\item konkretny klucz główny oraz konkretna rewizja (metoda \textbf{findInRevision(ID,N)}),
+		\item konkretny klucz główny oraz konkretne rewizje (metoda \textbf{findInRevisions(ID,N...)}),
+		\item konkretny klucz, gdzie modyfikacja nastąpiła w pewnym momencie czasu (metoda \textbf{findRevisions(ID,DateTime,TimeOperator)}),
+		\item obliczenie ilości modyfikacji (metoda \textbf{countRevisions(ID)}
+	\end{itemize}
+	
+	\begin{code}
 		\inputminted[
-			lineos=true,
+			linenos=true,
 			firstline=36,
-			lastline=79,
+			lastline=56,
 			fontfamily=monospace,
 			obeytabs=true,
-			samepage=true,
+			samepage=false,
 			fontsize=\scriptsize
 		]{java}{\SpringatomScrPath{/server/repository/SRepository.java}}
 		% src file used
 		\caption[\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji]{
-			\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji
+			\textbf{SRepository} - abstrakcyjne repozytorium wspierające dostęp do rewizji, źródło: opracowanie własne
 		}
 		\label{app:srepository}
-	\end{listing}
+	\end{code}
 	
-	Z uwagi na to, że funkcjonalność tego interfejsu nie jest dostępna w klasach dostarczonych przez \textbf{Spring Data JPA}, musiałaby być ona zaimplementowana. Niemniej nie odniosło by to skutku bez wprowadzenie dodatkowo elementu - fabryki, która nadpisywała proces tworzenia repozytoriów. Poniższa klasa \textbf{SRepositoriesFactoryBean} działa wybiórczo, tj. dobiera konkretne implementacje, zależnie od faktycznego typu repozytorium. Rozstrzygającym kryterium jest to, czy dane repozytorium jest przeznaczone dla obiektów wersjonowanych. 
-	\begin{listing}[H]
+	Uwzględnienie rozszerzenia nie byłoby możliwe bez modyfikacji procesu, podczas którego moduł \textbf{Spring Data JPA} tworzył obiekty implementujące funkcjonalność repozytoriów, zdefiniowaną poprzez interfejsy. Wprowadzony został dodatkowy element - fabryka, która nadpisywała oryginalny algorytm dostarczając implementacji zdefiniowanych w aplikacji praktycznej. Listing \ref{app:srepositories_factory_bean} pokazuje wycinek kodu klasy \textbf{SRepositoriesFactoryBean} realizujący tą czynność. 
+	\begin{code}
 		\inputminted[
-			lineos=true,
-			firstline=49,
-			lastline=117,
+			gobble=2,
+			linenos=true,
+			firstline=89,
+			lastline=105,
 			fontfamily=monospace,
 			obeytabs=true,
-			samepage=true,
+			samepage=false,
 			fontsize=\scriptsize
 		]{java}{\SpringatomScrPath{/server/repository/factory/SRepositoriesFactoryBean.java}}
-		% src file used
 		\caption[\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności]{
-			\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności
+			\textbf{SRepositoriesFactoryBean} - fabryka repozytoriów dla implementacji własnej funkcjonalności, źródło: opracowanie własne
 		}
 		\label{app:srepositories_factory_bean}
-	\end{listing}
+	\end{code}
 	
-\subsubsection{Model - Warstwa serwisów}
-	Serwisy	stanowią w aplikacji element realizujący logikę biznesową. Nie odnoszą się one jednak jedynie do operacji
+	\clearpage
+	\paragraph{Lista repozytoriów} \hspace{0pt} \\
+	Poniższa tabela zawiera listę repozytoriów zdefiniowanych w aplikacji demonstracyjnej, nazwę odpowiadającego jej obiektu domenowego oraz informację o tym, czy repozytorium wspiera dostęp do dziennika zmian tego obiektu.
+	\begin{center}
+		\begin{longtable}{| p{6cm} | p{5cm} | p{2cm} |}
+			\caption[Lista repozytoriów danych]{Lista repozytoriów danych \label{mvc:repo_list}}\tabularnewline	
+			
+			% header
+			\hline
+				\multicolumn{1}{|c|}{\textbf{Repozytorium}} 			&
+				\multicolumn{1}{|c|}{\textbf{Obiekt domenowy}} 		&
+				\multicolumn{1}{|c|}{\textbf{Dziennik zmian}} 			\\
+			\hline
+			\endfirsthead
+			
+			\multicolumn{2}{c}
+			{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} 	\\
+			\hline
+				\multicolumn{1}{|c|}{\textbf{Repozytorium}} 			&
+				\multicolumn{1}{|c|}{\textbf{Obiekt domenowy}} 		&
+				\multicolumn{1}{|c|}{\textbf{Dziennik zmian}} 			\\
+			\hline
+			\endhead
+				
+			\hline
+				\multicolumn{4}{|r|}{{Następna strona...}} \tabularnewline
+			\hline
+			\endfoot
+	
+			\hline
+			\endlastfoot	
+			% end of header
+			
+			% body starts her
+			SAppointmentRepository & SAppointment & Nie \hline
+			SAppointmentIssueRepository & SAppointmentIssue & Nie \hline
+			SAppointmentTaskRepository & SAppointmentTask & Nie \hline
+			SCarMasterRepository & SCarMaster & Nie \hline
+			SCarRepository & SCar & Tak \hline
+			SIssueRepository & SIssue & Nie \hline
+			SPersonContactRepository & SPersonContacat & Nie \hline
+			SPersonRepository & SPerson & Tak \hline
+			SReportRepository & SReport & Tak \hline
+			SUserAuthorityRepository & SUserAuthority & Nie \hline
+			SUserNotificationRepository & SUserNotification & Nie \hline
+			SUserRepository & SUser & Tak
+		\end{longtable}
+	\end{center}	
+	
+\subsection{Model - Warstwa serwisów}
+	Serwisy	stanowią w aplikacji element realizujący logikę biznesową, jednak nie odnoszą się one jedynie do operacji
 	na modelu danych. Również inne moduły aplikacji korzystają z własnych serwisów, jako miejsc gdzie funkcjonalność została
 	zebrana i jest gotowa do użycia. 	
-	\begin{listing}[h]
+	\begin{code}
 		\inputminted[
-			lineos=true,
+			linenos=true,
 			firstline=33,
-			lastline=57,
+			lastline=45,
 			fontfamily=monospace,
 			obeytabs=true,
-			samepage=true,
+			samepage=false,
 			fontsize=\scriptsize
 		]{java}{\SpringatomScrPath{/server/service/domain/SPersonService.java}}
 		% src file used
-		\label{app:sperson_service}
 		\caption[\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}]{
-			\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}
+			\textbf{SPersonService} - interfejs serwisu dla modelu \textsc{SPerson}, źródło: opracowanie własne
 		}
-	\end{listing}
+		\label{app:sperson_service}
+	\end{code}
 	
 	Serwisy zostały zaprojektowane aby korzystać z repozytoriów danych. Ma to swoje pozytywne skutki
-	i nie jest wcale oznakę nadmiarowości kodu, czy też jego duplikowania. Z uwagi na fakt, ze serwisy
-	odwołują się do danych poprzez interfejsy repozytorii, podnosi to znacząco możliwości 
+	i nie jest wcale oznaką nadmiarowości kodu, czy też jego duplikowania. Z uwagi na fakt, ze serwisy
+	odwołują się do danych poprzez interfejsy repozytoriów, podnosi to znacząco możliwości 
 	późniejszych zmian w postaci silnika bazy danych. Dodatkową korzyścią jest zwiększenie możliwości testowania
 	interesujących funkcji bez konieczności posiadania działającego połączenia z bazą danych.
 	
-\subsubsection{Widok - Warstwa widoku}
+\subsection{Widok - Warstwa widoku}
 	Warstwa widoku została zaprojektowana z wykorzystaniem standardowej biblioteki tagów \textbf{JSTL}, plików \textbf{JSP} oraz biblioteki \textbf{Apache Tiles} \ref{tech:tiles}. Dzięki \textbf{Tiles} udało się zminimalizować zbędny kod w plikach \textbf{JSP} definiujący elementy, takie jak nagłówek strony, element \textit{<head>}. Do gotowego widoku można się było następnie odwoływać po unikatowej nazwie. 
-	\begin{listing}[h]
+	\begin{code}
 		\inputminted[
-			lineos=true,
+			linenos=true,
 			firstline=23,
 			lastline=36,
 			fontfamily=monospace,
@@ -118,20 +276,21 @@
 		]{xml}{../SpringAtom_thesis/src/main/webapp/ui/core/core-page-view.xml}
 		% src file used
 		\caption[Definicja \textit{tile} - podstawowego elementu widoku]{
-			Definicja \textit{tile} - podstawowy element widoku w rozumieniu technologi Apache Tiles		
+			Definicja \textit{tile} - podstawowy element widoku w rozumieniu technologi Apache Tiles, źródło: opracowanie własne		
 		}
 		\label{app:apache_tiles_example}
-	\end{listing} 
+	\end{code} 
 	
 	Listing \ref{app:apache_tiles_example} pokazuje deklarację abstrakcyjnej \textit{płytki}. Abstrakcyjność jest tutaj kwestią umowną ponieważ
 	można by tę \textit{płytkę} zwrócić z dowolnego kontrolera i została by ona zrenderowana do poprawnego widoku HTML. Elementem, który jest w tej definicji
-	zadeklarowany, lecz nie zdefiniowany jest \textit{content} - faktyczna zawartość danej strony. Mimo to plik \textbf{JSP} odpowiadający tej płytce
+	zadeklarowany, lecz nie zdefiniowany, jest \textit{content} - faktyczna zawartość danej strony. Mimo to plik \textbf{JSP} odpowiadający tej płytce
 	zawiera kod, który umieści ją w ostatecznej strukturze DOM. 
-	\begin{listing}[H]
+	
+	\begin{code}
 		\inputminted[
-			lineos=true,
-			firstline=18,
-			lastline=60,
+			linenos=true,
+			firstline=51,
+			lastline=53,
 			fontfamily=monospace,
 			obeytabs=true,
 			samepage=true,
@@ -139,50 +298,102 @@
 		]{jsp}{../SpringAtom_thesis/src/main/webapp/ui/core/page.jsp}
 		% src file used
 		\label{app:apache_tiles_example_jsp}
-		\caption[Plik \textbf{JSP} odpowiadający płytce \ref{app:apache_tiles_example}]{
-			Plik \textbf{JSP odpowiadający płytce \ref{app:apache_tiles_example}}
+		\caption[Fragment pliku \textbf{JSP} umieszczający w nim atrybut \textbf{content}]{
+			Fragment pliku \textbf{JSP} umieszczający w nim atrybut \textbf{content}, źródło: opracowanie własne
 		}
-	\end{listing}
-		 
-\subsubsection{Globalna - Warstwa konwersji}
-	Warstwa konwersji typów jest modułem \textbf{Spring}, który wykorzystywany jest w momencie, kiedy z obiektu typu A programista chce uzyskać obiekt typu B. Dobrym przykładem jest najczęściej moment, w którym w kodzie JSP umieszczamy bezpośrednio nasz obiekt, korzystając z biblioteki tagów dostarczonej przez \textbf{Spring}. W tym momencie uruchamiany jest proces, mający na celu konwersję obiektu do reprezentatywnej postaci łańcucha znakowego, który można będzie wkomponować do drzewa DOM. Jest to rozwiązanie efektywne, niemniej posiadające jedno uchybienie. W przypadku, gdy programista chciałby uzyskać selektywny sposób, zależny od kontekstu, w jakim znajduje się obiekt lub też chęci uzyskania wartości jednego z atrybutów, nie jest on w stanie osiągnąć zamierzonego rezultatu, z uwagi na sposób, w jaki działa konwersja typów. Znalezienie pierwszego konwertera, który jest w stanie przeprowadzić żądaną transformację kończy proces wyszukiwania. Nie oznacza to wcale, że uzyskany wynik będzie zgodny z oczekiwanym. Z tego powodu aplikacja demonstracyjna rozszerza istniejącą funkcjonalność przez umożliwienie wybiórczego konwertowania między poszczególnymi typami. Na obecną chwilę zostało to zaimplementowane dla obiektów domenowych, a klasą kontrolującą selektywny proces jest \textbf{PersistableConverterPicker}.
-	\begin{listing}[h]
-		\inputminted[
-			lineos=true,
-			firstline=51,
-			lastline=68,
-			fontfamily=monospace,
-			obeytabs=true, 
-			samepage=true,
-			fontsize=\scriptsize
-		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
-		\label{app:conversion_persistableToString}
-		\caption[\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów]{
-			\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów
-		}
-	\end{listing}
-	\textbf{PersistableConverterPicker} posiada metody które pozwalają na wybór selektywnego konwertera do wykonania operacji
-	transformacji. Zostało również zapewnione wsparcia dla istniejącej funkcjonalności, bez użycia selektora. Ta część realizowana jest w 
-	metodzie \textbf{getDefaultConverter(...)}.
-	\begin{listing}[h]
-		\inputminted[
-			lineos=true,
-			firstline=71,
-			lastline=101,
-			fontfamily=monospace,
-			obeytabs=true, 
-			samepage=true,
-			fontsize=\scriptsize
-		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
-		\label{app:conversion_defaultConverter}
-		\caption[\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu]{
-			\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu
-		}
-	\end{listing}
+	\end{code}
 	
-	Selektywne konwertery różnią się od normalnych jedynie
-	użyciem specjalnej adnotacji, która pozwala na ustalenie, że:
+	\paragraph{Generyczny kontroler zwracający widok} \hspace{0pt} \\
+	Aby zminimalizować ilość kodu i pisania kontrolera posiadającego metody zwracające nazwy widoków dla każdego możliwego adresu, w aplikacji praktycznej istnieje tylko jeden kontroler wspierający to zadania. \textbf{SVTilesViewControler} działa w oparciu o plik, zawierający wpisy opisujące mapowania adresów na nazwy widoków. Adres jest tutaj kluczem, z którego kontroler buduje obiekt klasy \textbf{UriTemplate}. \textbf{UriTemplate} działa podobnie do wyrażenia regularnego i pozwala na stwierdzenie, czy adres pobrany z żądania, pasuje do szablonu. Listing \ref{app:svTilesViewController} pokazuje definicję metody realizującej mapowanie, natomiast listing \ref{app:mapping_props} to lista adresów wraz z odpowiadającymi im widokami.
+	\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=50,
+			lastline=61,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/webmvc/controllers/SVTilesViewController.java}}
+		% src file used
+		\caption[Generyczny kontroler zwracający nazwy widoków]{
+			Generyczny kontroler zwracający nazwy widoków zdefiniowanych w pliku \ref{app:mapping_props}, źródło: opracowanie własne
+		}
+		\label{app:svTilesViewController}
+	}
+	\end{code}
+		\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=18,
+			lastline=34,
+			fontfamily=monospace,
+			obeytabs=true,
+			samepage=true,
+			fontsize=\scriptsize
+		]{properties}{../SpringAtom_thesis/src/main/resources/org/agatom/springatom/webmvc/url-mapping.properties}
+		% src file used
+		\caption[Mapowania adresów na nazwy widoków]{
+			Mapowania adresów na nazwy widoków, źródło: opracowanie własne
+		}
+		\label{app:mapping_props}
+	\end{code}
+		 
+\subsection{Globalna - Warstwa konwersji}
+	Warstwa konwersji typów jest modułem \textbf{Spring}, który wykorzystywany jest w momencie, kiedy z obiektu typu A programista chce uzyskać obiekt typu B. Dobrym przykładem jest najczęściej moment, w którym w kodzie JSP umieszczamy bezpośrednio nasz obiekt, korzystając z biblioteki tagów dostarczonej przez \textbf{Spring}. W tym momencie uruchamiany jest proces, mający na celu konwersję obiektu do reprezentatywnej postaci łańcucha znakowego, który można będzie wkomponować do drzewa DOM. Jest to rozwiązanie efektywne, niemniej posiadające jedno uchybienie. W przypadku, gdy programista chciałby uzyskać selektywny sposób, zależny od kontekstu, w jakim znajduje się obiekt lub też chęci uzyskania wartości jednego z atrybutów, nie jest on w stanie osiągnąć zamierzonego rezultatu, z uwagi na sposób, w jaki działa konwersja typów. Znalezienie pierwszego konwertera, który jest w stanie przeprowadzić żądaną transformację kończy proces wyszukiwania. Nie oznacza to wcale, że uzyskany wynik będzie zgodny z oczekiwanym. Z tego powodu aplikacja demonstracyjna rozszerza istniejącą funkcjonalność przez umożliwienie wybiórczego konwertowania między poszczególnymi typami. Na obecną chwilę zostało to zaimplementowane dla obiektów domenowych, a klasą kontrolującą selektywny proces jest \textbf{PersistableConverterPicker}.
+	\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=51,
+			lastline=69,
+			fontfamily=monospace,
+			obeytabs=true, 
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
+		\caption[\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów]{
+			\textbf{PersistableConverterPicker} - koordynator selektywnej konwersji typów, źródło: opracowanie własne
+		}
+		\label{app:conversion_persistableToString}
+	\end{code}
+	\textbf{PersistableConverterPicker} posiada metody które pozwalają na wybór selektywnego konwertera do wykonania operacji
+	transformacji. Zostało również zapewnione wsparcie dla istniejącej funkcjonalności, bez użycia selektora. Ta część realizowana jest w 
+	metodzie \textbf{getDefaultConverter(...)}.
+	\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=72,
+			lastline=99,
+			fontfamily=monospace,
+			obeytabs=true, 
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/model/conversion/picker/PersistableConverterPicker.java}}
+		\caption[\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu]{
+			\textbf{PersistableConverterPicker} - pobranie domyślnego konwertera dla typu, źródło: opracowanie własne
+		}
+		\label{app:conversion_defaultConverter}
+	\end{code}
+	
+	\clearpage
+	Selektywne konwertery różnią się od normalnych jedynie użyciem specjalnej adnotacji \textbf{PersistableConverterUtility} (listing \ref{app:conversion_PersistableConverterUtility}), która pozwala na ustalenie, że:
 	\begin{itemize}
 		\item konwerter jest domyślny, jeśli nie został zdefiniowany klucz,
 		\item konwerter jest selektywny, jeśli istnieje zdefiniowany klucz.
 	\end{itemize}
+	
+	\begin{code}
+		\inputminted[
+			linenos=true,
+			firstline=34,
+			lastline=52,
+			fontfamily=monospace,
+			obeytabs=true, 
+			samepage=true,
+			fontsize=\scriptsize
+		]{java}{\SpringatomScrPath{/server/model/conversion/annotation/PersistableConverterUtility.java}}
+		\caption[\textbf{PersistableConverterUtility} - adnotacja opisująca selektywny konwerter]{
+			\textbf{PersistableConverterUtility} - adnotacja opisująca selektywny konwerter
+		}
+		\label{app:conversion_PersistableConverterUtility}
+	\end{code}
